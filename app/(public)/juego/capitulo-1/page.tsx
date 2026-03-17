@@ -1004,10 +1004,10 @@ export default function GameEngine() {
                 transform: `translate(-50%, -100%)`,
               }}
             >
-              {/* Le agregamos scaleX(-1) para darlo vuelta como un espejo */}
+              {/* Le dejamos el scaleX(-1) para el espejo, y multiplicamos la escala general por responsiveScale */}
               <div
-                className="edward-sprite pixelated animate-edward-idle"
-                style={{ transform: `scaleX(-1) scale(1.00)` }}
+                className="edward-sprite pixelated animate-edward-idle shrink-0"
+                style={{ transform: `scaleX(-1) scale(${1.00 * responsiveScale})` }}
               ></div>
             </div>
           )}
