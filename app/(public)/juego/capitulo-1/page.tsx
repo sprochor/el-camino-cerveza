@@ -84,7 +84,8 @@ export default function GameEngine() {
   const [introStep, setIntroStep] = useState(0);
   const [introFade, setIntroFade] = useState(false);
   const [isDebugMode, setIsDebugMode] = useState(false);
-
+  const [isMuted, setIsMuted] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   // === 1. PRIMERO DECLARAMOS LAS REFERENCIAS DE AUDIO ===
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const puertoAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -308,6 +309,7 @@ export default function GameEngine() {
         );
         if (result.transition) triggerTransition(result.transition);
       });
+
       return;
     }
 
@@ -352,7 +354,31 @@ export default function GameEngine() {
     INTERACT: "Tocar",
     TALK: "Hablar a",
   };
+  // === CONTROL DE AUDIO Y PANTALLA COMPLETA ===
+  const toggleMute = () => {
+    const newMuted = !isMuted;
+    setIsMuted(newMuted);
+    if (audioRef.current) audioRef.current.muted = newMuted;
+    if (puertoAudioRef.current) puertoAudioRef.current.muted = newMuted;
+  };
 
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch((err) => {
+        console.log("Error al intentar pantalla completa:", err);
+      });
+    } else {
+      if (document.exitFullscreen) document.exitFullscreen();
+    }
+  };
+
+  // Escuchar si el usuario sale de pantalla completa con la tecla ESC
+  useEffect(() => {
+    const handleFsChange = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", handleFsChange);
+    return () =>
+      document.removeEventListener("fullscreenchange", handleFsChange);
+  }, []);
   if (!scene) return <div className="text-white">Cargando escena...</div>;
 
   // === RENDERIZADO DE LA INTRO CINEMÁTICA ===
@@ -497,7 +523,205 @@ export default function GameEngine() {
         .animate-edward-idle { 
           /* steps(8) hace que salte justo 8 veces. 
              Podés cambiar el "4s" a "6s" si querés que se mueva más lento */
-          animation: edward-idle-anim 10s steps(8) infinite; 
+          animation: edward-idle-anim 15s steps(8) infinite; 
+        }
+          /* === ANIMACIÓN PALOMAS === */
+        :root {
+          /* Dividimos el ancho total (1708px) por los 4 cuadros */
+          --palomas-frame-width: calc(1708px / 4); 
+          --palomas-frame-height: 146px;
+          --palomas-sheet-width: -1708px; 
+        }
+        .palomas-sprite { 
+          width: var(--palomas-frame-width); 
+          height: var(--palomas-frame-height); 
+          background-image: url('/images/juego/palomas-idle.png'); 
+          background-repeat: no-repeat; 
+          transform-origin: bottom center; 
+        }
+        @keyframes palomas-idle-anim { 
+          to { background-position-x: var(--palomas-sheet-width); } 
+        }
+        .animate-palomas-idle { 
+          /* ¡Acá ajustamos a steps(4)! */
+          animation: palomas-idle-anim 3s steps(4) infinite; 
+        }
+            /* === ANIMACIÓN PALOMA === */
+        :root {
+          /* Dividimos el ancho total (1336px) por los 8 cuadros */
+          --paloma-frame-width: calc(1336px / 8); 
+          --paloma-frame-height: 186px;
+          --paloma-sheet-width: -1336px; 
+
+          /* NUEVO: Variables para la paloma escapando (Ajustá 1128px al ancho real de paloma-escape.png) */
+          --paloma-escape-width: calc(1128px / 8); 
+          --paloma-escape-height: 204px; /* Ajustá si es distinto */
+          --paloma-escape-sheet: -1128px;
+        }
+
+        .paloma-sprite { 
+          width: var(--paloma-frame-width); 
+          height: var(--paloma-frame-height); 
+          background-image: url('/images/juego/paloma-idle.png'); 
+          background-repeat: no-repeat; 
+          transform-origin: bottom center; 
+        }
+        @keyframes paloma-idle-anim { 
+          to { background-position-x: var(--paloma-sheet-width); } 
+        }
+        .animate-paloma-idle { 
+          animation: paloma-idle-anim 3s steps(8) infinite; 
+        }
+
+        /* === NUEVO: CÓDIGO DE ESCAPE === */
+        .paloma-escape-sprite { 
+          width: var(--paloma-escape-width); 
+          height: var(--paloma-escape-height); 
+          background-image: url('/images/juego/paloma-escape.png'); 
+          background-repeat: no-repeat; 
+          transform-origin: bottom center; 
+        }
+        @keyframes paloma-escape-anim { 
+          to { background-position-x: var(--paloma-escape-sheet); } 
+        }
+        @keyframes fly-away {
+          to { 
+            transform: translate(300px, -400px) scale(0.5); /* Vuela arriba y a la izquierda */
+            opacity: 0; /* Desaparece */
+          }
+        }
+        .animate-paloma-escape { 
+          /* Aletea rápido (0.3s) y a la vez se desplaza (fly-away) */
+          animation: 
+            paloma-escape-anim 0.3s steps(4) infinite, 
+            fly-away 1.5s ease-out forwards; 
+        }
+            /* === ANIMACIÓN GAUCHO PANCHO === */
+        :root {
+          /* 874px dividido en los 5 cuadros que me pasaste */
+          --pancho-frame-width: calc(870px / 5); 
+          --pancho-frame-height: 289px;
+          --pancho-sheet-width: -870px; 
+        }
+        .pancho-sprite { 
+          width: var(--pancho-frame-width); 
+          height: var(--pancho-frame-height); 
+          /* Cambiá el nombre si tu archivo se llama distinto */
+          background-image: url('/images/juego/gaucho-pancho-idle.png'); 
+          background-repeat: no-repeat; 
+          transform-origin: bottom center; 
+        }
+        @keyframes pancho-idle-anim { 
+          to { background-position-x: var(--pancho-sheet-width); } 
+        }
+        .animate-pancho-idle { 
+          /* steps(5) por los 5 cuadros. 5 segundos le da un ritmo relajado para tomar mate */
+          animation: pancho-idle-anim 25s steps(5) infinite; 
+        }
+          /* === ANIMACIÓN OLLA FUEGO === */
+        :root {
+          /* 1288px dividido en 7 cuadros */
+          --olla-frame-width: calc(1288px / 7); 
+          --olla-frame-height: 69px;
+          --olla-sheet-width: -1288px; 
+        }
+        .olla-fuego-sprite { 
+          width: var(--olla-frame-width); 
+          height: var(--olla-frame-height); 
+          /* Chequeá que el nombre de tu imagen coincida */
+          background-image: url('/images/juego/olla-fuego.png'); 
+          background-repeat: no-repeat; 
+          transform-origin: bottom center; 
+        }
+        @keyframes olla-fuego-anim { 
+          to { background-position-x: var(--olla-sheet-width); } 
+        }
+        .animate-olla-fuego { 
+          /* steps(7) para los 7 frames. Animación rápida para el efecto de llamas */
+          animation: olla-fuego-anim 2s steps(7) infinite; 
+        }
+          /* === ANIMACIÓN PERRO GALLETA === */
+        :root {
+          /* 1464px dividido en 6 cuadros */
+          --galleta-frame-width: calc(1464px / 6); 
+          --galleta-frame-height: 170px;
+          --galleta-sheet-width: -1464px; 
+        }
+        .galleta-sprite { 
+          width: var(--galleta-frame-width); 
+          height: var(--galleta-frame-height); 
+          /* Chequeá que el nombre de tu imagen coincida */
+          background-image: url('/images/juego/galleta-idle.png'); 
+          background-repeat: no-repeat; 
+          transform-origin: bottom center; 
+        }
+        @keyframes galleta-idle-anim { 
+          to { background-position-x: var(--galleta-sheet-width); } 
+        }
+        .animate-galleta-idle { 
+          /* steps(6) por los 6 cuadros. 3s lo hace un perrito con energía */
+          animation: galleta-idle-anim 12s steps(6) infinite; 
+        }
+            /* === ANIMACIÓN PULPERO === */
+        :root {
+          /* 930px dividido en 6 cuadros exactos */
+          --pulpero-frame-width: calc(930px / 6); 
+          --pulpero-frame-height: 267px;
+          --pulpero-sheet-width: -930px; 
+        }
+        .pulpero-sprite { 
+          width: var(--pulpero-frame-width); 
+          height: var(--pulpero-frame-height); 
+          /* ¡Asegurate de que tu imagen se llame exactamente así! */
+          background-image: url('/images/juego/pulpero-idle.png'); 
+          background-repeat: no-repeat; 
+          transform-origin: bottom center; 
+        }
+        @keyframes pulpero-idle-anim { 
+          to { background-position-x: var(--pulpero-sheet-width); } 
+        }
+        .animate-pulpero-idle { 
+          /* steps(6) por los 6 cuadros. 4 segundos es un buen ritmo para que limpie el vaso tranquilo */
+          animation: pulpero-idle-anim 12s steps(6) infinite; 
+        }
+          /* === ANIMACIÓN PANADERA === */
+        :root {
+          /* Dejamos que CSS calcule el ancho exacto con decimales */
+          --panadera-frame-width: calc(1038px / 8); 
+          --panadera-frame-height: 240px;
+          --panadera-sheet-width: -1038px; 
+        }
+        .panadera-sprite { 
+          width: var(--panadera-frame-width); 
+          height: var(--panadera-frame-height); 
+          background-image: url('/images/juego/panadera-idle.png'); 
+          background-repeat: no-repeat; 
+          transform-origin: bottom center; 
+        }
+        @keyframes panadera-idle-anim { 
+          to { background-position-x: var(--panadera-sheet-width); } 
+        }
+        .animate-panadera-idle { 
+          /* steps(8) porque son 8 cuadros */
+          animation: panadera-idle-anim 14s steps(8) infinite; 
+        }
+
+        /* === ANIMACIÓN GAUCHOS === */
+        :root {
+          --gauchos-frame-width: calc(1369px / 8); 
+          --gauchos-frame-height: 182px;
+          --gauchos-sheet-width: -1369px;
+        }
+        .gauchos-sprite { 
+          width: var(--gauchos-frame-width); 
+          height: var(--gauchos-frame-height); 
+          background-image: url('/images/juego/gauchos-mate.png'); 
+          background-repeat: no-repeat; 
+          transform-origin: bottom center; 
+        }
+        @keyframes gauchos-idle-anim { to { background-position-x: var(--gauchos-sheet-width); } }
+        .animate-gauchos-idle { 
+          animation: gauchos-idle-anim 15s steps(8) infinite; 
         }
       `,
         }}
@@ -509,28 +733,39 @@ export default function GameEngine() {
       {/* MONITOR */}
       <div className="w-full max-w-5xl bg-[#c0c0c0] p-3 rounded-lg border-t-4 border-l-4 border-white border-b-4 border-r-4 border-[#555] shadow-2xl relative z-30 flex flex-col">
         {/* HEADER */}
-        <div className="flex justify-between items-center bg-[#0000aa] text-white px-3 py-1 mb-3 border-2 border-white/20">
-          <span className="font-retro text-xl uppercase tracking-widest">
+        <div className="flex justify-between items-center bg-[#0000aa] text-white px-2 md:px-3 py-1 mb-3 border-2 border-white/20">
+          <span className="font-retro text-lg md:text-xl uppercase tracking-widest truncate max-w-[30%]">
             {scene.name}
           </span>
-          <div className="flex gap-4">
-            {/* NUEVO BOTÓN DE DEBUG */}
+          {/* BOTONERA SUPERIOR */}
+          <div className="flex gap-2 md:gap-4 flex-wrap justify-end">
+            <button
+              onClick={toggleMute}
+              className={`font-retro text-sm md:text-lg hover:text-[#55ffff] ${isMuted ? "text-[#aaaaaa]" : "text-white"}`}
+            >
+              Audio [{isMuted ? "OFF" : "ON"}]
+            </button>
+            <button
+              onClick={toggleFullscreen}
+              className="font-retro text-sm md:text-lg hover:text-[#55ffff] text-white hidden sm:block"
+            >
+              Pantalla [{isFullscreen ? "><" : "[]"}]
+            </button>
             <button
               onClick={() => setIsDebugMode(!isDebugMode)}
-              className={`font-retro text-lg hover:text-[#55ff55] ${isDebugMode ? "text-[#55ff55]" : "text-white"}`}
+              className={`font-retro text-sm md:text-lg hover:text-[#55ff55] ${isDebugMode ? "text-[#55ff55]" : "text-white"}`}
             >
               Debug [{isDebugMode ? "ON" : "OFF"}]
             </button>
-            {/* NUEVO BOTÓN DE REINICIO */}
             <button
               onClick={resetGame}
-              className="font-retro text-lg hover:text-[#ffff55]"
+              className="font-retro text-sm md:text-lg hover:text-[#ffff55]"
             >
               Reiniciar [↺]
             </button>
             <Link
               href="/juego"
-              className="font-retro text-lg hover:text-[#ff5555]"
+              className="font-retro text-sm md:text-lg hover:text-[#ff5555]"
             >
               Cerrar [X]
             </Link>
@@ -600,8 +835,10 @@ export default function GameEngine() {
                 onClick={(e) => handleHotspotClick(e, hotspot)}
                 onMouseEnter={() => setHoverText(hotspot.name)}
                 onMouseLeave={() => setHoverText("")}
-                // Si isDebugMode es true, agregamos las clases rojas. Si no, queda invisible.
-                className={`absolute z-20 cursor-pointer flex items-end justify-center ${
+                /* ACÁ ESTÁ LA MAGIA: Si es Galleta, le damos z-30 para que esté delante de la barra. Al resto, z-20. */
+                className={`absolute cursor-pointer flex items-end justify-center ${
+                  hotspot.id === "galleta" ? "z-30" : "z-20"
+                } ${
                   isDebugMode
                     ? "border-2 border-red-500 bg-red-500/40 hover:bg-yellow-500/50 transition-colors"
                     : ""
@@ -628,10 +865,85 @@ export default function GameEngine() {
                     className={`w-full h-full object-contain pixelated drop-shadow-md ${isDebugMode ? "opacity-50" : "opacity-100"}`}
                   />
                 )}
+                {/* Animación del Fuego en la Olla */}
+                {hotspot.id === "olla" && flags.includes("olla_encendida") && (
+                  <div className="w-full h-full flex items-end justify-center pointer-events-none">
+                    {/* Ajustá el scale si el fuego se ve muy grande o chico */}
+                    <div className="olla-fuego-sprite animate-olla-fuego pixelated scale-[0.4] shrink-0" />
+                  </div>
+                )}
+                {/* Animación especial para el Perro Galleta */}
+                {hotspot.id === "galleta" && (
+                  <div className="w-full h-full flex items-end justify-center pointer-events-none">
+                    {/* Como es un perro chico, probá con un scale-[0.6] para empezar, 
+                        y ajustalo para que se vea bien frente a Heinrich */}
+                    <div className="galleta-sprite animate-galleta-idle pixelated drop-shadow-md scale-[0.4] shrink-0" />
+                  </div>
+                )}
+                {/* Animación especial para el Gaucho Pancho */}
+                {hotspot.id === "gaucho" && (
+                  <div className="w-full h-full flex items-end justify-center pointer-events-none">
+                    {/* Al igual que el pulpero, podés jugar con el scale-[...] para ajustar su tamaño real en la escena */}
+                    <div className="pancho-sprite animate-pancho-idle pixelated drop-shadow-md scale-[0.8] shrink-0" />
+                  </div>
+                )}
+                {/* Animación especial para el Pulpero */}
+                {hotspot.id === "pulpero" && (
+                  <div className="w-full h-full flex items-end justify-center pointer-events-none">
+                    {/* ACÁ CONTROLÁS LA ESCALA: 
+                        Cambiá el scale-[0.8] por scale-[1.2], scale-[0.5], etc., según necesites. 
+                        Le dejé el shrink-0 para que no se te corte la imagen. */}
+                    <div className="pulpero-sprite animate-pulpero-idle pixelated drop-shadow-md scale-[0.8] shrink-0" />
+                  </div>
+                )}
+                {/* Animación especial para las Palomas */}
+                {hotspot.id === "palomas" && (
+                  <div className="w-full h-full flex items-end justify-center pointer-events-none">
+                    {/* ¡El secreto es agregar shrink-0 al final de esta línea! */}
+                    <div className="palomas-sprite animate-palomas-idle pixelated drop-shadow-md scale-[0.2] shrink-0" />
+                  </div>
+                )}
+                {/* Animación especial para la Paloma Individual */}
+                {hotspot.id === "paloma" && (
+                  <div className="w-full h-full flex items-end justify-center pointer-events-none">
+                    {flags.includes("paloma_escapo") ? (
+                      /* Si tiene la bandera (la tocaste), sale volando */
+                      <div className="paloma-escape-sprite animate-paloma-escape pixelated drop-shadow-md scale-[0.5] shrink-0" />
+                    ) : (
+                      /* Si no, se queda picoteando */
+                      <div className="paloma-sprite animate-paloma-idle pixelated drop-shadow-md scale-[0.5] shrink-0" />
+                    )}
+                  </div>
+                )}
+                {/* Animación especial para los Gauchos */}
+                {hotspot.id === "gauchos" && (
+                  <div className="w-full h-full flex items-end justify-center pointer-events-none">
+                    {/* ACÁ ESTÁ LA MAGIA: Agregamos scale-[0.7] al final */}
+                    <div className="gauchos-sprite animate-gauchos-idle pixelated drop-shadow-md scale-[0.6] shrink-0" />
+                  </div>
+                )}
+                {/* Animación especial para la Panadera */}
+                {hotspot.id === "panadera" && (
+                  <div className="w-full h-full flex items-end justify-center pointer-events-none">
+                    {/* scaleX en negativo la da vuelta, y scaleY mantiene su altura */}
+                    <div
+                      className="panadera-sprite animate-panadera-idle pixelated drop-shadow-md"
+                      style={{ transform: "scaleX(-0.6) scaleY(0.6)" }}
+                    />
+                  </div>
+                )}
               </div>
             );
           })}
-
+          {/* === CAPA DE LA BARRA (ENTRE EL PULPERO Y HEINRICH) === */}
+          {currentSceneId === "pulperia" && (
+            <img
+              src="/images/juego/fondo-pulperia-barra.png"
+              alt="Barra"
+              /* z-[25] tapa a los hotspots (z-20) pero deja a Heinrich por delante (z-30) */
+              className="absolute inset-0 w-full h-full object-cover z-[25] pointer-events-none pixelated"
+            />
+          )}
           {/* PERSONAJE CON ESCALA DINÁMICA Y VELOCIDAD CONSTANTE */}
           <div
             // Borramos el duration-[800ms] de acá

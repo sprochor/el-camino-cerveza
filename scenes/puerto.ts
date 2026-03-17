@@ -289,7 +289,7 @@ export const puertoScene: Scene = {
     },
     {
       id: "salida_plaza",
-      name: "Ir a la Plaza Mayor",
+      name: "la Plaza Mayor",
       top: "35%",
       left: "30%",
       width: "5%",
