@@ -86,17 +86,31 @@ export default function GameEngine() {
   const [isDebugMode, setIsDebugMode] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [responsiveScale, setResponsiveScale] = useState(1);
   // === 1. PRIMERO DECLARAMOS LAS REFERENCIAS DE AUDIO ===
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const puertoAudioRef = useRef<HTMLAudioElement | null>(null);
   const walkTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const flagsRef = useRef<string[]>(flags);
   const inventoryRef = useRef<Item[]>(inventory);
+  const gameWrapperRef = useRef<HTMLDivElement>(null);
 
   const screenRef = useRef<HTMLDivElement>(null);
   const scene = ALL_SCENES[currentSceneId as keyof typeof ALL_SCENES];
   const [maskData, setMaskData] = useState<ImageData | null>(null);
-
+  // Calcula la escala según el tamaño de la pantalla
+  useEffect(() => {
+    const updateScale = () => {
+      if (screenRef.current) {
+        // Asumimos 1024px como el tamaño base original de tu monitor en PC
+        const currentWidth = screenRef.current.clientWidth;
+        setResponsiveScale(currentWidth / 1024);
+      }
+    };
+    updateScale(); // Correr al inicio
+    window.addEventListener("resize", updateScale);
+    return () => window.removeEventListener("resize", updateScale);
+  }, [currentSceneId]);
   // === 2. DESPUÉS DECLARAMOS LA FUNCIÓN DE REINICIO (Que ahora sí sabe qué es puertoAudioRef) ===
   const resetGame = (e?: React.MouseEvent) => {
     // Esto evita que el clic en "Reiniciar" dispare clics por accidente en el fondo
@@ -364,9 +378,12 @@ export default function GameEngine() {
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch((err) => {
-        console.log("Error al intentar pantalla completa:", err);
-      });
+      // 👇 AHORA APUNTA AL WRAPPER DEL JUEGO
+      if (gameWrapperRef.current) {
+        gameWrapperRef.current.requestFullscreen().catch((err) => {
+          console.log("Error pantalla completa:", err);
+        });
+      }
     } else {
       if (document.exitFullscreen) document.exitFullscreen();
     }
@@ -477,7 +494,10 @@ export default function GameEngine() {
 
   // === RENDERIZADO DEL JUEGO NORMAL ===
   return (
-    <div className="bg-[#1a1a1a] min-h-screen flex flex-col items-center justify-center p-2 md:p-6 selection:bg-transparent">
+    <div 
+      ref={gameWrapperRef} // 👈 ¡ESTO ES CLAVE PARA EL FULLSCREEN!
+      className={`bg-[#1a1a1a] flex flex-col items-center justify-center p-2 md:p-6 selection:bg-transparent ${isFullscreen ? "w-full h-screen" : "min-h-screen"}`}
+    >
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -868,8 +888,11 @@ export default function GameEngine() {
                 {/* Animación del Fuego en la Olla */}
                 {hotspot.id === "olla" && flags.includes("olla_encendida") && (
                   <div className="w-full h-full flex items-end justify-center pointer-events-none">
-                    {/* Ajustá el scale si el fuego se ve muy grande o chico */}
-                    <div className="olla-fuego-sprite animate-olla-fuego pixelated scale-[0.4] shrink-0" />
+                    {/* Borramos el scale-[0.4] de className y lo pasamos a style multiplicando por responsiveScale */}
+                    <div 
+                      className="olla-fuego-sprite animate-olla-fuego pixelated shrink-0"
+                      style={{ transform: `scale(${0.4 * responsiveScale})` }}
+                    />
                   </div>
                 )}
                 {/* Animación especial para el Perro Galleta */}
@@ -877,30 +900,30 @@ export default function GameEngine() {
                   <div className="w-full h-full flex items-end justify-center pointer-events-none">
                     {/* Como es un perro chico, probá con un scale-[0.6] para empezar, 
                         y ajustalo para que se vea bien frente a Heinrich */}
-                    <div className="galleta-sprite animate-galleta-idle pixelated drop-shadow-md scale-[0.4] shrink-0" />
+                    <div className="galleta-sprite animate-galleta-idle pixelated drop-shadow-md shrink-0" 
+                         style={{ transform: `scale(${0.5 * responsiveScale})` }} />
                   </div>
                 )}
                 {/* Animación especial para el Gaucho Pancho */}
                 {hotspot.id === "gaucho" && (
                   <div className="w-full h-full flex items-end justify-center pointer-events-none">
-                    {/* Al igual que el pulpero, podés jugar con el scale-[...] para ajustar su tamaño real en la escena */}
-                    <div className="pancho-sprite animate-pancho-idle pixelated drop-shadow-md scale-[0.8] shrink-0" />
+                    <div className="pancho-sprite animate-pancho-idle pixelated drop-shadow-md shrink-0" 
+                         style={{ transform: `scale(${0.7 * responsiveScale})` }} />
                   </div>
                 )}
                 {/* Animación especial para el Pulpero */}
                 {hotspot.id === "pulpero" && (
                   <div className="w-full h-full flex items-end justify-center pointer-events-none">
-                    {/* ACÁ CONTROLÁS LA ESCALA: 
-                        Cambiá el scale-[0.8] por scale-[1.2], scale-[0.5], etc., según necesites. 
-                        Le dejé el shrink-0 para que no se te corte la imagen. */}
-                    <div className="pulpero-sprite animate-pulpero-idle pixelated drop-shadow-md scale-[0.8] shrink-0" />
+                    <div className="pulpero-sprite animate-pulpero-idle pixelated drop-shadow-md shrink-0" 
+                         style={{ transform: `scale(${0.8 * responsiveScale})` }} />
                   </div>
                 )}
                 {/* Animación especial para las Palomas */}
                 {hotspot.id === "palomas" && (
                   <div className="w-full h-full flex items-end justify-center pointer-events-none">
                     {/* ¡El secreto es agregar shrink-0 al final de esta línea! */}
-                    <div className="palomas-sprite animate-palomas-idle pixelated drop-shadow-md scale-[0.2] shrink-0" />
+                    <div className="palomas-sprite animate-palomas-idle pixelated drop-shadow-md shrink-0" 
+                    style={{ transform: `scale(${0.2 * responsiveScale})` }} />
                   </div>
                 )}
                 {/* Animación especial para la Paloma Individual */}
@@ -908,10 +931,16 @@ export default function GameEngine() {
                   <div className="w-full h-full flex items-end justify-center pointer-events-none">
                     {flags.includes("paloma_escapo") ? (
                       /* Si tiene la bandera (la tocaste), sale volando */
-                      <div className="paloma-escape-sprite animate-paloma-escape pixelated drop-shadow-md scale-[0.5] shrink-0" />
+                      <div 
+                        className="paloma-escape-sprite animate-paloma-escape pixelated drop-shadow-md shrink-0"
+                        style={{ transform: `scale(${0.5 * responsiveScale})` }} 
+                      />
                     ) : (
                       /* Si no, se queda picoteando */
-                      <div className="paloma-sprite animate-paloma-idle pixelated drop-shadow-md scale-[0.5] shrink-0" />
+                      <div 
+                        className="paloma-sprite animate-paloma-idle pixelated drop-shadow-md shrink-0"
+                        style={{ transform: `scale(${0.5 * responsiveScale})` }} 
+                      />
                     )}
                   </div>
                 )}
@@ -919,17 +948,15 @@ export default function GameEngine() {
                 {hotspot.id === "gauchos" && (
                   <div className="w-full h-full flex items-end justify-center pointer-events-none">
                     {/* ACÁ ESTÁ LA MAGIA: Agregamos scale-[0.7] al final */}
-                    <div className="gauchos-sprite animate-gauchos-idle pixelated drop-shadow-md scale-[0.6] shrink-0" />
+                    <div className="gauchos-sprite animate-gauchos-idle pixelated drop-shadow-md shrink-0" 
+                    style={{ transform: `scale(${0.6 * responsiveScale})` }} />
                   </div>
                 )}
                 {/* Animación especial para la Panadera */}
                 {hotspot.id === "panadera" && (
                   <div className="w-full h-full flex items-end justify-center pointer-events-none">
-                    {/* scaleX en negativo la da vuelta, y scaleY mantiene su altura */}
-                    <div
-                      className="panadera-sprite animate-panadera-idle pixelated drop-shadow-md"
-                      style={{ transform: "scaleX(-0.6) scaleY(0.6)" }}
-                    />
+                    <div className="panadera-sprite animate-panadera-idle pixelated drop-shadow-md shrink-0"
+                         style={{ transform: `scaleX(${-0.6 * responsiveScale}) scaleY(${0.6 * responsiveScale})` }} />
                   </div>
                 )}
               </div>
@@ -946,21 +973,24 @@ export default function GameEngine() {
           )}
           {/* PERSONAJE CON ESCALA DINÁMICA Y VELOCIDAD CONSTANTE */}
           <div
-            // Borramos el duration-[800ms] de acá
             className={`absolute z-30 pointer-events-none ${!isTransitioning ? "transition-all ease-linear" : ""}`}
             style={{
               top: `${charPos.y}%`,
               left: `${charPos.x}%`,
               transform: `translate(-50%, -100%)`,
-              transitionDuration: `${walkDuration}ms`, // <-- SE LO PASAMOS DINÁMICAMENTE ACÁ
+              transitionDuration: `${walkDuration}ms`,
             }}
           >
             <div
-              // Y también borramos el duration-[800ms] de acá
               className={`heinrich-sprite pixelated facing-${charDirection} ${isWalking ? "animate-walk" : "is-idle"} ${!isTransitioning ? "transition-transform ease-linear" : ""}`}
               style={{
-                transform: `scale(${scene.getScale ? scene.getScale(charPos.y) : scene.scale || 0.6})`,
-                transitionDuration: `${walkDuration}ms`, // <-- SE LO PASAMOS DINÁMICAMENTE ACÁ
+                // 👇 ACÁ ES DONDE VA LA ESCALA MULTIPLICADA POR responsiveScale
+                transform: `scale(${
+                  (scene.getScale
+                    ? scene.getScale(charPos.y)
+                    : scene.scale || 0.6) * responsiveScale
+                })`,
+                transitionDuration: `${walkDuration}ms`,
               }}
             ></div>
           </div>
