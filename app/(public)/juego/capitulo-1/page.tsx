@@ -238,6 +238,7 @@ export default function GameEngine() {
   }, [gameState, currentSceneId]);
 
   useEffect(() => {
+    setMaskData(null);
     if (scene && scene.maskUrl) {
       const img = new Image();
       img.src = scene.maskUrl;
@@ -249,6 +250,11 @@ export default function GameEngine() {
         if (ctx) {
           ctx.drawImage(img, 0, 0);
           setMaskData(ctx.getImageData(0, 0, img.width, img.height));
+        }
+      };
+      img.onerror = () => {
+        console.error("Ojo: No se pudo cargar la máscara de colisiones:", scene.maskUrl);
+        setMaskData(null);
         }
       };
     } else {

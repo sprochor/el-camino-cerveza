@@ -103,7 +103,7 @@ export const quintaScene: Scene = {
       // Tus coordenadas originales, pero ajustadas para la imagen visual
       top: "71%",
       left: "85%",
-      width: "17%",
+      width: "15%",
       height: "30%",
       walkToX: 85,
       walkToY: 95,

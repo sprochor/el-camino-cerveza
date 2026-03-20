@@ -4,7 +4,7 @@ const OUTRO_SCRIPT = [
   {
     bg: "bg-black",
     title: "🕒 2 SEMANAS DESPUÉS...",
-    subtitle: "El gran día de la degustación ha llegado.\nHeinrich reúne a los locales en el patio de la pulpería...",
+    subtitle: "El gran día de la degustación ha llegado.\nHeinrich da a probar su cerveza a los locales...",
     text: "",
     portrait: null,
   },
