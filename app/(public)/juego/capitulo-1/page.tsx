@@ -114,9 +114,9 @@ export default function GameEngine() {
         // ✨ Sprites de animaciones interactivas (¡Para que no desaparezcan!)
         "/images/juego/galleta-mimos.png",
         "/images/juego/olla-fuego.png",
-        "/images/juego/paloma-escape.png"
-        "/images/juego/barril-vacio.png"
-        "/images/juego/edward-idle.png"
+        "/images/juego/paloma-escape.png",
+        "/images/juego/barril-vacio.png",
+        "/images/juego/edward-idle.png",
 
       ];
 
