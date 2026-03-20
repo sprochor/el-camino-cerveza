@@ -143,7 +143,7 @@ export const plazaScene: Scene = {
       left: "45%", // Ubicados a la derecha de la plaza
       width: "11%",
       height: "17%",
-      walkToX: 75,
+      walkToX: 50,
       walkToY: 75,
       onLook: () => ({
         text: "/images/juego/heinrich-surprised.png|Dos hombres con ropas de campo. Están compartiendo una bebida caliente en una especie de calabaza.",

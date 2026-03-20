@@ -14,7 +14,7 @@ export const puertoScene: Scene = {
   getScale: (y) => {
     const minY = 60; // El punto más lejano en el fondo
     const maxY = 100; // El punto más cercano a la pantalla
-    const minScale = 0.45; // Tamaño cuando está lejos
+    const minScale = 0.35; // Tamaño cuando está lejos
     const maxScale = 0.8; // Tamaño cuando está cerca
 
     // Interpolación lineal (Calcula el tamaño exacto según la posición)

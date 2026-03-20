@@ -67,12 +67,18 @@ export default function GameHUD({
           >
             Pantalla [{isFullscreen ? "><" : "[]"}]
           </button>
-          <button
-            onClick={() => setIsDebugMode(!isDebugMode)}
-            className={`font-retro text-sm md:text-lg hover:text-[#55ff55] ${isDebugMode ? "text-[#55ff55]" : "text-white"}`}
-          >
-            Debug [{isDebugMode ? "ON" : "OFF"}]
-          </button>
+
+          {/* 👇 MAGIA: SOLO SE MUESTRA EN LOCALHOST 👇 */}
+          {process.env.NODE_ENV === 'development' && (
+            <button
+              onClick={() => setIsDebugMode(!isDebugMode)}
+              className={`font-retro text-sm md:text-lg hover:text-[#55ff55] ${isDebugMode ? "text-[#55ff55]" : "text-white"}`}
+            >
+              Debug [{isDebugMode ? "ON" : "OFF"}]
+            </button>
+          )}
+          {/* 👆 FIN DE LA MAGIA 👆 */}
+
           <button
             onClick={resetGame}
             className="font-retro text-sm md:text-lg hover:text-[#ffff55]"
