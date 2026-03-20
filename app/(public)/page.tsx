@@ -48,7 +48,7 @@ export default function HomePage() {
         
         {/* 1. ENCABEZADO (HERO) LIMPIO */}
         <section className="relative rounded-3xl overflow-hidden shadow-md">
-          <img src="/hero-cerveza.jpg" className="absolute inset-0 w-full h-full object-cover" alt="Mundo Cervecero" />
+          <img src="/hero-cerveza.webp" className="absolute inset-0 w-full h-full object-cover" alt="Mundo Cervecero" />
           <div className="absolute inset-0 bg-black/60"></div>
 
           <div className="relative text-center py-20 md:py-32 px-4 md:px-6 text-white max-w-3xl mx-auto">

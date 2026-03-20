@@ -54,7 +54,7 @@ export default function NosotrosPage() {
         <div className="md:w-1/2 flex justify-center md:justify-end">
           <div className="relative w-72 h-72 md:w-[450px] md:h-[450px] bg-white rounded-full shadow-2xl flex items-center justify-center border-8 border-amber-100 group overflow-hidden">
             <img
-              src="/logo-cerveza.png"
+              src="/logo-cerveza.webp"
               alt="Logo Comunidad Cervecera"
               className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
             />

@@ -98,7 +98,7 @@ const NavLinks = ({ mobile = false }: { mobile?: boolean }) => {
         {/* LOGO Y NOMBRE */}
         <Link href="/" className="flex items-center gap-3 md:gap-4 hover:opacity-90 transition z-50">
           <Image
-            src="/logo-cerveza.png"
+            src="/logo-cerveza.webp"
             alt="Logo El Camino de la Cerveza"
             width={56}
             height={56}
