@@ -16,14 +16,14 @@ export default function Footer() {
               <span className="text-3xl">🍻</span> El Camino
             </Link>
             <p className="text-sm text-stone-400 mt-4 max-w-sm leading-relaxed">
-              Descubriendo las mejores fábricas artesanales, estilos y etiquetas de Argentina. Tu guía definitiva para la cultura cervecera.
+              Tu guía definitiva para la cultura cervecera.
             </p>
           </div>
 
           {/* COLUMNA 2: Navegación Sincronizada con el Navbar */}
           <div className="flex flex-col items-center md:items-start">
             <h3 className="text-white font-bold mb-4 uppercase tracking-widest text-sm border-b border-stone-800 pb-2 w-full max-w-[150px] mx-auto md:mx-0">
-              Ruta de Pinta
+              Ruta de la Pinta
             </h3>
             <ul className="flex flex-col gap-3 text-sm font-medium">
               <li>
@@ -75,7 +75,7 @@ export default function Footer() {
             </div>
 
             <p className="text-sm text-stone-400">
-              ¿Tenés una cervecería? Escribinos a:<br />
+              Escribinos a:<br />
               <a href="mailto:contacto@elcaminodelacerveza.com" className="text-white hover:text-amber-500 font-bold transition break-all mt-1 inline-block">
                 contacto@elcaminodelacerveza.com
               </a>
@@ -89,9 +89,11 @@ export default function Footer() {
           <p>
             &copy; {currentYear} El Camino de la Cerveza. Creado con malta, lúpulo y código.
           </p>
+          
+          {/* 👇 ACÁ PUSIMOS LOS LINKS REALES 👇 */}
           <div className="flex gap-6 font-medium">
-            <span className="hover:text-white transition cursor-pointer">Políticas de Privacidad</span>
-            <span className="hover:text-white transition cursor-pointer">Términos y Condiciones</span>
+            <Link href="/privacidad" className="hover:text-white transition cursor-pointer">Políticas de Privacidad</Link>
+            <Link href="/terminos" className="hover:text-white transition cursor-pointer">Términos y Condiciones</Link>
           </div>
         </div>
 

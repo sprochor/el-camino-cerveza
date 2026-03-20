@@ -122,8 +122,8 @@ export default function HomePage() {
             </div>
             
             <div className="shrink-0 z-30">
-              <Link href="/juegos" className="inline-block bg-amber-500 hover:bg-amber-400 text-stone-900 font-black font-mono px-6 py-4 rounded-none border-b-4 border-r-4 border-amber-700 hover:border-amber-600 hover:translate-y-1 hover:translate-x-1 transition-all">
-                &gt; EXPLORAR EL JUEGO_
+              <Link href="/juego/" className="inline-block bg-amber-500 hover:bg-amber-400 text-stone-900 font-black font-mono px-6 py-4 rounded-none border-b-4 border-r-4 border-amber-700 hover:border-amber-600 hover:translate-y-1 hover:translate-x-1 transition-all">
+                &gt; EXPLORAR EL JUEGO
               </Link>
             </div>
           </div>

@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 // --- LÓGICA DE NIVEL CERVECERO ÚNICO ---
 const NIVELES_CERVECERO = [
-  { id: 1, nombre: "Aprendiz de Pinta", min: 0, max: 10, desc: "Iniciando la ruta.", icono: "🍺", color: "bg-amber-50 text-amber-800", borderColor: "border-amber-200" },
+  { id: 1, nombre: "Aprendiz de la Pinta", min: 0, max: 10, desc: "Iniciando la ruta.", icono: "🍺", color: "bg-amber-50 text-amber-800", borderColor: "border-amber-200" },
   { id: 2, nombre: "Catador Curioso", min: 11, max: 50, desc: "Descubriendo estilos.", icono: "🍻", color: "bg-orange-50 text-orange-800", borderColor: "border-orange-200" },
   { id: 3, nombre: "Amante del Lúpulo", min: 51, max: 150, desc: "Paladar entrenado.", icono: "🌿", color: "bg-green-50 text-green-800", borderColor: "border-green-200" },
   { id: 4, nombre: "Juez Cervecero", min: 151, max: 400, desc: "Reconoce defectos y virtudes.", icono: "⚖️", color: "bg-blue-50 text-blue-800", borderColor: "border-blue-200" },
@@ -35,6 +35,7 @@ export default function MiCaminoPage() {
   const [user, setUser] = useState<User | null>(null)
   const [displayName, setDisplayName] = useState("")
   const [avatarUrl, setAvatarUrl] = useState("") 
+  const [logros, setLogros] = useState<string[]>([]) // 👈 NUEVO: Estado para los logros
   const [saving, setSaving] = useState(false)
   const [uploadingAvatar, setUploadingAvatar] = useState(false) 
 
@@ -53,16 +54,17 @@ export default function MiCaminoPage() {
       setUser(session.user)
       const userId = session.user.id
 
-      // 1. Traer nombre y foto de perfil
+      // 1. Traer nombre, foto y LOGROS
       const { data: profile } = await supabase
         .from("profiles")
-        .select("full_name, avatar_url")
+        .select("full_name, avatar_url, logros") // 👈 Agregamos 'logros'
         .eq("id", userId)
         .single();
 
       if (profile) { 
         setDisplayName(profile.full_name || ""); 
         setAvatarUrl(profile.avatar_url || ""); 
+        setLogros(profile.logros || []); // 👈 Guardamos los logros
       }
 
       // 2. Traer reseñas del usuario
@@ -130,7 +132,6 @@ export default function MiCaminoPage() {
 
       if (error) throw error;
       alert("¡Perfil actualizado con éxito!");
-      window.location.reload();
     } catch (error: any) {
       alert("Error al guardar: " + error.message);
     } finally {
@@ -150,6 +151,9 @@ export default function MiCaminoPage() {
 
   const progreso = obtenerNivel(resenas.length, NIVELES_CERVECERO);
 
+  // 👈 Verificamos si el usuario tiene el logro
+  const tieneCap1 = logros.includes("heinrich_cap1");
+
   return (
     <div className="max-w-7xl mx-auto py-10 px-4 space-y-12">
       <header className="border-b border-gray-200 pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -160,6 +164,7 @@ export default function MiCaminoPage() {
       </header>
 
       {/* --- SECCIÓN SUPERIOR: NIVEL Y PERFIL --- */}
+      {/* ... (Todo el bloque de NIVEL Y PERFIL queda exactamente igual que en tu código) ... */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
         {/* TARJETA 1: Gamificación Única */}
@@ -232,6 +237,7 @@ export default function MiCaminoPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-6 border-t border-gray-200">
         
         {/* COLUMNA 1 y 2: RESEÑAS */}
+        {/* ... (Todo el bloque de RESEÑAS queda exactamente igual) ... */}
         <div className="lg:col-span-2">
           <h2 className="text-2xl font-black text-stone-900 mb-6 flex items-center gap-2">📝 Mis Veredictos</h2>
           {resenas.length === 0 ? (
@@ -289,14 +295,17 @@ export default function MiCaminoPage() {
               </h3>
               
               <div className="space-y-4">
-                {/* Medalla 1: Bloqueada */}
-                <div className="flex items-center gap-4 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300">
-                  <div className="w-14 h-14 bg-stone-800 rounded-full border-2 border-dashed border-stone-500 flex items-center justify-center text-2xl shrink-0">
-                    🔒
+                
+                {/* 👇 MEDALLA 1: AHORA RESPONDE A LA BASE DE DATOS 👇 */}
+                <div className={`flex items-center gap-4 transition duration-300 ${tieneCap1 ? 'opacity-100' : 'opacity-50 grayscale hover:grayscale-0 hover:opacity-100'}`}>
+                  <div className={`w-14 h-14 rounded-full border-2 flex items-center justify-center text-2xl shrink-0 ${tieneCap1 ? 'bg-amber-100 border-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]' : 'bg-stone-800 border-dashed border-stone-500'}`}>
+                    {tieneCap1 ? '🍺' : '🔒'}
                   </div>
                   <div>
-                    <h4 className="text-stone-300 font-bold text-sm">El Desembarco</h4>
-                    <p className="text-stone-500 text-xs">Completar Capítulo 1.</p>
+                    <h4 className={`${tieneCap1 ? 'text-amber-400' : 'text-stone-300'} font-bold text-sm`}>El barril equivocado</h4>
+                    <p className={`${tieneCap1 ? 'text-amber-200/70' : 'text-stone-500'} text-xs`}>
+                      {tieneCap1 ? '¡Completaste el Capítulo 1!' : 'Completar Capítulo 1.'}
+                    </p>
                   </div>
                 </div>
 
@@ -306,7 +315,7 @@ export default function MiCaminoPage() {
                     🔒
                   </div>
                   <div>
-                    <h4 className="text-stone-300 font-bold text-sm">Receta Perfecta</h4>
+                    <h4 className="text-stone-300 font-bold text-sm">Proximamente</h4>
                     <p className="text-stone-500 text-xs">Completar Capítulo 2.</p>
                   </div>
                 </div>
@@ -317,14 +326,14 @@ export default function MiCaminoPage() {
                     🔒
                   </div>
                   <div>
-                    <h4 className="text-stone-300 font-bold text-sm">Rey de la Pulpería</h4>
+                    <h4 className="text-stone-300 font-bold text-sm">Proximamente</h4>
                     <p className="text-stone-500 text-xs">Completar Capítulo 3.</p>
                   </div>
                 </div>
               </div>
 
               <div className="mt-6 pt-4 border-t border-stone-800 text-center">
-                <Link href="/juegos" className="text-amber-600 hover:text-amber-400 font-mono text-xs font-bold tracking-widest transition">
+                <Link href="/juego" className="text-amber-600 hover:text-amber-400 font-mono text-xs font-bold tracking-widest transition">
                   [ IR AL JUEGO ]
                 </Link>
               </div>

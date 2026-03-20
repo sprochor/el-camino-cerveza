@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import Comentarios from "@/components/Comentarios"; // 👈 NUEVO: Importamos el componente
 
 export default function NotaDetailPage() {
   const { id } = useParams();
@@ -117,7 +118,6 @@ export default function NotaDetailPage() {
         />
 
         {/* CSS PERSONALIZADO PARA EL HTML INYECTADO */}
-        {/* Este bloque es nuestro "escudo" contra estilos rotos al copiar y pegar */}
         <style
           dangerouslySetInnerHTML={{
             __html: `
@@ -165,6 +165,10 @@ export default function NotaDetailPage() {
             </button>
           </div>
         </footer>
+
+        {/* 👇 ACÁ INYECTAMOS LA CAJA DE COMENTARIOS 👇 */}
+        <Comentarios notaId={id as string} />
+        
       </article>
     </div>
   );
