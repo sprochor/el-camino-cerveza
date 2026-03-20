@@ -161,7 +161,7 @@ export const plazaScene: Scene = {
                 text: "Buenas tardes, señores. ¿Qué es esa infusión que beben con tanta devoción?",
               },
               {
-                portrait: "/images/juego/Gauchos-neutral.png",
+                portrait: "/images/juego/gauchos-neutral.png",
                 text: "Es mate, amigazo. La sangre de esta tierra. ¿Gusta un amargo?",
               },
               {
@@ -169,7 +169,7 @@ export const plazaScene: Scene = {
                 text: "Oh, danke. (Heinrich da un sorbo)... ¡Es terriblemente amargo y caliente! Sabe a pasto hervido.",
               },
               {
-                portrait: "/images/juego/Gauchos-neutral.png",
+                portrait: "/images/juego/gauchos-neutral.png",
                 text: "(Se ríen a carcajadas) ¡Falta costumbre, gringo! Ya le vas a agarrar el gustito.",
               },
             ],
