@@ -585,26 +585,28 @@ export default function GameEngine() {
           isFullscreen ? "w-full h-[100dvh] p-0 md:p-2" : "min-h-[100dvh] p-2 md:p-6"
         }`}
       >
-        {/* 👇 OVERLAY ESTRICTO PARA PC 👇 */}
-      <div className="fixed inset-0 z-[9999] bg-[#1a1a1a] flex-col items-center justify-center text-center p-6 flex lg:hidden">
-        <div className="animate-bounce mb-8">
-          <span className="text-8xl">🖥️</span>
-        </div>
-        <h2 className="text-[#ffaa00] font-retro text-4xl md:text-5xl mb-6 drop-shadow-[0_4px_4px_rgba(0,0,0,1)]">
-          Experiencia de PC
-        </h2>
-        <p className="text-white font-retro text-xl md:text-2xl mb-8 leading-relaxed max-w-lg mx-auto">
-          Esta aventura gráfica está diseñada con la interfaz clásica de los años 90. Las pantallas de los celulares no tienen el espacio suficiente para mostrar los comandos correctamente.
-        </p>
-        <div className="bg-black border-4 border-[#555] p-6 max-w-sm mx-auto shadow-2xl mb-8">
-          <p className="text-[#55ff55] font-retro text-xl leading-relaxed">
-            💡 Consejo del Maestro:<br/><br/>
-            ¡Guardá el enlace y entrá desde tu computadora para jugar con pantalla completa, música y todos los detalles!
+        {/* 👇 OVERLAY ESTRICTO PARA PC (TAMAÑO CORREGIDO) 👇 */}
+      <div className="fixed inset-0 z-[9999] bg-[#1a1a1a] flex-col items-center justify-start text-center p-4 flex lg:hidden overflow-y-auto">
+        <div className="my-auto flex flex-col items-center justify-center max-w-sm mx-auto py-8">
+          <div className="animate-bounce mb-4">
+            <span className="text-6xl">🖥️</span>
+          </div>
+          <h2 className="text-[#ffaa00] font-retro text-3xl mb-4 drop-shadow-[0_2px_2px_rgba(0,0,0,1)] px-2">
+            Experiencia de PC
+          </h2>
+          <p className="text-white font-retro text-lg mb-6 leading-tight px-2">
+            Esta aventura está diseñada con la interfaz clásica de los años 90. Las pantallas de los celulares no tienen el espacio suficiente.
           </p>
+          <div className="bg-black border-2 border-[#555] p-4 w-full shadow-xl mb-6">
+            <p className="text-[#55ff55] font-retro text-base leading-snug">
+              💡 Consejo del Maestro:<br/><br/>
+              ¡Guardá el enlace y entrá desde tu compu para jugar con pantalla completa y todos los detalles!
+            </p>
+          </div>
+          <Link href="/juego" className="text-amber-500 font-retro text-xl hover:text-white transition p-2">
+            [ ← Volver al menú ]
+          </Link>
         </div>
-        <Link href="/juego" className="text-amber-500 font-retro text-2xl hover:text-white transition">
-          [ ← Volver al menú ]
-        </Link>
       </div>
       {/* 👆 FIN DEL OVERLAY 👆 */}
       <div className="fixed inset-0 pointer-events-none z-50 mix-blend-overlay opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjMDAwIiBmaWxsLW9wYWNpdHk9IjAuMSIvPjwvc3ZnPg==')]"></div>
