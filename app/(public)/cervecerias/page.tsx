@@ -58,7 +58,7 @@ export default function CerveceriasPage() {
             Guía de <span className="text-amber-600">Cervecerías</span> 🏭
           </h1>
           <p className="text-lg text-stone-600 max-w-2xl mx-auto">
-            Descubrí las fábricas artesanales detrás de tus pintas favoritas.
+            Descubrí las fábricas detrás de tus pintas favoritas.
             Conocé su historia, de dónde vienen y qué cervezas producen.
           </p>
         </div>

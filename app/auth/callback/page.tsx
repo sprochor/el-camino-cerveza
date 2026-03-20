@@ -1,36 +1,57 @@
-'use client'
+"use client";
 
-import { useEffect } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { supabase } from '@/lib/supabaseClient'
+import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { supabase } from "@/lib/supabaseClient";
+import { Suspense } from "react";
 
-export default function AuthCallbackPage() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
+// 1. Ponemos toda tu lógica de login en este componente interno
+function CallbackLogic() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    // Esta función se ejecuta apenas carga la página
-    const finalizarLogin = async () => {
-      // 1. Verificamos si el login trajo instrucciones de hacia dónde ir
-      // Si no hay parámetro 'next', lo mandamos al inicio ('/')
-      const next = searchParams.get('next') || '/'
+    const code = searchParams.get("code");
+    const next = searchParams.get("next") ?? "/";
 
-      // 2. Verificamos que Supabase haya procesado el enlace
-      await supabase.auth.getSession()
-      
-      // 3. Redirigimos al usuario exactamente a donde quería ir
-      router.push(next)
+    if (code) {
+      const exchangeCode = async () => {
+        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        if (!error) {
+          router.push(next);
+          router.refresh();
+        } else {
+          router.push("/login?error=true");
+        }
+      };
+      exchangeCode();
+    } else {
+      // Si el usuario llega por Magic Link estándar y ya tiene sesión
+      router.push(next);
+      router.refresh();
     }
-
-    finalizarLogin()
-  }, [router, searchParams])
+  }, [router, searchParams]);
 
   return (
-    <div className="flex h-screen w-full items-center justify-center bg-stone-50">
-      <div className="text-center">
-        <h2 className="text-3xl font-black text-amber-600 mb-2 tracking-tight">Entrando al Club... 🍺</h2>
-        <p className="text-stone-500 font-medium">Estamos verificando tu cuenta.</p>
+    <div className="min-h-screen flex items-center justify-center bg-stone-50">
+      <div className="text-amber-700 text-xl font-bold animate-pulse">
+        Verificando tus credenciales... 🍻
       </div>
     </div>
-  )
+  );
+}
+
+// 2. El componente principal que Vercel va a construir, envuelto en Suspense
+export default function AuthCallbackPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-stone-50">
+        <div className="text-amber-700 text-xl font-bold animate-pulse">
+          Cargando... 🍺
+        </div>
+      </div>
+    }>
+      <CallbackLogic />
+    </Suspense>
+  );
 }
