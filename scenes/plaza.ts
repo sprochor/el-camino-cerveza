@@ -14,7 +14,7 @@ export const plazaScene: Scene = {
   getScale: (y) => {
     const minY = 50; // El punto más lejano cerca del Cabildo/Recova
     const maxY = 100; // Primer plano
-    const minScale = 0.45;
+    const minScale = 0.30;
     const maxScale = 0.8;
 
     let dynamicScale =
@@ -36,12 +36,13 @@ export const plazaScene: Scene = {
     {
       id: "salida_puerto",
       name: "Volver al Puerto",
+      isExit: true,
       top: "31%",
       left: "14%",
       width: "9%",
       height: "26%",
       walkToX: 9,
-      walkToY: 60, // Ajustado para que camine hacia la salida
+      walkToY: 40, // Ajustado para que camine hacia la salida
       onLook: () => ({
         text: "/images/juego/heinrich-neutral.png|El camino embarrado que baja hacia el puerto.",
       }),
@@ -69,112 +70,69 @@ export const plazaScene: Scene = {
       }),
 
       onTalk: (inventory, flags) => {
-        const tieneLevadura = inventory.some((i) => i.id === "levadura");
+        const tieneLevadura = inventory.some((i) => i?.id === "masa-madre");
 
-        // 🟢 YA TIENE LEVADURA
+        // 🟢 1. YA TIENE LEVADURA (Bloque final)
         if (tieneLevadura) {
           return {
             text: "/images/juego/panadera-neutral.png|Más le vale que esa cerveza sea mejor que su acento.",
           };
         }
 
-        // 🔴 NO TIENE MOSTO
+        // 🔴 2. AÚN NO TIENE MOSTO LISTO
         if (!flags.includes("mosto_listo")) {
           if (!flags.includes("panadera_explico")) {
             return {
               setFlag: "panadera_explico",
               dialogue: [
-                {
-                  portrait: "/images/juego/panadera-neutral.png",
-                  text: "¿Qué quiere, extranjero?",
-                },
-                {
-                  portrait: "/images/juego/heinrich-neutral.png",
-                  text: "Hallo… estoy buscando levadura.",
-                },
-                {
-                  portrait: "/images/juego/panadera-small-mouth.png",
-                  text: "¿Para hacer pan?",
-                },
-                {
-                  portrait: "/images/juego/heinrich-happy.png",
-                  text: "Para hacer cerveza.",
-                },
-                {
-                  portrait: "/images/juego/panadera-annoyed.png",
-                  text: "¿Cerveza? Eso no es cosa seria.",
-                },
-                {
-                  portrait: "/images/juego/panadera-annoyed.png",
-                  text: "Primero consiga algo que fermentar. Después hablamos.",
-                },
+                { portrait: "/images/juego/panadera-neutral.png", text: "¿Qué quiere, extranjero?" },
+                { portrait: "/images/juego/heinrich-neutral.png", text: "Hallo… estoy buscando algo que haga fermentar." },
+                { portrait: "/images/juego/panadera-small-mouth.png", text: "¿Para hacer pan?" },
+                { portrait: "/images/juego/heinrich-happy.png", text: "Para hacer cerveza." },
+                { portrait: "/images/juego/panadera-annoyed.png", text: "¿Cerveza? ¿Y ya la tiene?" },
+                { portrait: "/images/juego/heinrich-speaking-small.png", text: "Nein… estoy en eso.." },
+                { portrait: "/images/juego/panadera-annoyed.png", text: "Primero consiga algo que fermentar. Después hablamos." },
               ],
             };
           }
 
+          // Si ya te explicó pero seguís sin mosto
           return {
-            text: "/images/juego/heinrich-neutral.png|Mejor termino la cerveza antes de volver a hablarle.",
+            text: "/images/juego/heinrich-neutral.png|Mejor preparo el mosto antes de volver a insistirle.",
           };
         }
 
-        // 🟡 TIENE MOSTO → NEGOCIACIÓN
-        if (!flags.includes("panadera_acuerdo")) {
+        // 🟡 3. TIENE EL MOSTO LISTO (Y YA LE HABÍA HABLADO ANTES)
+        if (flags.includes("panadera_explico")) {
           return {
-            setFlag: "panadera_acuerdo",
             dialogue: [
-              {
-                portrait: "/images/juego/panadera-neutral.png",
-                text: "¿Otra vez usted?",
-              },
-              {
-                portrait: "/images/juego/heinrich-happy.png",
-                text: "Ahora sí. Tengo algo listo para fermentar.",
-              },
-              {
-                portrait: "/images/juego/panadera-small-mouth.png",
-                text: "¿Eso es su famosa cerveza?",
-              },
-              {
-                portrait: "/images/juego/heinrich-neutral.png",
-                text: "Todavía no… pero lo será.",
-              },
-              {
-                portrait: "/images/juego/panadera-annoyed.png",
-                text: "No regalo levadura para experimentos raros.",
-              },
-              {
-                portrait: "/images/juego/heinrich-happy.png",
-                text: "Le prometo que será la mejor cerveza que haya probado.",
-              },
-              {
-                portrait: "/images/juego/panadera-excited.png",
-                text: "¿Ah, sí?",
-              },
-              {
-                portrait: "/images/juego/panadera-smiling.png",
-                text: "Bueno… si me guarda un vaso… trato hecho.",
-              },
+              { portrait: "/images/juego/panadera-neutral.png", text: "¿Otra vez usted?" },
+              { portrait: "/images/juego/heinrich-happy.png", text: "Ahora sí. Tengo el mosto dulce listo para fermentar." },
+              { portrait: "/images/juego/panadera-small-mouth.png", text: "¿Eso es su famosa cerveza?" },
+              { portrait: "/images/juego/heinrich-neutral.png", text: "Todavía no… pero lo será." },
+              { portrait: "/images/juego/panadera-annoyed.png", text: "No regalo masa madre para experimentos raros." },
+              { portrait: "/images/juego/heinrich-happy.png", text: "Le prometo que será la mejor cerveza que haya probado." },
+              { portrait: "/images/juego/panadera-excited.png", text: "¿Ah, sí? Bueno… si me guarda un vaso… trato hecho." },
+              { portrait: "/images/juego/panadera-neutral.png", text: "Aquí tiene la masa madre. Y si eso explota… no vuelva." },
             ],
+            addItem: { id: "masa-madre", name: "masa madre", icon: "🍞", imageUrl: "/images/juego/items/masa-madre.png"},
           };
         }
 
-        // 🟢 ENTREGA FINAL
+        // 🟠 4. TIENE EL MOSTO LISTO (PERO NUNCA LE HABÍA HABLADO)
         return {
+          setFlag: "panadera_explico", // Se la seteamos para que ya quede registrada
           dialogue: [
-            {
-              portrait: "/images/juego/panadera-small-mouth.png",
-              text: "Más le vale cumplir, extranjero.",
-            },
-            {
-              portrait: "/images/juego/panadera-neutral.png",
-              text: "Aquí tiene la levadura.",
-            },
-            {
-              portrait: "/images/juego/panadera-annoyed.png",
-              text: "Y si eso explota… no vuelva.",
-            },
+            { portrait: "/images/juego/panadera-neutral.png", text: "¿Qué se le ofrece, extranjero? Tengo el mejor pan de la Recova." },
+            { portrait: "/images/juego/heinrich-happy.png", text: "No busco pan, señora. Busco el secreto que lo hace crecer. Masa madre." },
+            { portrait: "/images/juego/panadera-small-mouth.png", text: "¿Y para qué la quiere si no es para hornear?" },
+            { portrait: "/images/juego/heinrich-neutral.png", text: "Soy maestro cervecero. Tengo una olla llena de mosto esperando a ser fermentado." },
+            { portrait: "/images/juego/panadera-annoyed.png", text: "No regalo masa madre para experimentos raros, gringo." },
+            { portrait: "/images/juego/heinrich-happy.png", text: "Le prometo que si me ayuda, probará la mejor cerveza de su vida." },
+            { portrait: "/images/juego/panadera-excited.png", text: "¿Ah, sí? Bueno… si me guarda un vaso… trato hecho." },
+            { portrait: "/images/juego/panadera-neutral.png", text: "Aquí tiene la masa madre. Y si eso explota… no vuelva." },
           ],
-          addItem: { id: "levadura", name: "Levadura Fresca", icon: "🍞" },
+          addItem: { id: "masa-madre", name: "masa madre", icon: "🍞", imageUrl: "/images/juego/items/masa-madre.png"},
         };
       },
     },
@@ -325,7 +283,7 @@ export const plazaScene: Scene = {
       left: "28%",
       width: "13%",
       height: "15%",
-      walkToX: 50,
+      walkToX: 40,
       walkToY: 80,
 
       onLook: () => ({
@@ -350,7 +308,7 @@ export const plazaScene: Scene = {
 
         return {
           text: "/images/juego/heinrich-happy.png|Lleno el balde con agua limpia de la fuente.",
-          addItem: { id: "balde_agua", name: "Balde con Agua", icon: "🪣" },
+          addItem: { id: "balde_agua", name: "Balde con Agua", icon: "🪣" , imageUrl: "/images/juego/items/balde-lleno.png"  },
           removeItem: "balde_vacio",
         };
       },
@@ -362,6 +320,7 @@ export const plazaScene: Scene = {
     {
       id: "entrada_pulperia",
       name: "La Pulpería",
+      isExit: true,
       top: "50%",
       left: "0%",
       width: "5%",

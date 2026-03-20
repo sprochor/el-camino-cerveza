@@ -83,29 +83,36 @@ export const puertoScene: Scene = {
       height: "30%",
       walkToX: 70,
       walkToY: 100,
+
       onLook: (inventory, flags) => {
         if (flags.includes("conocio_whitmore")) {
+          if (flags.includes("sospecha_polvora")) {
+            return {
+              text: "/images/juego/heinrich-concerned.png|Ese inglés es peligroso. Y esos barriles… no son cerveza.",
+            };
+          }
           return {
-            text: "/images/juego/heinrich-neutral.png|Un espía inglés en el puerto... y yo preocupado por hacer cerveza.",
+            text: "/images/juego/heinrich-neutral.png|Edward Whitmore. Comerciante… o algo peor.",
           };
         }
         return {
-          text: "/images/juego/heinrich-neutral.png|Un hombre elegante. Su traje oscuro desentona con el barro del puerto.",
+          text: "/images/juego/heinrich-neutral.png|Un hombre elegante. Demasiado elegante para este puerto.",
         };
       },
+
       onInteract: () => ({
-        text: "/images/juego/heinrich-concerned.png|Mejor mantengo mi distancia.",
+        text: "/images/juego/heinrich-concerned.png|No creo que tocar a un inglés bien vestido termine bien.",
       }),
+
       onTalk: (inventory, flags) => {
-        // Primera conversación
+        // 🟢 PRIMER ENCUENTRO
         if (!flags.includes("conocio_whitmore")) {
           return {
             setFlag: "conocio_whitmore",
             dialogue: [
-              // <-- Corregido: dialogue
               {
-                portrait: "/images/juego/edward-neutral.png", // <-- Corregido: portrait
-                text: "Adler… no esperaba verte con vida en Buenos Aires.", // <-- Corregido: text
+                portrait: "/images/juego/edward-neutral.png",
+                text: "Adler… no esperaba verte con vida en Buenos Aires.",
               },
               {
                 portrait: "/images/juego/heinrich-surprised.png",
@@ -113,7 +120,7 @@ export const puertoScene: Scene = {
               },
               {
                 portrait: "/images/juego/edward-smirk.png",
-                text: "Digamos que nuestros intereses comerciales colisionaron en alta mar.",
+                text: "Digamos que nuestros intereses comerciales… colisionaron en alta mar.",
               },
               {
                 portrait: "/images/juego/heinrich-angry.png",
@@ -121,33 +128,79 @@ export const puertoScene: Scene = {
               },
               {
                 portrait: "/images/juego/edward-neutral.png",
-                text: "Era necesario aligerar la carga para escapar de la tormenta.",
+                text: "Era necesario aligerar la carga. Supervivencia básica.",
+              },
+              {
+                portrait: "/images/juego/heinrich-angry.png",
+                text: "Para usted tal vez. Para mí era mi trabajo.",
               },
               {
                 portrait: "/images/juego/edward-smirk.png",
-                text: "Después de todo, yo solo comercio cerveza porter inglesa.",
+                text: "El mundo recompensa a quienes saben adaptarse, Adler.",
+              },
+              {
+                portrait: "/images/juego/heinrich-neutral.png",
+                text: "Yo prefiero perfeccionar las cosas. Como la cerveza.",
+              },
+              {
+                portrait: "/images/juego/edward-smirk.png",
+                text: "¿Cerveza? Yo solo comercio porter inglesa.",
               },
               {
                 portrait: "/images/juego/heinrich-surprised.png",
-                text: "¿Porter? ¿Cerveza negra? No. Las cervezas deben ser rubias.",
+                text: "¿Porter? ¿Cerveza negra? Nein… las cervezas deben ser rubias.",
               },
               {
                 portrait: "/images/juego/edward-smirk.png",
                 text: "El mercado parece pensar lo contrario.",
               },
+              {
+                portrait: "/images/juego/heinrich-happy.png",
+                text: "Entonces el mercado necesita educación.",
+              },
+              {
+                portrait: "/images/juego/edward-neutral.png",
+                text: "Ten cuidado, Adler… Buenos Aires no es Baviera.",
+              },
             ],
           };
         }
 
-        // Diálogos posteriores (si descubrió la pólvora cambia el diálogo)
+        // 🔴 SI DESCUBRE LA PÓLVORA → NO HABLAR MÁS
         if (flags.includes("sospecha_polvora")) {
           return {
-            text: "/images/juego/edward-thinking.png|¿Curioso por mis barriles, Adler? Te sugiero que no fumes cerca de ellos.",
+            text: "/images/juego/heinrich-concerned.png|No debería llamar su atención otra vez. Ese hombre es peligroso.",
           };
         }
 
+        // 🟡 SEGUNDA INTERACCIÓN (antes de pólvora)
+        if (!flags.includes("hablo_whitmore_extra")) {
+          return {
+            setFlag: "hablo_whitmore_extra",
+            dialogue: [
+              {
+                portrait: "/images/juego/heinrich-neutral.png",
+                text: "¿Siempre arruina el negocio de otros?",
+              },
+              {
+                portrait: "/images/juego/edward-smirk.png",
+                text: "Solo cuando es conveniente.",
+              },
+              {
+                portrait: "/images/juego/heinrich-annoyed.png",
+                text: "Algún día probará una cerveza de verdad.",
+              },
+              {
+                portrait: "/images/juego/edward-smirk.png",
+                text: "Y tú, Adler… algún día entenderás el poder.",
+              },
+            ],
+          };
+        }
+
+        // 🔁 DEFAULT (antes de pólvora)
         return {
-          text: "/images/juego/edward-smirk.png|Disfruta el poco tiempo que te queda en este puerto, cervecero.",
+          text: "/images/juego/edward-smirk.png|Disfruta tu pequeño proyecto, cervecero.",
         };
       },
     },
@@ -270,17 +323,27 @@ export const puertoScene: Scene = {
         text: "/images/juego/heinrich-neutral.png|Unos pequeños barriles de madera vacío. Perfecto para fermentar mi primera tanda.",
       }),
       onInteract: (inventory, flags) => {
-        // Chequeamos si la bandera "necesita_fermentar" NO existe
-        if (!flags.includes("necesita_fermentar")) {
+        // 1. Si NO está enfriando y TAMPOCO está listo
+        if (!flags.includes("mosto_enfriando") && !flags.includes("necesita_fermentar")) {
           return {
-            text: "/images/juego/heinrich-concerned.png|Mejor no andar cargando un barril inútilmente. Solo lo llevaré cuando tenga algo que fermentar.",
+            text: "/images/juego/heinrich-concerned.png|Mejor no andar cargando un barril inútilmente. Solo lo llevaré cuando tenga mosto cocinándose o listo.",
           };
         }
 
-        // Si la bandera SÍ existe, entonces se lo lleva
+        // 2. Si el mosto se estaba enfriando, aprovechamos el viaje para darlo por terminado
+        if (flags.includes("mosto_enfriando") && !flags.includes("mosto_listo")) {
+          return {
+            text: "/images/juego/heinrich-happy.png|¡Me llevo uno! Con la caminata hasta acá y la vuelta, el mosto de la olla ya debería estar perfectamente frío.",
+            addItem: { id: "barril_vacio", name: "Barril Vacío", icon: "🛢️" , imageUrl: "/images/juego/items/barril.png" },
+            setFlag: "mosto_listo,necesita_fermentar" // 👈 ¡La magia del tiempo acá!
+          };
+        }
+
+        // 3. Si por casualidad el jugador ya lo había dejado enfriar del todo antes de venir
         return {
           text: "/images/juego/heinrich-happy.png|¡Me llevo uno! Esto es exactamente lo que necesito para dejar fermentando mi cerveza.",
-          addItem: { id: "barril_vacio", name: "Barril Vacío", icon: "🛢️" },
+          addItem: { id: "barril_vacio", name: "Barril Vacío", icon: "🛢️" , imageUrl: "/images/juego/items/barril.png" },
+          setFlag: "necesita_fermentar"
         };
       },
       onTalk: () => ({
@@ -290,6 +353,7 @@ export const puertoScene: Scene = {
     {
       id: "salida_plaza",
       name: "la Plaza Mayor",
+      isExit: true,
       top: "35%",
       left: "30%",
       width: "5%",

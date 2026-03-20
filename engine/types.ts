@@ -2,11 +2,12 @@
 
 export type ActionType = "WALK" | "LOOK" | "INTERACT" | "TALK";
 
-export type Item = { 
-  id: string; 
-  name: string; 
-  icon: string 
-};
+export interface Item {
+  id: string;
+  name: string;
+  icon?: string;       // El emoji (lo dejamos de respaldo por las dudas)
+  imageUrl?: string;   // 👈 ¡NUEVO! La ruta a la imagen pixel art
+}
 
 export type DialogueLine = {
   portrait?: string;
@@ -35,14 +36,14 @@ export type Hotspot = {
   height: string;
   walkToX: number;
   walkToY: number;
-  
-  // Opcionales para renderizar objetos dinámicos
   imageUrl?: string;
+  visible?: (inventory: Item[], flags: string[]) => boolean;
+  imageScale?: number;
+  isExit?: boolean;
   condition?: (inventory: Item[], flags: string[]) => boolean;
-  
-  onLook: ActionFn;
-  onInteract: ActionFn;
-  onTalk: ActionFn;
+  onLook?: (inventory: Item[], flags: string[]) => ActionResult;
+  onInteract: (inventory: Item[], flags: string[]) => ActionResult;
+  onTalk?: (inventory: Item[], flags: string[]) => ActionResult;
 };
 
 export type Scene = {

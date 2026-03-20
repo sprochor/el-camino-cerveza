@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+.font-retro { font-family: 'VT323', monospace; }
+.pixelated { image-rendering: pixelated; }
+
+/* === HEINRICH === */
+:root { 
+  --frame-width: 125px; 
+  --frame-height: 250px; 
+  --sheet-width: calc(var(--frame-width) * -8); 
+}
+.heinrich-sprite { 
+  width: var(--frame-width); 
+  height: var(--frame-height); 
+  background-repeat: no-repeat; 
+  transform-origin: bottom center; 
+}
+@keyframes walk-anim { to { background-position-x: var(--sheet-width); } }
+.animate-walk { animation: walk-anim 0.6s steps(8) infinite; }
+.facing-south { background-image: url('/images/juego/heinrich-walk-south.png'); background-position-y: 0px; }
+.facing-east  { background-image: url('/images/juego/heinrich-walk-east.png');  background-position-y: 0px; }
+.facing-west  { background-image: url('/images/juego/heinrich-walk-west.png');  background-position-y: 0px; }
+.facing-north { background-image: url('/images/juego/heinrich-walk-north.png'); background-position-y: 0px; }
+.is-idle { background-position-x: 0px; animation: none; }
+
+/* === EDWARD === */
+:root {
+  --edward-frame-width: 129px; 
+  --edward-frame-height: 192px; 
+  --edward-sheet-width: calc(var(--edward-frame-width) * -8); 
+}
+.edward-sprite { 
+  width: var(--edward-frame-width); 
+  height: var(--edward-frame-height); 
+  background-image: url('/images/juego/edward-idle.png'); 
+  background-repeat: no-repeat; 
+  transform-origin: bottom center; 
+}
+@keyframes edward-idle-anim { to { background-position-x: var(--edward-sheet-width); } }
+.animate-edward-idle { animation: edward-idle-anim 15s steps(8) infinite; }
+
+/* === PALOMAS GRUPO === */
+:root {
+  --palomas-frame-width: calc(1708px / 4); 
+  --palomas-frame-height: 146px;
+  --palomas-sheet-width: -1708px; 
+}
+.palomas-sprite { 
+  width: var(--palomas-frame-width); 
+  height: var(--palomas-frame-height); 
+  background-image: url('/images/juego/palomas-idle.png'); 
+  background-repeat: no-repeat; 
+  transform-origin: bottom center; 
+}
+@keyframes palomas-idle-anim { to { background-position-x: var(--palomas-sheet-width); } }
+.animate-palomas-idle { animation: palomas-idle-anim 3s steps(4) infinite; }
+
+/* === PALOMA INDIVIDUAL === */
+:root {
+  --paloma-frame-width: calc(1336px / 8); 
+  --paloma-frame-height: 186px;
+  --paloma-sheet-width: -1336px; 
+  --paloma-escape-width: calc(1128px / 8); 
+  --paloma-escape-height: 204px;
+  --paloma-escape-sheet: -1128px;
+}
+.paloma-sprite { 
+  width: var(--paloma-frame-width); 
+  height: var(--paloma-frame-height); 
+  background-image: url('/images/juego/paloma-idle.png'); 
+  background-repeat: no-repeat; 
+  transform-origin: bottom center; 
+}
+@keyframes paloma-idle-anim { to { background-position-x: var(--paloma-sheet-width); } }
+.animate-paloma-idle { animation: paloma-idle-anim 3s steps(8) infinite; }
+
+.paloma-escape-sprite { 
+  width: var(--paloma-escape-width); 
+  height: var(--paloma-escape-height); 
+  background-image: url('/images/juego/paloma-escape.png'); 
+  background-repeat: no-repeat; 
+  transform-origin: bottom center; 
+}
+@keyframes paloma-escape-anim { to { background-position-x: var(--paloma-escape-sheet); } }
+@keyframes fly-away {
+  to { transform: translate(300px, -400px) scale(0.5); opacity: 0; }
+}
+.animate-paloma-escape { 
+  animation: paloma-escape-anim 0.3s steps(4) infinite, fly-away 1.5s ease-out forwards; 
+}
+
+/* === GAUCHO PANCHO === */
+:root {
+  --pancho-frame-width: calc(870px / 5); 
+  --pancho-frame-height: 289px;
+  --pancho-sheet-width: -870px; 
+}
+.pancho-sprite { 
+  width: var(--pancho-frame-width); 
+  height: var(--pancho-frame-height); 
+  background-image: url('/images/juego/gaucho-pancho-idle.png'); 
+  background-repeat: no-repeat; 
+  transform-origin: bottom center; 
+}
+@keyframes pancho-idle-anim { to { background-position-x: var(--pancho-sheet-width); } }
+.animate-pancho-idle { animation: pancho-idle-anim 25s steps(5) infinite; }
+
+/* === OLLA FUEGO === */
+:root {
+  --olla-frame-width: calc(1288px / 7); 
+  --olla-frame-height: 69px;
+  --olla-sheet-width: -1288px; 
+}
+.olla-fuego-sprite { 
+  width: var(--olla-frame-width); 
+  height: var(--olla-frame-height); 
+  background-image: url('/images/juego/olla-fuego.png'); 
+  background-repeat: no-repeat; 
+  transform-origin: bottom center; 
+}
+@keyframes olla-fuego-anim { to { background-position-x: var(--olla-sheet-width); } }
+.animate-olla-fuego { animation: olla-fuego-anim 2s steps(7) infinite; }
+
+/* === PERRO GALLETA === */
+:root {
+  --galleta-frame-width: calc(1464px / 6); 
+  --galleta-frame-height: 170px;
+  --galleta-sheet-width: -1464px; 
+}
+.galleta-sprite { 
+  width: var(--galleta-frame-width); 
+  height: var(--galleta-frame-height); 
+  background-image: url('/images/juego/galleta-idle.png'); 
+  background-repeat: no-repeat; 
+  transform-origin: bottom center; 
+}
+@keyframes galleta-idle-anim { to { background-position-x: var(--galleta-sheet-width); } }
+.animate-galleta-idle { animation: galleta-idle-anim 12s steps(6) infinite; }
+
+/* === PERRO GALLETA MIMOS === */
+
+.galleta-mimos-sprite { 
+  /* Calculado: 1332px de ancho total / 4 frames = 333px por frame */
+  width: 333px; 
+  height: 187px; /* Alto de tu nueva imagen */
+  background-image: url('/images/juego/galleta-mimos.png'); 
+  background-repeat: no-repeat; 
+  transform-origin: bottom center; 
+}
+
+/* Keyframes específicos para esta hoja de 1332px de ancho */
+@keyframes galleta-mimos-anim { 
+  to { background-position-x: -1332px; } 
+}
+
+.animate-galleta-mimos { 
+  /* steps(4) porque son 4 frames. 
+     Ajusté la duración a 1s para que se vea fluida, pero probalo y cambialo a gusto. */
+  animation: galleta-mimos-anim 5s steps(4) infinite; 
+}
+/* === PULPERO === */
+:root {
+  --pulpero-frame-width: calc(930px / 6); 
+  --pulpero-frame-height: 267px;
+  --pulpero-sheet-width: -930px; 
+}
+.pulpero-sprite { 
+  width: var(--pulpero-frame-width); 
+  height: var(--pulpero-frame-height); 
+  background-image: url('/images/juego/pulpero-idle.png'); 
+  background-repeat: no-repeat; 
+  transform-origin: bottom center; 
+}
+@keyframes pulpero-idle-anim { to { background-position-x: var(--pulpero-sheet-width); } }
+.animate-pulpero-idle { animation: pulpero-idle-anim 12s steps(6) infinite; }
+
+/* === PANADERA === */
+:root {
+  --panadera-frame-width: calc(1038px / 8); 
+  --panadera-frame-height: 240px;
+  --panadera-sheet-width: -1038px; 
+}
+.panadera-sprite { 
+  width: var(--panadera-frame-width); 
+  height: var(--panadera-frame-height); 
+  background-image: url('/images/juego/panadera-idle.png'); 
+  background-repeat: no-repeat; 
+  transform-origin: bottom center; 
+}
+@keyframes panadera-idle-anim { to { background-position-x: var(--panadera-sheet-width); } }
+.animate-panadera-idle { animation: panadera-idle-anim 14s steps(8) infinite; }
+
+/* === GAUCHOS PLAZA === */
+:root {
+  --gauchos-frame-width: calc(1369px / 8); 
+  --gauchos-frame-height: 182px;
+  --gauchos-sheet-width: -1369px;
+}
+.gauchos-sprite { 
+  width: var(--gauchos-frame-width); 
+  height: var(--gauchos-frame-height); 
+  background-image: url('/images/juego/gauchos-mate.png'); 
+  background-repeat: no-repeat; 
+  transform-origin: bottom center; 
+}
+@keyframes gauchos-idle-anim { to { background-position-x: var(--gauchos-sheet-width); } }
+.animate-gauchos-idle { animation: gauchos-idle-anim 15s steps(8) infinite; }
