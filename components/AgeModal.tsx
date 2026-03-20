@@ -51,7 +51,7 @@ export default function AgeModal() {
                 onClick={handleYes}
                 className="bg-amber-500 hover:bg-amber-400 text-stone-900 font-black px-8 py-3 rounded-xl transition shadow-[4px_4px_0_rgba(0,0,0,0.8)] active:translate-y-1 active:translate-x-1 active:shadow-none w-full sm:w-auto"
               >
-                SÍ, TENGO 18 O MÁS
+                SÍ, TENGO MAS DE 18 AÑOS
               </button>
               <button 
                 onClick={handleNo}

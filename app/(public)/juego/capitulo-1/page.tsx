@@ -238,10 +238,13 @@ export default function GameEngine() {
   }, [gameState, currentSceneId]);
 
   useEffect(() => {
+    // Limpiamos la máscara anterior apenas cambiamos de escena
     setMaskData(null);
+
     if (scene && scene.maskUrl) {
       const img = new Image();
       img.src = scene.maskUrl;
+      
       img.onload = () => {
         const canvas = document.createElement("canvas");
         canvas.width = img.width;
@@ -252,10 +255,11 @@ export default function GameEngine() {
           setMaskData(ctx.getImageData(0, 0, img.width, img.height));
         }
       };
+      
+      // Si falla la carga en Vercel, forzamos el límite manual
       img.onerror = () => {
         console.error("Ojo: No se pudo cargar la máscara de colisiones:", scene.maskUrl);
-        setMaskData(null);
-        }
+        setMaskData(null); 
       };
     } else {
       setMaskData(null);
