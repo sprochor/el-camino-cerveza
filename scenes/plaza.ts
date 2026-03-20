@@ -14,7 +14,7 @@ export const plazaScene: Scene = {
   getScale: (y) => {
     const minY = 50; // El punto más lejano cerca del Cabildo/Recova
     const maxY = 100; // Primer plano
-    const minScale = 0.30;
+    const minScale = 0.20;
     const maxScale = 0.8;
 
     let dynamicScale =

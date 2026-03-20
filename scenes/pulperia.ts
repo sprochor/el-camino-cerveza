@@ -13,7 +13,7 @@ export const pulperiaScene: Scene = {
   getScale: (y) => {
     const minY = 50;
     const maxY = 100;
-    const minScale = 0.55;
+    const minScale = 0.45;
     const maxScale = 1.1;
 
     let s = minScale + ((y - minY) / (maxY - minY)) * (maxScale - minScale);
@@ -389,7 +389,7 @@ export const pulperiaScene: Scene = {
       width: "6%",
       height: "10%",
       walkToX: 75,
-      walkToY: 80,
+      walkToY: 1,
       
       onLook: () => ({ 
         text: "/images/juego/heinrich-neutral.png|Un saco lleno de cebada. Los locales se la dan a los caballos, pero es oro puro para un cervecero." 

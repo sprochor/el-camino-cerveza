@@ -130,7 +130,7 @@
 .galleta-sprite { 
   width: var(--galleta-frame-width); 
   height: var(--galleta-frame-height); 
-  background-image: url('/images/juego/galleta-idle.png'); 
+  background-image: url('/images/juego/galleta-idle.webp'); 
   background-repeat: no-repeat; 
   transform-origin: bottom center; 
 }
