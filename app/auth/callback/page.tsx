@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
-import { Suspense } from "react";
 
-// 1. Ponemos toda tu lógica de login en este componente interno
+// 1. Aislamos la lógica en un sub-componente
 function CallbackLogic() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -26,7 +25,6 @@ function CallbackLogic() {
       };
       exchangeCode();
     } else {
-      // Si el usuario llega por Magic Link estándar y ya tiene sesión
       router.push(next);
       router.refresh();
     }
@@ -41,7 +39,7 @@ function CallbackLogic() {
   );
 }
 
-// 2. El componente principal que Vercel va a construir, envuelto en Suspense
+// 2. Exportamos la página envuelta en <Suspense>
 export default function AuthCallbackPage() {
   return (
     <Suspense fallback={
