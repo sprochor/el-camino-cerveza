@@ -5,6 +5,9 @@ import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
+const OPCIONES_PRESENTACIONES = ["Lata", "Botella", "Barril", "Growler"];
+const OPCIONES_TAMANOS = ["354ml", "473ml", "500ml", "710ml", "Pinta", "Media Pinta", "Litro"];
+
 export default function EditarCervezaAdmin() {
   const { id } = useParams();
   const router = useRouter();
@@ -29,6 +32,8 @@ export default function EditarCervezaAdmin() {
   const [notasCata, setNotasCata] = useState("");
   const [historia, setHistoria] = useState("");
   const [premios, setPremios] = useState("");
+  const [presentaciones, setPresentaciones] = useState<string[]>([]); // 👈
+  const [tamanos, setTamanos] = useState<string[]>([]); // 👈
   
   // Imagen existente vs Imagen Nueva
   const [imagenActualUrl, setImagenActualUrl] = useState("");
@@ -75,6 +80,8 @@ export default function EditarCervezaAdmin() {
         setNotasCata(cervezaActual.notas_cata || "");
         setHistoria(cervezaActual.historia_cerveza || "");
         setPremios(cervezaActual.premios || "");
+        setPresentaciones(cervezaActual.presentaciones || []); // 👈
+        setTamanos(cervezaActual.tamanos || []);               // 👈
         setImagenActualUrl(cervezaActual.imagen_url || "");
       }
       
@@ -131,6 +138,8 @@ export default function EditarCervezaAdmin() {
           notas_cata: notasCata,
           historia_cerveza: historia,
           premios,
+          presentaciones, // 👈
+          tamanos,        // 👈
           imagen_url: urlFinalImagen,
         })
         .eq("id", id); // ¡CRUCIAL PARA NO PISAR TODA LA BASE DE DATOS!
@@ -244,6 +253,39 @@ export default function EditarCervezaAdmin() {
                   <option value="Edición Limitada">Edición Limitada</option>
                 </select>
               </div>
+              {/* 👇 NUEVOS BOTONES DE PRESENTACIÓN Y TAMAÑO 👇 */}
+              <div className="col-span-2 md:col-span-3">
+                <label className="block text-sm font-bold text-gray-600 mb-2">Formatos (Click para seleccionar varios)</label>
+                <div className="flex flex-wrap gap-2">
+                  {OPCIONES_PRESENTACIONES.map(p => (
+                    <button
+                      type="button"
+                      key={p}
+                      onClick={() => setPresentaciones(prev => prev.includes(p) ? prev.filter(x => x !== p) : [...prev, p])}
+                      className={`px-3 py-1 rounded-xl text-sm font-bold transition-all border ${presentaciones.includes(p) ? 'bg-amber-500 text-stone-900 border-amber-600 shadow-inner' : 'bg-white text-stone-500 border-gray-300 hover:bg-stone-100'}`}
+                    >
+                      {p}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="col-span-2 md:col-span-3">
+                <label className="block text-sm font-bold text-gray-600 mb-2">Tamaños / Volúmenes</label>
+                <div className="flex flex-wrap gap-2">
+                  {OPCIONES_TAMANOS.map(t => (
+                    <button
+                      type="button"
+                      key={t}
+                      onClick={() => setTamanos(prev => prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t])}
+                      className={`px-3 py-1 rounded-xl text-sm font-bold transition-all border ${tamanos.includes(t) ? 'bg-amber-500 text-stone-900 border-amber-600 shadow-inner' : 'bg-white text-stone-500 border-gray-300 hover:bg-stone-100'}`}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* 👆 FIN NUEVOS BOTONES 👆 */}
             </div>
           </div>
 

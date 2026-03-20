@@ -173,12 +173,46 @@ export default function CervezaDetailPage() {
           </div>
 
           <div className="mt-6 flex flex-col md:flex-row gap-6 border-t border-gray-100 pt-6">
-            <div className="flex-1 flex justify-between items-center text-sm bg-stone-50 p-4 rounded-xl border border-gray-100">
-              <span className="text-gray-500 font-bold">Disponibilidad</span>
-              <span className="text-stone-800 font-medium bg-white px-3 py-1 rounded shadow-sm">
-                {cerveza.disponibilidad || "Todo el año"}
-              </span>
+            
+            {/* Disponibilidad Reestructurada */}
+            <div className="flex-1 bg-stone-50 p-4 rounded-xl border border-gray-100 flex flex-col gap-2">
+              <span className="text-gray-500 text-xs font-bold uppercase">Disponibilidad</span>
+              <div className="flex">
+                <span className="bg-white px-3 py-1 rounded shadow-sm text-sm font-bold text-stone-800 border border-gray-200">
+                  {cerveza.disponibilidad || "Todo el año"}
+                </span>
+              </div>
             </div>
+
+            {/* BLOQUE DE FORMATOS Y TAMAÑOS (YA LIMPIO SIN ICONOS) */}
+            {(cerveza.presentaciones?.length > 0 || cerveza.tamanos?.length > 0) && (
+              <div className="flex-[2] bg-stone-50 p-4 rounded-xl border border-gray-100 flex flex-col gap-3">
+                {cerveza.presentaciones?.length > 0 && (
+                  <div className="flex items-center gap-3">
+                    <span className="text-gray-500 text-xs font-bold uppercase w-16">Envase</span>
+                    <div className="flex flex-wrap gap-2">
+                      {cerveza.presentaciones.map((p: string) => (
+                        <span key={p} className="bg-white px-3 py-1 rounded shadow-sm text-sm font-bold text-stone-700 border border-gray-200">
+                          {p}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {cerveza.tamanos?.length > 0 && (
+                  <div className="flex items-center gap-3">
+                    <span className="text-gray-500 text-xs font-bold uppercase w-16">Tamaño</span>
+                    <div className="flex flex-wrap gap-2">
+                      {cerveza.tamanos.map((t: string) => (
+                        <span key={t} className="bg-white px-3 py-1 rounded shadow-sm text-sm font-bold text-stone-700 border border-gray-200">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Vaso Recomendado Luminoso */}
             {vasoFinal && (

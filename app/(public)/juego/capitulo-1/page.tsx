@@ -115,6 +115,9 @@ export default function GameEngine() {
         "/images/juego/galleta-mimos.png",
         "/images/juego/olla-fuego.png",
         "/images/juego/paloma-escape.png"
+        "/images/juego/barril-vacio.png"
+        "/images/juego/edward-idle.png"
+
       ];
 
       imagesToPreload.forEach((src) => {
