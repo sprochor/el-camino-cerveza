@@ -93,23 +93,23 @@ export default function GameEngine() {
         "/images/juego/heinrich-walk-west.png",
         
         // 🌆 Fondos del juego
-        "/images/juego/fondo-puerto.png",
-        "/images/juego/fondo-plaza.png",
-        "/images/juego/fondo-pulperia.png",
-        "/images/juego/fondo-quinta.png",
+        "/images/juego/fondo-puerto.webp",
+        "/images/juego/fondo-plaza.webp",
+        "/images/juego/fondo-pulperia.webp",
+        "/images/juego/fondo-quinta.webp",
         "/images/juego/fondo-pulperia-barra.png",
         
         // 🎬 Cinemáticas Intro (Para que no haya pantalla negra)
-        "/images/juego/intro-mar.png",
-        "/images/juego/intro-bodega.png",
-        "/images/juego/intro-camarote.png",
-        "/images/juego/intro-tormenta.png",
+        "/images/juego/intro-mar.webp",
+        "/images/juego/intro-bodega.webp",
+        "/images/juego/intro-camarote.webp",
+        "/images/juego/intro-tormenta.webp",
         
         // 🎬 Cinemáticas Outro
-        "/images/juego/outro-pancho.png",
-        "/images/juego/outro-pulpero.png",
-        "/images/juego/outro-panadera.png",
-        "/images/juego/outro-heinrich-triste.png",
+        "/images/juego/outro-pancho.webp",
+        "/images/juego/outro-pulpero.webp",
+        "/images/juego/outro-panadera.webp",
+        "/images/juego/outro-heinrich-triste.webp",
         
         // ✨ Sprites de animaciones interactivas (¡Para que no desaparezcan!)
         "/images/juego/galleta-mimos.png",

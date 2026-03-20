@@ -101,7 +101,7 @@ export default function NosotrosPage() {
           <div className="md:w-1/2 w-full h-64 md:h-auto self-stretch bg-stone-800 relative border-l-4 border-stone-800">
             {/* Podés poner una captura de pantalla del juego acá */}
             <img
-              src="/images/juego/fondo-puerto.png"
+              src="/images/juego/fondo-puerto.webp"
               alt="La Cruzada de Heinrich"
               className="w-full h-full object-cover pixelated opacity-80 hover:opacity-100 transition duration-500"
             />

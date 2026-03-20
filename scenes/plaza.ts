@@ -4,7 +4,7 @@ export const plazaScene: Scene = {
   id: "plaza",
   name: "PLAZA MAYOR",
   bgClass:
-    "bg-[url('/images/juego/fondo-plaza.png')] bg-cover bg-center bg-no-repeat",
+    "bg-[url('/images/juego/fondo-plaza.webp')] bg-cover bg-center bg-no-repeat",
   maskUrl: "/images/juego/fondo-plaza-mask.png",
   startX: 20,
   startY: 80,

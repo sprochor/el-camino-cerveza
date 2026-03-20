@@ -4,7 +4,7 @@ export const quintaScene: Scene = {
   id: "quinta",
   name: "EL PATIO TRASERO",
   bgClass:
-    "bg-[url('/images/juego/fondo-quinta.png')] bg-cover bg-center bg-no-repeat",
+    "bg-[url('/images/juego/fondo-quinta.webp')] bg-cover bg-center bg-no-repeat",
   maskUrl: "/images/juego/fondo-quinta-mask.png",
   startX: 37,
   startY: 80,

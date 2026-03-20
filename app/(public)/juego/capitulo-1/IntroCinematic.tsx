@@ -2,37 +2,37 @@ import { useState } from "react";
 
 const INTRO_SCRIPT = [
   {
-    bg: "bg-[url('/images/juego/intro-mar.png')] bg-cover bg-center",
+    bg: "bg-[url('/images/juego/intro-mar.webp')] bg-cover bg-center",
     text: "Europa — 1806\n\nUn joven maestro cervecero bávaro,\ndevoto de la pureza y el buen sabor,\nemprende un viaje hacia el Nuevo Mundo…",
     portrait: null,
   },
   {
-    bg: "bg-[url('/images/juego/intro-mar.png')] bg-cover bg-center",
+    bg: "bg-[url('/images/juego/intro-mar.webp')] bg-cover bg-center",
     text: "Dicen que en América hay oportunidades…\n\nY también gente sedienta.",
     portrait: "/images/juego/heinrich-neutral.png",
   },
   {
-    bg: "bg-[url('/images/juego/intro-bodega.png')] bg-cover bg-center",
+    bg: "bg-[url('/images/juego/intro-bodega.webp')] bg-cover bg-center",
     text: "*Revisa un barril de la bodega, olfatea y hace una mueca*\n\nEsto no es cerveza.",
     portrait: "/images/juego/heinrich-surprised.png",
   },
   {
-    bg: "bg-[url('/images/juego/intro-camarote.png')] bg-cover bg-center",
+    bg: "bg-[url('/images/juego/intro-camarote.webp')] bg-cover bg-center",
     text: "— Señor Whitmore… ¿seguro que debemos llevar esta carga?",
     portrait: null,
   },
   {
-    bg: "bg-[url('/images/juego/intro-camarote.png')] bg-cover bg-center",
+    bg: "bg-[url('/images/juego/intro-camarote.webp')] bg-cover bg-center",
     text: "— Si, el Imperio Británico siempre tiene… intereses.",
     portrait: "/images/juego/edward-smirk.png",
   },
   {
-    bg: "bg-[url('/images/juego/intro-tormenta.png')] bg-cover bg-center",
+    bg: "bg-[url('/images/juego/intro-tormenta.webp')] bg-cover bg-center",
     text: "¡CRACK! La tormenta sacude el barco.\nUn barril se suelta… rueda… y se rompe.\n\nMarca: CROWN PROPERTY.",
     portrait: null,
   },
   {
-    bg: "bg-[url('/images/juego/fondo-puerto.png')] bg-cover bg-center",
+    bg: "bg-[url('/images/juego/fondo-puerto.webp')] bg-cover bg-center",
     text: "Buenos Aires — Virreinato del Río de la Plata\n\nBueno… alguien tiene que enseñarles a beber cerveza.",
     portrait: "/images/juego/heinrich-happy.png",
   },

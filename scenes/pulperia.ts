@@ -4,7 +4,7 @@ export const pulperiaScene: Scene = {
   id: "pulperia",
   name: "LA PULPERÍA",
   bgClass:
-    "bg-[url('/images/juego/fondo-pulperia.png')] bg-cover bg-center bg-no-repeat",
+    "bg-[url('/images/juego/fondo-pulperia.webp')] bg-cover bg-center bg-no-repeat",
   maskUrl: "/images/juego/fondo-pulperia-mask.png",
   startX: 50,
   startY: 90,

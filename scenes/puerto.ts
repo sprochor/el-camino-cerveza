@@ -4,7 +4,7 @@ export const puertoScene: Scene = {
   id: "puerto",
   name: "PUERTO DE BUENOS AIRES",
   bgClass:
-    "bg-[url('/images/juego/fondo-puerto.png')] bg-cover bg-center bg-no-repeat",
+    "bg-[url('/images/juego/fondo-puerto.webp')] bg-cover bg-center bg-no-repeat",
   maskUrl: "/images/juego/fondo-puerto-mask.png",
   startX: 40,
   startY: 85,

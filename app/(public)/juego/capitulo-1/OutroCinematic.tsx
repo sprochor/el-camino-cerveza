@@ -9,24 +9,24 @@ const OUTRO_SCRIPT = [
     portrait: null,
   },
   {
-    bg: "bg-[url('/images/juego/outro-pancho.png')] bg-cover bg-center",
+    bg: "bg-[url('/images/juego/outro-pancho.webp')] bg-cover bg-center",
     text: "Gringo... te aprecio, pero esto tiene gusto a agua de zanja. Y de las malas.",
     portrait: "/images/juego/pancho-annoyed.png",
   },
   {
-    bg: "bg-[url('/images/juego/outro-pulpero.png')] bg-cover bg-center",
+    bg: "bg-[url('/images/juego/outro-pulpero.webp')] bg-cover bg-center",
     text: "Se lo advertí. Y ahora va a tener que limpiar mi pulperia!",
     portrait: "/images/juego/pulpero-serious.png",
   },
   {
     // 💡 ACÁ PODÉS PONER OTRA (ej: 'outro-panadera.png')
-    bg: "bg-[url('/images/juego/outro-panadera.png')] bg-cover bg-center",
+    bg: "bg-[url('/images/juego/outro-panadera.webp')] bg-cover bg-center",
     text: "¡Mi pobre masa madre! No merecía terminar en esta bebida tan mala...",
     portrait: "/images/juego/panadera-annoyed.png",
   },
   {
     // 💡 ACÁ PODÉS PONER EL DESASTRE FINAL (ej: 'outro-heinrich-triste.png')
-    bg: "bg-[url('/images/juego/outro-heinrich-triste.png')] bg-cover bg-center",
+    bg: "bg-[url('/images/juego/outro-heinrich-triste.webp')] bg-cover bg-center",
     text: "Ach du lieber... ¡Sabe a rayos! Esto es un desastre.\n\ Pero aun no me ire de este lugar, con mi libro de recetas y lupulo verdadero volvere a intentarlo",
     portrait: "/images/juego/heinrich-surprised.png",
   },

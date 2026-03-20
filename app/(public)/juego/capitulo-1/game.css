@@ -183,7 +183,7 @@
 .panadera-sprite { 
   width: var(--panadera-frame-width); 
   height: var(--panadera-frame-height); 
-  background-image: url('/images/juego/panadera-idle.png'); 
+  background-image: url('/images/juego/panadera-idle.webp'); 
   background-repeat: no-repeat; 
   transform-origin: bottom center; 
 }
@@ -199,7 +199,7 @@
 .gauchos-sprite { 
   width: var(--gauchos-frame-width); 
   height: var(--gauchos-frame-height); 
-  background-image: url('/images/juego/gauchos-mate.png'); 
+  background-image: url('/images/juego/gauchos-mate.webp'); 
   background-repeat: no-repeat; 
   transform-origin: bottom center; 
 }
