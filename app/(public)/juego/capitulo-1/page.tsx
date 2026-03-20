@@ -86,14 +86,37 @@ export default function GameEngine() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const imagesToPreload = [
+        // 🚶‍♂️ Personaje principal
         "/images/juego/heinrich-walk-south.png",
         "/images/juego/heinrich-walk-north.png",
         "/images/juego/heinrich-walk-east.png",
         "/images/juego/heinrich-walk-west.png",
+        
+        // 🌆 Fondos del juego
+        "/images/juego/fondo-puerto.png",
+        "/images/juego/fondo-plaza.png",
         "/images/juego/fondo-pulperia.png",
         "/images/juego/fondo-quinta.png",
-        "/images/juego/fondo-plaza.png",
+        "/images/juego/fondo-pulperia-barra.png",
+        
+        // 🎬 Cinemáticas Intro (Para que no haya pantalla negra)
+        "/images/juego/intro-mar.png",
+        "/images/juego/intro-bodega.png",
+        "/images/juego/intro-camarote.png",
+        "/images/juego/intro-tormenta.png",
+        
+        // 🎬 Cinemáticas Outro
+        "/images/juego/outro-pancho.png",
+        "/images/juego/outro-pulpero.png",
+        "/images/juego/outro-panadera.png",
+        "/images/juego/outro-heinrich-triste.png",
+        
+        // ✨ Sprites de animaciones interactivas (¡Para que no desaparezcan!)
+        "/images/juego/galleta-mimos.png",
+        "/images/juego/olla-fuego.png",
+        "/images/juego/paloma-escape.png"
       ];
+
       imagesToPreload.forEach((src) => {
         const img = new Image();
         img.src = src;
