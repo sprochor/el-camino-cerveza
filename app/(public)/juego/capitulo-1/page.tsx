@@ -581,6 +581,28 @@ export default function GameEngine() {
           isFullscreen ? "w-full h-[100dvh] p-0 md:p-2" : "min-h-[100dvh] p-2 md:p-6"
         }`}
       >
+        {/* 👇 OVERLAY ESTRICTO PARA PC 👇 */}
+      <div className="fixed inset-0 z-[9999] bg-[#1a1a1a] flex-col items-center justify-center text-center p-6 flex lg:hidden">
+        <div className="animate-bounce mb-8">
+          <span className="text-8xl">🖥️</span>
+        </div>
+        <h2 className="text-[#ffaa00] font-retro text-4xl md:text-5xl mb-6 drop-shadow-[0_4px_4px_rgba(0,0,0,1)]">
+          Experiencia de PC
+        </h2>
+        <p className="text-white font-retro text-xl md:text-2xl mb-8 leading-relaxed max-w-lg mx-auto">
+          Esta aventura gráfica está diseñada con la interfaz clásica de los años 90. Las pantallas de los celulares no tienen el espacio suficiente para mostrar los comandos correctamente.
+        </p>
+        <div className="bg-black border-4 border-[#555] p-6 max-w-sm mx-auto shadow-2xl mb-8">
+          <p className="text-[#55ff55] font-retro text-xl leading-relaxed">
+            💡 Consejo del Maestro:<br/><br/>
+            ¡Guardá el enlace y entrá desde tu computadora para jugar con pantalla completa, música y todos los detalles!
+          </p>
+        </div>
+        <Link href="/juego" className="text-amber-500 font-retro text-2xl hover:text-white transition">
+          [ ← Volver al menú ]
+        </Link>
+      </div>
+      {/* 👆 FIN DEL OVERLAY 👆 */}
       <div className="fixed inset-0 pointer-events-none z-50 mix-blend-overlay opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjMDAwIiBmaWxsLW9wYWNpdHk9IjAuMSIvPjwvc3ZnPg==')]"></div>
 
       {/* SI NO CARGÓ LA ESCENA */}
