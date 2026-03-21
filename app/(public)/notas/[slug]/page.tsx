@@ -7,7 +7,7 @@ import { useParams } from "next/navigation";
 import Comentarios from "@/components/Comentarios"; // 👈 NUEVO: Importamos el componente
 
 export default function NotaDetailPage() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [nota, setNota] = useState<any>(null);
   const [cargando, setCargando] = useState(true);
 
@@ -18,13 +18,14 @@ export default function NotaDetailPage() {
       const { data, error } = await supabase
         .from("noticias")
         .select("*")
-        .eq("id", id)
+        .eq("slug", slug)
         .single();
 
-      if (error) {
-        console.error("Error trayendo la nota:", error);
+      if (error && error.code === 'PGRST116') { // Error de "no se encontró"
+         const fallback = await supabase.from("noticias").select("*").eq("id", slug).single();
+         if (fallback.data) setNota(fallback.data);
       } else if (data) {
-        setNota(data);
+         setNota(data);
       }
 
       setCargando(false);
