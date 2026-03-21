@@ -122,19 +122,19 @@ export default function NotaDetailPage() {
         <style
           dangerouslySetInnerHTML={{
             __html: `
-          /* 👇 LA ORDEN DEFINITIVA PARA QUE NADA CORTE PALABRAS 👇 */
-          .prose-cervecero,
-          .prose-cervecero * { 
+          /* 👇 EL EQUILIBRIO PERFECTO 👇 */
+          .prose-cervecero { 
+            /* Esto permite que baje al renglón siguiente con naturalidad */
+            white-space: pre-wrap !important; 
+            
+            /* Esto le dice: Mantené las palabras enteras... */
             word-break: normal !important; 
-            overflow-wrap: normal !important; 
-            word-wrap: normal !important;
-            white-space: normal !important;
-            -webkit-hyphens: none !important;
-            -ms-hyphens: none !important;
-            hyphens: none !important;
+            
+            /* ...PERO si hay una palabra/link más larga que la pantalla, ahí sí cortala para que no se escape */
+            overflow-wrap: break-word !important; 
           }
           
-          /* Evita que imágenes o tablas gigantes empujen el texto afuera */
+          /* Nadie se escapa del ancho de la pantalla */
           .prose-cervecero * { 
             max-width: 100% !important; 
           }
@@ -148,7 +148,7 @@ export default function NotaDetailPage() {
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
           }
           
-          .prose-cervecero p { margin-bottom: 1.5rem; }
+          .prose-cervecero p { margin-bottom: 1.5rem; line-height: 1.8; }
           .prose-cervecero h2 { font-size: 1.75rem; font-weight: 900; color: #1c1917; margin-top: 2.5rem; margin-bottom: 1rem; line-height: 1.2; }
           .prose-cervecero h3 { font-size: 1.5rem; font-weight: 800; color: #292524; margin-top: 2rem; margin-bottom: 0.75rem; }
           .prose-cervecero strong { font-weight: 800; color: #1c1917; }
@@ -157,13 +157,12 @@ export default function NotaDetailPage() {
           .prose-cervecero li { margin-bottom: 0.5rem; color: #44403c; }
           .prose-cervecero blockquote { border-left: 4px solid #f59e0b; padding-left: 1rem; font-style: italic; background: #fafaf9; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
           
-          /* Solo permitimos cortes forzados en los enlaces para que no rompan el diseño */
+          /* Los enlaces gigantes (URLs) tienen permiso explícito para romperse */
           .prose-cervecero a { 
             color: #b45309; 
             text-decoration: underline; 
             font-weight: bold; 
             word-break: break-all !important;
-            overflow-wrap: break-word !important;
           }
           .prose-cervecero a:hover { color: #d97706; }
         `,
