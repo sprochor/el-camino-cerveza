@@ -58,7 +58,6 @@ export default function NotasPage() {
         {/* GRILLA DE NOTAS */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {notas.map((nota) => (
-            {/* 👇 ACÁ ESTÁ EL CAMBIO: Usamos nota.slug (y si no tiene, usamos nota.id para no romper notas viejas) 👇 */}
             <Link 
               href={`/notas/${nota.slug || nota.id}`} 
               key={nota.id} 
