@@ -1,8 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function JuegoLandingPage() {
+  const router = useRouter(); // 👈 Inicializamos el router
+  const [zarpando, setZarpando] = useState(false); // 👈 El estado del botón
+
+  // Esta función reemplaza al clásico <Link>
+  const handleEmpezarAventura = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setZarpando(true); // 1. Al instante, cambiamos el texto del botón
+    
+    // 2. Le decimos a Next que nos lleve al juego (cambiá la ruta por la tuya exacta)
+    router.push("/juego/capitulo-1"); 
+  };
   return (
     <div className="bg-stone-900 min-h-screen pb-20 font-sans selection:bg-amber-500 selection:text-stone-900">
       {/* HERO SECTION - ESTILO RETRO */}
@@ -23,11 +36,17 @@ export default function JuegoLandingPage() {
           </p>
 
           <div className="mt-12">
-            <Link href="/juego/capitulo-1">
-              <button className="bg-amber-500 hover:bg-amber-400 text-stone-900 font-black font-mono text-xl px-8 py-4 rounded-none border-t-2 border-l-2 border-amber-300 border-b-4 border-r-4 border-amber-700 hover:border-amber-600 active:translate-y-1 active:translate-x-1 active:border-b-2 active:border-r-2 transition-all shadow-[4px_4px_0_rgba(0,0,0,0.5)]">
-                &gt; JUGAR CAPÍTULO 1 AHORA
-              </button>
-            </Link>
+            <button 
+              onClick={handleEmpezarAventura}
+              disabled={zarpando}
+              className={`font-black font-mono text-xl px-8 py-4 rounded-none border-t-2 border-l-2 border-amber-300 border-b-4 border-r-4 border-amber-700 active:translate-y-1 active:translate-x-1 active:border-b-2 active:border-r-2 transition-all shadow-[4px_4px_0_rgba(0,0,0,0.5)] ${
+                zarpando 
+                  ? "bg-stone-600 text-stone-400 cursor-not-allowed border-stone-800 shadow-none translate-y-1 translate-x-1" 
+                  : "bg-amber-500 hover:bg-amber-400 text-stone-900 hover:border-amber-600"
+              }`}
+            >
+              {zarpando ? "> ZARPANDO AL VIRREINATO..." : "> JUGAR CAPÍTULO 1 AHORA"}
+            </button>
           </div>
         </div>
       </div>

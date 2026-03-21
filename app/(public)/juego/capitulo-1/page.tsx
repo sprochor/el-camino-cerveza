@@ -42,6 +42,7 @@ export default function GameEngine() {
   const [gameState, setGameState] = useState<"INTRO" | "PLAYING" | "OUTRO">(
     "INTRO",
   );
+  const [cargandoJuego, setCargandoJuego] = useState(true);
   const [resetCount, setResetCount] = useState(0);
   const [isDebugMode, setIsDebugMode] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -69,15 +70,23 @@ export default function GameEngine() {
     flagsRef.current = flags;
   }, [flags]);
   useEffect(() => {
-    const requireAuth = async () => {
+    const inicializarJuego = async () => {
+      // 1. Chequeamos si el usuario está logueado
       const {
         data: { session },
       } = await supabase.auth.getSession();
+
+      // 2. Si NO hay sesión, lo pateamos al login
       if (!session) {
-        window.location.href = "/login"; // O la ruta que uses para el login
+        window.location.href = "/login";
+      } else {
+        // 3. Si SÍ hay sesión, apagamos el Loading y le mostramos el juego
+        setCargandoJuego(false);
       }
     };
-    requireAuth();
+
+    // 4. Ejecutamos la función que acabamos de crear
+    inicializarJuego();
   }, []);
   useEffect(() => {
     inventoryRef.current = inventory;
@@ -91,33 +100,32 @@ export default function GameEngine() {
         "/images/juego/heinrich-walk-north.png",
         "/images/juego/heinrich-walk-east.png",
         "/images/juego/heinrich-walk-west.png",
-        
+
         // 🌆 Fondos del juego
         "/images/juego/fondo-puerto.webp",
         "/images/juego/fondo-plaza.webp",
         "/images/juego/fondo-pulperia.webp",
         "/images/juego/fondo-quinta.webp",
         "/images/juego/fondo-pulperia-barra.png",
-        
+
         // 🎬 Cinemáticas Intro (Para que no haya pantalla negra)
         "/images/juego/intro-mar.webp",
         "/images/juego/intro-bodega.webp",
         "/images/juego/intro-camarote.webp",
         "/images/juego/intro-tormenta.webp",
-        
+
         // 🎬 Cinemáticas Outro
         "/images/juego/outro-pancho.webp",
         "/images/juego/outro-pulpero.webp",
         "/images/juego/outro-panadera.webp",
         "/images/juego/outro-heinrich-triste.webp",
-        
+
         // ✨ Sprites de animaciones interactivas (¡Para que no desaparezcan!)
         "/images/juego/galleta-mimos.png",
         "/images/juego/olla-fuego.png",
         "/images/juego/paloma-escape.png",
         "/images/juego/barril-vacio.png",
         "/images/juego/edward-idle.png",
-
       ];
 
       imagesToPreload.forEach((src) => {
@@ -270,7 +278,7 @@ export default function GameEngine() {
     if (scene && scene.maskUrl) {
       const img = new Image();
       img.src = scene.maskUrl;
-      
+
       img.onload = () => {
         const canvas = document.createElement("canvas");
         canvas.width = img.width;
@@ -281,11 +289,14 @@ export default function GameEngine() {
           setMaskData(ctx.getImageData(0, 0, img.width, img.height));
         }
       };
-      
+
       // Si falla la carga en Vercel, forzamos el límite manual
       img.onerror = () => {
-        console.error("Ojo: No se pudo cargar la máscara de colisiones:", scene.maskUrl);
-        setMaskData(null); 
+        console.error(
+          "Ojo: No se pudo cargar la máscara de colisiones:",
+          scene.maskUrl,
+        );
+        setMaskData(null);
       };
     } else {
       setMaskData(null);
@@ -604,14 +615,34 @@ export default function GameEngine() {
   }, []);
 
   // === UN ÚNICO ENVOLTORIO GLOBAL PARA TODO ===
+  if (cargandoJuego) {
+    return (
+      <div className="fixed inset-0 z-[9999] bg-[#1a1a1a] flex flex-col items-center justify-center font-retro text-center">
+        <div className="animate-bounce mb-6">
+          <span className="text-7xl drop-shadow-[0_0_15px_rgba(255,170,0,0.8)]">
+            🍺
+          </span>
+        </div>
+        <h2 className="text-[#ffaa00] text-3xl mb-4 tracking-widest animate-pulse drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">
+          CARGANDO...
+        </h2>
+        <p className="text-stone-400 text-lg">
+          Acondicionando los barriles en la bodega
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div
-        ref={gameWrapperRef}
-        className={`bg-[#1a1a1a] flex flex-col items-center justify-center selection:bg-transparent overflow-x-hidden overflow-y-auto ${
-          isFullscreen ? "w-full h-[100dvh] p-0 md:p-2" : "min-h-[100dvh] p-2 md:p-6"
-        }`}
-      >
-        {/* 👇 OVERLAY ESTRICTO PARA PC (TAMAÑO CORREGIDO) 👇 */}
+      ref={gameWrapperRef}
+      className={`bg-[#1a1a1a] flex flex-col items-center justify-center selection:bg-transparent overflow-x-hidden overflow-y-auto ${
+        isFullscreen
+          ? "w-full h-[100dvh] p-0 md:p-2"
+          : "min-h-[100dvh] p-2 md:p-6"
+      }`}
+    >
+      {/* 👇 OVERLAY ESTRICTO PARA PC (TAMAÑO CORREGIDO) 👇 */}
       <div className="fixed inset-0 z-[9999] bg-[#1a1a1a] flex-col items-center justify-start text-center p-4 flex lg:hidden overflow-y-auto">
         <div className="my-auto flex flex-col items-center justify-center max-w-sm mx-auto py-8">
           <div className="animate-bounce mb-4">
@@ -621,15 +652,22 @@ export default function GameEngine() {
             Experiencia de PC
           </h2>
           <p className="text-white font-retro text-lg mb-6 leading-tight px-2">
-            Esta aventura está diseñada con la interfaz clásica de los años 90. Las pantallas de los celulares no tienen el espacio suficiente.
+            Esta aventura está diseñada con la interfaz clásica de los años 90.
+            Las pantallas de los celulares no tienen el espacio suficiente.
           </p>
           <div className="bg-black border-2 border-[#555] p-4 w-full shadow-xl mb-6">
             <p className="text-[#55ff55] font-retro text-base leading-snug">
-              💡 Consejo del Maestro:<br/><br/>
-              ¡Guardá el enlace y entrá desde tu compu para jugar con pantalla completa y todos los detalles!
+              💡 Consejo del Maestro:
+              <br />
+              <br />
+              ¡Guardá el enlace y entrá desde tu compu para jugar con pantalla
+              completa y todos los detalles!
             </p>
           </div>
-          <Link href="/juego" className="text-amber-500 font-retro text-xl hover:text-white transition p-2">
+          <Link
+            href="/juego"
+            className="text-amber-500 font-retro text-xl hover:text-white transition p-2"
+          >
             [ ← Volver al menú ]
           </Link>
         </div>
@@ -657,9 +695,13 @@ export default function GameEngine() {
         <OutroCinematic resetGame={resetGame} />
       ) : (
         /* SI ESTAMOS JUGANDO NORMALMENTE */
-        <div className={`w-full max-w-5xl bg-[#c0c0c0] rounded-lg border-[#555] shadow-2xl relative z-30 flex flex-col ${
-            isFullscreen ? "border-0 p-1 md:p-3 min-h-full" : "border-t-4 border-l-4 border-white border-b-4 border-r-4 p-2 md:p-3"
-          }`}>
+        <div
+          className={`w-full max-w-5xl bg-[#c0c0c0] rounded-lg border-[#555] shadow-2xl relative z-30 flex flex-col ${
+            isFullscreen
+              ? "border-0 p-1 md:p-3 min-h-full"
+              : "border-t-4 border-l-4 border-white border-b-4 border-r-4 p-2 md:p-3"
+          }`}
+        >
           <GameHUD
             sceneName={scene.name}
             isMuted={isMuted}
@@ -679,11 +721,11 @@ export default function GameEngine() {
             message={message}
           >
             <div
-                ref={screenRef}
-                onClick={handleScreenClick}
-                onMouseLeave={() => setHoverText("")}
-                className={`w-full aspect-video mx-auto ${scene.bgClass} relative overflow-hidden border-4 border-[#555] cursor-crosshair shadow-[inset_0_0_20px_rgba(0,0,0,0.8)]`}
-              >
+              ref={screenRef}
+              onClick={handleScreenClick}
+              onMouseLeave={() => setHoverText("")}
+              className={`w-full aspect-video mx-auto ${scene.bgClass} relative overflow-hidden border-4 border-[#555] cursor-crosshair shadow-[inset_0_0_20px_rgba(0,0,0,0.8)]`}
+            >
               <div
                 className={`absolute inset-0 bg-black z-50 transition-opacity duration-500 pointer-events-none ${isTransitioning ? "opacity-100" : "opacity-0"}`}
               ></div>
