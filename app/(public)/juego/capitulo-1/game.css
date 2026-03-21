@@ -32,7 +32,7 @@
 .edward-sprite { 
   width: var(--edward-frame-width); 
   height: var(--edward-frame-height); 
-  background-image: url('/images/juego/edward-idle.png'); 
+  background-image: url('/images/juego/edward-idle.webp'); 
   background-repeat: no-repeat; 
   transform-origin: bottom center; 
 }
@@ -48,7 +48,7 @@
 .palomas-sprite { 
   width: var(--palomas-frame-width); 
   height: var(--palomas-frame-height); 
-  background-image: url('/images/juego/palomas-idle.png'); 
+  background-image: url('/images/juego/palomas-idle.webp'); 
   background-repeat: no-repeat; 
   transform-origin: bottom center; 
 }
@@ -167,7 +167,7 @@
 .pulpero-sprite { 
   width: var(--pulpero-frame-width); 
   height: var(--pulpero-frame-height); 
-  background-image: url('/images/juego/pulpero-idle.png'); 
+  background-image: url('/images/juego/pulpero-idle.webp'); 
   background-repeat: no-repeat; 
   transform-origin: bottom center; 
 }

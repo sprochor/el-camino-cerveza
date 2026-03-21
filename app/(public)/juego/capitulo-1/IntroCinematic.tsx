@@ -14,7 +14,7 @@ const INTRO_SCRIPT = [
   {
     bg: "bg-[url('/images/juego/intro-bodega.webp')] bg-cover bg-center",
     text: "*Revisa un barril de la bodega, olfatea y hace una mueca*\n\nEsto no es cerveza.",
-    portrait: "/images/juego/heinrich-surprised.png",
+    portrait: "/images/juego/heinrich-surprised.webp",
   },
   {
     bg: "bg-[url('/images/juego/intro-camarote.webp')] bg-cover bg-center",
@@ -24,7 +24,7 @@ const INTRO_SCRIPT = [
   {
     bg: "bg-[url('/images/juego/intro-camarote.webp')] bg-cover bg-center",
     text: "— Si, el Imperio Británico siempre tiene… intereses.",
-    portrait: "/images/juego/edward-smirk.png",
+    portrait: "/images/juego/edward-smirk.webp",
   },
   {
     bg: "bg-[url('/images/juego/intro-tormenta.webp')] bg-cover bg-center",
@@ -34,7 +34,7 @@ const INTRO_SCRIPT = [
   {
     bg: "bg-[url('/images/juego/fondo-puerto.webp')] bg-cover bg-center",
     text: "Buenos Aires — Virreinato del Río de la Plata\n\nBueno… alguien tiene que enseñarles a beber cerveza.",
-    portrait: "/images/juego/heinrich-happy.png",
+    portrait: "/images/juego/heinrich-happy.webp",
   },
   {
     bg: "bg-black",

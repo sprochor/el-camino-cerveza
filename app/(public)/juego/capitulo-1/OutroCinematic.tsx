@@ -28,7 +28,7 @@ const OUTRO_SCRIPT = [
     // 💡 ACÁ PODÉS PONER EL DESASTRE FINAL (ej: 'outro-heinrich-triste.png')
     bg: "bg-[url('/images/juego/outro-heinrich-triste.webp')] bg-cover bg-center",
     text: "Ach du lieber... ¡Sabe a rayos! Esto es un desastre.\n\ Pero aun no me ire de este lugar, con mi libro de recetas y lupulo verdadero volvere a intentarlo",
-    portrait: "/images/juego/heinrich-surprised.png",
+    portrait: "/images/juego/heinrich-surprised.webp",
   },
   {
     bg: "bg-black",

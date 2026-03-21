@@ -57,7 +57,7 @@ export const puertoScene: Scene = {
       walkToX: 25,
       walkToY: 85,
       onLook: () => ({
-        text: "/images/juego/heinrich-surprised.png|Barriles ingleses... pero no huelen a cerveza.",
+        text: "/images/juego/heinrich-surprised.webp|Barriles ingleses... pero no huelen a cerveza.",
       }),
       onInteract: (inventory, flags) => {
         if (!flags.includes("sospecha_polvora")) {
@@ -111,15 +111,15 @@ export const puertoScene: Scene = {
             setFlag: "conocio_whitmore",
             dialogue: [
               {
-                portrait: "/images/juego/edward-neutral.png",
+                portrait: "/images/juego/edward-neutral.webp",
                 text: "Adler… no esperaba verte con vida en Buenos Aires.",
               },
               {
-                portrait: "/images/juego/heinrich-surprised.png",
+                portrait: "/images/juego/heinrich-surprised.webp",
                 text: "¿Nos conocemos?",
               },
               {
-                portrait: "/images/juego/edward-smirk.png",
+                portrait: "/images/juego/edward-smirk.webp",
                 text: "Digamos que nuestros intereses comerciales… colisionaron en alta mar.",
               },
               {
@@ -127,7 +127,7 @@ export const puertoScene: Scene = {
                 text: "¡Tú ordenaste tirar mi cargamento por la borda!",
               },
               {
-                portrait: "/images/juego/edward-neutral.png",
+                portrait: "/images/juego/edward-neutral.webp",
                 text: "Era necesario aligerar la carga. Supervivencia básica.",
               },
               {
@@ -135,7 +135,7 @@ export const puertoScene: Scene = {
                 text: "Para usted tal vez. Para mí era mi trabajo.",
               },
               {
-                portrait: "/images/juego/edward-smirk.png",
+                portrait: "/images/juego/edward-smirk.webp",
                 text: "El mundo recompensa a quienes saben adaptarse, Adler.",
               },
               {
@@ -143,23 +143,23 @@ export const puertoScene: Scene = {
                 text: "Yo prefiero perfeccionar las cosas. Como la cerveza.",
               },
               {
-                portrait: "/images/juego/edward-smirk.png",
+                portrait: "/images/juego/edward-smirk.webp",
                 text: "¿Cerveza? Yo solo comercio porter inglesa.",
               },
               {
-                portrait: "/images/juego/heinrich-surprised.png",
+                portrait: "/images/juego/heinrich-surprised.webp",
                 text: "¿Porter? ¿Cerveza negra? Nein… las cervezas deben ser rubias.",
               },
               {
-                portrait: "/images/juego/edward-smirk.png",
+                portrait: "/images/juego/edward-smirk.webp",
                 text: "El mercado parece pensar lo contrario.",
               },
               {
-                portrait: "/images/juego/heinrich-happy.png",
+                portrait: "/images/juego/heinrich-happy.webp",
                 text: "Entonces el mercado necesita educación.",
               },
               {
-                portrait: "/images/juego/edward-neutral.png",
+                portrait: "/images/juego/edward-neutral.webp",
                 text: "Ten cuidado, Adler… Buenos Aires no es Baviera.",
               },
             ],
@@ -183,15 +183,15 @@ export const puertoScene: Scene = {
                 text: "¿Siempre arruina el negocio de otros?",
               },
               {
-                portrait: "/images/juego/edward-smirk.png",
+                portrait: "/images/juego/edward-smirk.webp",
                 text: "Solo cuando es conveniente.",
               },
               {
-                portrait: "/images/juego/heinrich-annoyed.png",
+                portrait: "/images/juego/heinrich-annoyed.webp",
                 text: "Algún día probará una cerveza de verdad.",
               },
               {
-                portrait: "/images/juego/edward-smirk.png",
+                portrait: "/images/juego/edward-smirk.webp",
                 text: "Y tú, Adler… algún día entenderás el poder.",
               },
             ],
@@ -200,7 +200,7 @@ export const puertoScene: Scene = {
 
         // 🔁 DEFAULT (antes de pólvora)
         return {
-          text: "/images/juego/edward-smirk.png|Disfruta tu pequeño proyecto, cervecero.",
+          text: "/images/juego/edward-smirk.webp|Disfruta tu pequeño proyecto, cervecero.",
         };
       },
     },
@@ -224,7 +224,7 @@ export const puertoScene: Scene = {
 
         if (flags.includes("cerveza_arruinada")) {
           return {
-            text: "/images/juego/heinrich-happy.png|¡Lo encontré! Mi libro de recetas familiar. Ahora podré hacer la cerveza bien.",
+            text: "/images/juego/heinrich-happy.webp|¡Lo encontré! Mi libro de recetas familiar. Ahora podré hacer la cerveza bien.",
             addItem: { id: "recetas", name: "Libro de Recetas", icon: "📖" },
           };
         }
@@ -316,7 +316,7 @@ export const puertoScene: Scene = {
       height: "12%",
       walkToX: 60,
       walkToY: 85,
-      imageUrl: "/images/juego/barril-vacio.png",
+      imageUrl: "/images/juego/barril-vacio.webp",
       condition: (inventory) => !inventory.some((i) => i.id === "barril_vacio"),
 
       onLook: () => ({
@@ -333,7 +333,7 @@ export const puertoScene: Scene = {
         // 2. Si el mosto se estaba enfriando, aprovechamos el viaje para darlo por terminado
         if (flags.includes("mosto_enfriando") && !flags.includes("mosto_listo")) {
           return {
-            text: "/images/juego/heinrich-happy.png|¡Me llevo uno! Con la caminata hasta acá y la vuelta, el mosto de la olla ya debería estar perfectamente frío.",
+            text: "/images/juego/heinrich-happy.webp|¡Me llevo uno! Con la caminata hasta acá y la vuelta, el mosto de la olla ya debería estar perfectamente frío.",
             addItem: { id: "barril_vacio", name: "Barril Vacío", icon: "🛢️" , imageUrl: "/images/juego/items/barril.png" },
             setFlag: "mosto_listo,necesita_fermentar" // 👈 ¡La magia del tiempo acá!
           };
@@ -341,7 +341,7 @@ export const puertoScene: Scene = {
 
         // 3. Si por casualidad el jugador ya lo había dejado enfriar del todo antes de venir
         return {
-          text: "/images/juego/heinrich-happy.png|¡Me llevo uno! Esto es exactamente lo que necesito para dejar fermentando mi cerveza.",
+          text: "/images/juego/heinrich-happy.webp|¡Me llevo uno! Esto es exactamente lo que necesito para dejar fermentando mi cerveza.",
           addItem: { id: "barril_vacio", name: "Barril Vacío", icon: "🛢️" , imageUrl: "/images/juego/items/barril.png" },
           setFlag: "necesita_fermentar"
         };

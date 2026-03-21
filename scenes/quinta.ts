@@ -71,7 +71,7 @@ export const quintaScene: Scene = {
       walkToX: 20,
       walkToY: 70,
       onLook: () => ({
-        text: "/images/juego/heinrich-surprised.png|¡Parece lúpulo salvaje! Creciendo como maleza por las paredes.",
+        text: "/images/juego/heinrich-surprised.webp|¡Parece lúpulo salvaje! Creciendo como maleza por las paredes.",
       }),
       onInteract: (inventory) => {
         if (inventory.some((i) => i.id === "lupulo")) {
@@ -80,7 +80,7 @@ export const quintaScene: Scene = {
           };
         }
         return {
-          text: "/images/juego/heinrich-happy.png|Perfecto para darle amargor. Guardo unas flores… con suerte no envenenan a nadie.",
+          text: "/images/juego/heinrich-happy.webp|Perfecto para darle amargor. Guardo unas flores… con suerte no envenenan a nadie.",
           addItem: {
             id: "lupulo",
             name: "Lúpulo sospechoso",
@@ -127,7 +127,7 @@ export const quintaScene: Scene = {
       onInteract: (inventory, flags) => {
         if (!flags.includes("balde_recogido")) {
           return {
-            text: "/images/juego/heinrich-happy.png|Me llevo este balde vacío. El pozo está sequísimo, así que tendré que buscar agua en otro lado.",
+            text: "/images/juego/heinrich-happy.webp|Me llevo este balde vacío. El pozo está sequísimo, así que tendré que buscar agua en otro lado.",
             setFlag: "balde_recogido",
             // Removemos removeItem porque es el único hotspot y la visual se controla con el visible
             addItem: {
@@ -182,7 +182,7 @@ export const quintaScene: Scene = {
       walkToX: 75,
       walkToY: 65,
       onLook: () => ({
-        text: "/images/juego/heinrich-surprised.png|Un barril de caña, el aroma es… contundente. Esto no es bebida, es una advertencia.",
+        text: "/images/juego/heinrich-surprised.webp|Un barril de caña, el aroma es… contundente. Esto no es bebida, es una advertencia.",
       }),
       onInteract: () => ({
         text: "/images/juego/heinrich-concerned.webp|Mejor no. Prefiero cerveza. Esto parece combustible.",
@@ -211,7 +211,7 @@ export const quintaScene: Scene = {
         text: "/images/juego/heinrich-neutral.webp|No soy leñador, soy cervecero. Mi relación con la madera se limita estrictamente a los barriles.",
       }),
       onTalk: () => ({
-        text: "/images/juego/heinrich-happy.png|No sos un roble bávaro, pero tenés tu encanto sureño.",
+        text: "/images/juego/heinrich-happy.webp|No sos un roble bávaro, pero tenés tu encanto sureño.",
       }),
     },
 
@@ -240,7 +240,7 @@ export const quintaScene: Scene = {
           };
         if (flags.includes("barril_en_mesa"))
           return {
-            text: "/images/juego/heinrich-thinking.png|El mosto está en el barril. Le falta la chispa de la vida: algo que la haga cobrar vida.",
+            text: "/images/juego/heinrich-thinking.webp|El mosto está en el barril. Le falta la chispa de la vida: algo que la haga cobrar vida.",
           };
         return {
           text: "/images/juego/heinrich-neutral.webp|Una mesa vieja bajo la sombra. El lugar perfecto para dejar reposar un buen barril.",
@@ -255,7 +255,7 @@ export const quintaScene: Scene = {
         if (flags.includes("barril_en_mesa")) {
           if (!tieneMasaMadre) {
             return {
-              text: "/images/juego/heinrich-thinking.png|El mosto dulce ya está en el barril, pero necesita fermentar.",
+              text: "/images/juego/heinrich-thinking.webp|El mosto dulce ya está en el barril, pero necesita fermentar.",
             };
           }
 
@@ -265,11 +265,11 @@ export const quintaScene: Scene = {
             removeItem: "masa-madre",
             dialogue: [
               {
-                portrait: "/images/juego/heinrich-happy.png",
+                portrait: "/images/juego/heinrich-happy.webp",
                 text: "Agrego la masa madre al mosto y cierro el barril herméticamente.",
               },
               {
-                portrait: "/images/juego/heinrich-thinking.png",
+                portrait: "/images/juego/heinrich-thinking.webp",
                 text: "Ahora solo queda esperar… y confiar en que no explote.",
               },
             ],
@@ -279,13 +279,13 @@ export const quintaScene: Scene = {
         // FASE INICIAL: No está en la mesa y tampoco lo tiene encima
         if (!tieneBarrilLleno) {
           return {
-            text: "/images/juego/heinrich-thinking.png|Es un lugar fresco, ideal para fermentar una cerveza",
+            text: "/images/juego/heinrich-thinking.webp|Es un lugar fresco, ideal para fermentar una cerveza",
           };
         }
 
         // TRANSICIÓN: Apoya el barril lleno en la mesa
         return {
-          text: "/images/juego/heinrich-happy.png|Apoyo el barril bajo la mesa, a la sombra. Pesa bastante. Ahora necesito algo para hacerlo fermentar...",
+          text: "/images/juego/heinrich-happy.webp|Apoyo el barril bajo la mesa, a la sombra. Pesa bastante. Ahora necesito algo para hacerlo fermentar...",
           setFlag: "barril_en_mesa",
           removeItem: "barril_lleno",
         };

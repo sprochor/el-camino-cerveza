@@ -125,13 +125,13 @@ export default function GameEngine() {
         "/images/juego/olla-fuego.png",
         "/images/juego/paloma-escape.png",
         "/images/juego/barril-vacio.png",
-        "/images/juego/edward-idle.png",
+        "/images/juego/edward-idle.webp",
 
         // Caras y personajes
         "/images/juego/heinrich-neutral.webp",
-        "/images/juego/olla-fuego.png",
-        "/images/juego/paloma-escape.png",
-        "/images/juego/barril-vacio.png",
+        "/images/juego/pulpero-idle.webp",
+        "/images/juego/palomas-idle.webp",
+        "/images/juego/heinrich-happy.webp",
         "/images/juego/edward-idle.png",
       ];
 
@@ -348,7 +348,7 @@ export default function GameEngine() {
 
         // 2. Disparamos el mensaje
         parseMessage(
-          "/images/juego/heinrich-neutral.png|Llegaste a Buenos Aires.",
+          "/images/juego/heinrich-neutral.webp|Llegaste a Buenos Aires.",
         );
       }
     }, 600); // 600 milisegundos de delay cinemático

@@ -88,7 +88,7 @@ export const plazaScene: Scene = {
                 { portrait: "/images/juego/panadera-neutral.png", text: "¿Qué quiere, extranjero?" },
                 { portrait: "/images/juego/heinrich-neutral.webp", text: "Hallo… estoy buscando algo que haga fermentar." },
                 { portrait: "/images/juego/panadera-small-mouth.png", text: "¿Para hacer pan?" },
-                { portrait: "/images/juego/heinrich-happy.png", text: "Para hacer cerveza." },
+                { portrait: "/images/juego/heinrich-happy.webp", text: "Para hacer cerveza." },
                 { portrait: "/images/juego/panadera-annoyed.png", text: "¿Cerveza? ¿Y ya la tiene?" },
                 { portrait: "/images/juego/heinrich-speaking-small.webp", text: "Nein… estoy en eso.." },
                 { portrait: "/images/juego/panadera-annoyed.png", text: "Primero consiga algo que fermentar. Después hablamos." },
@@ -107,11 +107,11 @@ export const plazaScene: Scene = {
           return {
             dialogue: [
               { portrait: "/images/juego/panadera-neutral.png", text: "¿Otra vez usted?" },
-              { portrait: "/images/juego/heinrich-happy.png", text: "Ahora sí. Tengo el mosto dulce listo para fermentar." },
+              { portrait: "/images/juego/heinrich-happy.webp", text: "Ahora sí. Tengo el mosto dulce listo para fermentar." },
               { portrait: "/images/juego/panadera-small-mouth.png", text: "¿Eso es su famosa cerveza?" },
               { portrait: "/images/juego/heinrich-neutral.webp", text: "Todavía no… pero lo será." },
               { portrait: "/images/juego/panadera-annoyed.png", text: "No regalo masa madre para experimentos raros." },
-              { portrait: "/images/juego/heinrich-happy.png", text: "Le prometo que será la mejor cerveza que haya probado." },
+              { portrait: "/images/juego/heinrich-happy.webp", text: "Le prometo que será la mejor cerveza que haya probado." },
               { portrait: "/images/juego/panadera-excited.png", text: "¿Ah, sí? Bueno… si me guarda un vaso… trato hecho." },
               { portrait: "/images/juego/panadera-neutral.png", text: "Aquí tiene la masa madre. Y si eso explota… no vuelva." },
             ],
@@ -124,11 +124,11 @@ export const plazaScene: Scene = {
           setFlag: "panadera_explico", // Se la seteamos para que ya quede registrada
           dialogue: [
             { portrait: "/images/juego/panadera-neutral.png", text: "¿Qué se le ofrece, extranjero? Tengo el mejor pan de la Recova." },
-            { portrait: "/images/juego/heinrich-happy.png", text: "No busco pan, señora. Busco el secreto que lo hace crecer. Masa madre." },
+            { portrait: "/images/juego/heinrich-happy.webp", text: "No busco pan, señora. Busco el secreto que lo hace crecer. Masa madre." },
             { portrait: "/images/juego/panadera-small-mouth.png", text: "¿Y para qué la quiere si no es para hornear?" },
             { portrait: "/images/juego/heinrich-neutral.webp", text: "Soy maestro cervecero. Tengo una olla llena de mosto esperando a ser fermentado." },
             { portrait: "/images/juego/panadera-annoyed.png", text: "No regalo masa madre para experimentos raros, gringo." },
-            { portrait: "/images/juego/heinrich-happy.png", text: "Le prometo que si me ayuda, probará la mejor cerveza de su vida." },
+            { portrait: "/images/juego/heinrich-happy.webp", text: "Le prometo que si me ayuda, probará la mejor cerveza de su vida." },
             { portrait: "/images/juego/panadera-excited.png", text: "¿Ah, sí? Bueno… si me guarda un vaso… trato hecho." },
             { portrait: "/images/juego/panadera-neutral.png", text: "Aquí tiene la masa madre. Y si eso explota… no vuelva." },
           ],
@@ -146,7 +146,7 @@ export const plazaScene: Scene = {
       walkToX: 50,
       walkToY: 75,
       onLook: () => ({
-        text: "/images/juego/heinrich-surprised.png|Dos hombres con ropas de campo. Están compartiendo una bebida caliente en una especie de calabaza.",
+        text: "/images/juego/heinrich-surprised.webp|Dos hombres con ropas de campo. Están compartiendo una bebida caliente en una especie de calabaza.",
       }),
       onInteract: () => ({
         text: "/images/juego/heinrich-concerned.webp|Tienen cuchillos muy grandes en la cintura. Mejor no los molesto físicamente.",
@@ -165,7 +165,7 @@ export const plazaScene: Scene = {
                 text: "Es mate, amigazo. La sangre de esta tierra. ¿Gusta un amargo?",
               },
               {
-                portrait: "/images/juego/heinrich-surprised.png",
+                portrait: "/images/juego/heinrich-surprised.webp",
                 text: "Oh, danke. (Heinrich da un sorbo)... ¡Es terriblemente amargo y caliente! Sabe a pasto hervido.",
               },
               {
@@ -307,7 +307,7 @@ export const plazaScene: Scene = {
         }
 
         return {
-          text: "/images/juego/heinrich-happy.png|Lleno el balde con agua limpia de la fuente.",
+          text: "/images/juego/heinrich-happy.webp|Lleno el balde con agua limpia de la fuente.",
           addItem: { id: "balde_agua", name: "Balde con Agua", icon: "🪣" , imageUrl: "/images/juego/items/balde-lleno.png"  },
           removeItem: "balde_vacio",
         };
@@ -328,7 +328,7 @@ export const plazaScene: Scene = {
       walkToX: 5,
       walkToY: 80,
       onLook: () => ({
-        text: "/images/juego/heinrich-surprised.png|Un cartel de madera reza 'Pulpería El Farol'. Se escucha alboroto y guitarras desde adentro.",
+        text: "/images/juego/heinrich-surprised.webp|Un cartel de madera reza 'Pulpería El Farol'. Se escucha alboroto y guitarras desde adentro.",
       }),
       onInteract: () => ({
         text: "Entrando a la pulpería...",
