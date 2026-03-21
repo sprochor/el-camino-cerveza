@@ -202,9 +202,17 @@ export default function DashboardAdmin() {
                   </td>
                 </tr>
               ))}
-
-              {/* RENDER ESTILOS */}
-              {tabActiva === "estilos" && listas.estilos.map((item: any) => (
+{/* RENDER ESTILOS (Con ordenamiento alfanumérico natural) */}
+              {tabActiva === "estilos" && 
+                [...listas.estilos]
+                  .sort((a: any, b: any) => {
+                    const codeA = a.codigo_bjcp || "";
+                    const codeB = b.codigo_bjcp || "";
+                    if (!codeA) return 1;
+                    if (!codeB) return -1;
+                    return codeA.localeCompare(codeB, undefined, { numeric: true, sensitivity: 'base' });
+                  })
+                  .map((item: any) => (
                 <tr key={item.id} className="hover:bg-stone-50 transition">
                   <td className="px-6 py-4 font-bold text-stone-900">{item.nombre}</td>
                   <td className="px-6 py-4 text-gray-500">
