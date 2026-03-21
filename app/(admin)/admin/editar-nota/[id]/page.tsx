@@ -29,6 +29,7 @@ export default function EditarNoticiaPage() {
   const [content, setContent] = useState('') 
   const [imagenVieja, setImagenVieja] = useState<string | null>(null)
   const [imagenNueva, setImagenNueva] = useState<File | null>(null) 
+  const [slugActual, setSlugActual] = useState<string>('') // 👈 Guardamos el slug actual por las dudas
 
   useEffect(() => {
     const cargarDatos = async () => {
@@ -40,11 +41,22 @@ export default function EditarNoticiaPage() {
         setTitle(noticia.title || '')
         setContent(noticia.content || '')
         setImagenVieja(noticia.image_url || null)
+        setSlugActual(noticia.slug || noticia.id) // Guardamos el slug o el ID si no tiene
       }
       setLoading(false)
     }
     cargarDatos()
   }, [noticiaId, router])
+
+  // 👇 NUEVO: Función para generar el slug igual que al crear
+  const crearSlug = (texto: string) => {
+    return texto
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -53,19 +65,33 @@ export default function EditarNoticiaPage() {
     try {
       let imageUrl = imagenVieja
       if (imagenNueva) {
-        const fileName = `noticia-cover-${Date.now()}-${imagenNueva.name}`
-        const { error: uploadError } = await supabase.storage.from('bodegas-cover').upload(fileName, imagenNueva)
+        // 👇 CORRECCIÓN: Cambié 'bodegas-cover' por 'noticias'
+        const fileName = `${Date.now()}-${imagenNueva.name}`
+        const { error: uploadError } = await supabase.storage.from('noticias').upload(fileName, imagenNueva)
         if (uploadError) throw uploadError
-        const { data: { publicUrl } } = supabase.storage.from('bodegas-cover').getPublicUrl(fileName)
+        const { data: { publicUrl } } = supabase.storage.from('noticias').getPublicUrl(fileName)
         imageUrl = publicUrl
       }
 
-      const { error } = await supabase.from('noticias').update({ title, content, image_url: imageUrl }).eq('id', noticiaId)
+      // 👇 NUEVO: Generamos el slug actualizado por si cambiaste el título
+      const slugGenerado = crearSlug(title);
+
+      const { error } = await supabase
+        .from('noticias')
+        .update({ 
+          title, 
+          content, 
+          image_url: imageUrl,
+          slug: slugGenerado // 👈 Guardamos el nuevo slug
+        })
+        .eq('id', noticiaId)
+        
       if (error) throw error
 
       alert('¡Noticia actualizada con éxito!')
-      // 👇 CORRECCIÓN 1: Redirige a /notas/ después de guardar
-      router.push(`/notas/${noticiaId}`) 
+      
+      // 👇 Redirigimos al NUEVO slug en vez del ID viejo
+      router.push(`/notas/${slugGenerado}`) 
     } catch (error: any) {
       alert('Error: ' + error.message)
     } finally {
@@ -78,8 +104,8 @@ export default function EditarNoticiaPage() {
   return (
     <div className="max-w-4xl mx-auto py-10 px-4">
       <div className="flex items-center gap-4 mb-8">
-        {/* 👇 CORRECCIÓN 2: El botón de cancelar apunta a /notas/ */}
-        <Link href={`/notas/${noticiaId}`} className="text-gray-500 hover:text-red-800 font-bold text-xl">← Cancelar</Link>
+        {/* 👇 Cancelar vuelve al slug actual (o al ID si es una nota vieja sin slug) */}
+        <Link href={`/notas/${slugActual}`} className="text-gray-500 hover:text-red-800 font-bold text-xl">← Cancelar</Link>
         <h1 className="text-3xl font-bold text-blue-800">Editar Noticia</h1>
       </div>
       

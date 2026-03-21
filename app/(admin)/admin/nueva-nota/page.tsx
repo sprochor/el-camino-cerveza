@@ -27,7 +27,15 @@ export default function NuevaNotaPage() {
       ["clean"], // Botón para borrar formato
     ],
   };
-
+// Función para convertir el título en una URL amigable (Slug)
+  const crearSlug = (texto: string) => {
+    return texto
+      .toLowerCase()
+      .normalize("NFD") // Separa los acentos de las letras (ej: á -> a + ´)
+      .replace(/[\u0300-\u036f]/g, "") // Borra los acentos sueltos
+      .replace(/[^a-z0-9]+/g, "-") // Cambia cualquier símbolo o espacio por un guión
+      .replace(/(^-|-$)+/g, ""); // Limpia por si quedó un guión al principio o al final
+  };
   const handleGuardar = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!titulo || !contenido) {
@@ -58,11 +66,14 @@ export default function NuevaNotaPage() {
       }
 
       // 2. Guardar la nota en la base de datos
+      const slugGenerado = crearSlug(titulo); // 👈 Generamos el slug antes de guardar
+
       const { error: insertError } = await supabase.from("noticias").insert([
         {
           title: titulo,
-          content: contenido, // Quill nos devuelve HTML puro, lo guardamos tal cual
+          content: contenido,
           image_url: imageUrl,
+          slug: slugGenerado, // 👈 Lo guardamos en la nueva columna
         },
       ]);
 
