@@ -91,6 +91,17 @@ export default function MiCaminoPage() {
       }
 
       const file = event.target.files[0]
+
+      // 👇 NUEVO ESCUDO: Límite de 2MB (2 * 1024 * 1024 bytes) 👇
+      if (file.size > 2097152) {
+        throw new Error('La imagen es muy pesada. El tamaño máximo es 2MB.')
+      }
+
+      // 👇 NUEVO ESCUDO: Verificar que sea sí o sí una imagen 👇
+      if (!file.type.startsWith('image/')) {
+        throw new Error('Solo se permiten archivos de imagen (JPG, PNG, WebP).')
+      }
+
       const fileExt = file.name.split('.').pop()
       const fileName = `${user?.id}-${Math.random()}.${fileExt}`
       const filePath = `${fileName}`
@@ -115,7 +126,7 @@ export default function MiCaminoPage() {
       setAvatarUrl(publicUrl)
       
     } catch (error: any) {
-      alert("Error al subir foto: " + error.message)
+      alert("Error al subir foto: " + error.message) // Ahora mostrará nuestros mensajes personalizados
     } finally {
       setUploadingAvatar(false)
     }
