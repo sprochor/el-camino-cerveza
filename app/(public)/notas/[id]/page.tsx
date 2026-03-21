@@ -122,20 +122,25 @@ export default function NotaDetailPage() {
         <style
           dangerouslySetInnerHTML={{
             __html: `
-          /* 👇 RESETEO ABSOLUTO DE CORTES DE PALABRA 👇 */
-          .prose-cervecero, 
-          .prose-cervecero * { 
+          /* 👇 EL EQUILIBRIO PERFECTO 👇 */
+          .prose-cervecero { 
+            /* Esto permite que baje al renglón siguiente con naturalidad */
+            white-space: pre-wrap !important; 
+            
+            /* Esto le dice: Mantené las palabras enteras... */
             word-break: normal !important; 
-            word-wrap: normal !important;
-            overflow-wrap: normal !important;
-            white-space: normal !important;
-            -webkit-hyphens: none !important;
-            hyphens: none !important;
+            
+            /* ...PERO si hay una palabra/link más larga que la pantalla, ahí sí cortala para que no se escape */
+            overflow-wrap: break-word !important; 
+          }
+          
+          /* Nadie se escapa del ancho de la pantalla */
+          .prose-cervecero * { 
+            max-width: 100% !important; 
           }
           
           /* Arreglo para las imágenes que pongas adentro de la nota */
           .prose-cervecero img { 
-            max-width: 100% !important;
             height: auto !important; 
             border-radius: 1rem; 
             margin: 2.5rem auto; 
@@ -152,12 +157,12 @@ export default function NotaDetailPage() {
           .prose-cervecero li { margin-bottom: 0.5rem; color: #44403c; }
           .prose-cervecero blockquote { border-left: 4px solid #f59e0b; padding-left: 1rem; font-style: italic; background: #fafaf9; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
           
+          /* Los enlaces gigantes (URLs) tienen permiso explícito para romperse */
           .prose-cervecero a { 
             color: #b45309; 
             text-decoration: underline; 
             font-weight: bold; 
-            /* Solo a los links les permitimos romperse si son excesivamente largos */
-            word-break: break-all !important; 
+            word-break: break-all !important;
           }
           .prose-cervecero a:hover { color: #d97706; }
         `,
