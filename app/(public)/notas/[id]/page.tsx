@@ -122,10 +122,14 @@ export default function NotaDetailPage() {
         <style
           dangerouslySetInnerHTML={{
             __html: `
-          /* 👇 LA REGLA DE ORO DEFINITIVA 👇 */
-          .prose-cervecero, .prose-cervecero * { 
+          /* 👇 RESETEO ABSOLUTO DE CORTES DE PALABRA 👇 */
+          .prose-cervecero, 
+          .prose-cervecero * { 
             word-break: normal !important; 
-            overflow-wrap: break-word !important; 
+            word-wrap: normal !important;
+            overflow-wrap: normal !important;
+            white-space: normal !important;
+            -webkit-hyphens: none !important;
             hyphens: none !important;
           }
           
@@ -152,6 +156,8 @@ export default function NotaDetailPage() {
             color: #b45309; 
             text-decoration: underline; 
             font-weight: bold; 
+            /* Solo a los links les permitimos romperse si son excesivamente largos */
+            word-break: break-all !important; 
           }
           .prose-cervecero a:hover { color: #d97706; }
         `,
