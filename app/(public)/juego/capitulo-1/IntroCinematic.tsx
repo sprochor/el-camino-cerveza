@@ -9,7 +9,7 @@ const INTRO_SCRIPT = [
   {
     bg: "bg-[url('/images/juego/intro-mar.webp')] bg-cover bg-center",
     text: "Dicen que en América hay oportunidades…\n\nY también gente sedienta.",
-    portrait: "/images/juego/heinrich-neutral.png",
+    portrait: "/images/juego/heinrich-neutral.webp",
   },
   {
     bg: "bg-[url('/images/juego/intro-bodega.webp')] bg-cover bg-center",

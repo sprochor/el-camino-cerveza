@@ -98,7 +98,7 @@
 .pancho-sprite { 
   width: var(--pancho-frame-width); 
   height: var(--pancho-frame-height); 
-  background-image: url('/images/juego/gaucho-pancho-idle.png'); 
+  background-image: url('/images/juego/gaucho-pancho-idle.webp'); 
   background-repeat: no-repeat; 
   transform-origin: bottom center; 
 }

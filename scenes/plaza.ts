@@ -44,11 +44,11 @@ export const plazaScene: Scene = {
       walkToX: 9,
       walkToY: 40, // Ajustado para que camine hacia la salida
       onLook: () => ({
-        text: "/images/juego/heinrich-neutral.png|El camino embarrado que baja hacia el puerto.",
+        text: "/images/juego/heinrich-neutral.webp|El camino embarrado que baja hacia el puerto.",
       }),
       onInteract: () => ({ text: "Caminando...", transition: "puerto" }),
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|No le hablo a los caminos, ya no estoy tan mareado por el viaje.",
+        text: "/images/juego/heinrich-neutral.webp|No le hablo a los caminos, ya no estoy tan mareado por el viaje.",
       }),
     },
     {
@@ -62,11 +62,11 @@ export const plazaScene: Scene = {
       walkToY: 83,
 
       onLook: () => ({
-        text: "/images/juego/heinrich-neutral.png|Una mujer vendiendo pan recién horneado. Huele mejor que todo lo que probé en este puerto.",
+        text: "/images/juego/heinrich-neutral.webp|Una mujer vendiendo pan recién horneado. Huele mejor que todo lo que probé en este puerto.",
       }),
 
       onInteract: () => ({
-        text: "/images/juego/heinrich-concerned.png|Mejor hablarle con respeto. Esa mujer podría amasar… y golpear.",
+        text: "/images/juego/heinrich-concerned.webp|Mejor hablarle con respeto. Esa mujer podría amasar… y golpear.",
       }),
 
       onTalk: (inventory, flags) => {
@@ -75,7 +75,7 @@ export const plazaScene: Scene = {
         // 🟢 1. YA TIENE LEVADURA (Bloque final)
         if (tieneLevadura) {
           return {
-            text: "/images/juego/panadera-neutral.png|Más le vale que esa cerveza sea mejor que su acento.",
+            text: "/images/juego/panadera-neutral.webp|Más le vale que esa cerveza sea mejor que su acento.",
           };
         }
 
@@ -86,11 +86,11 @@ export const plazaScene: Scene = {
               setFlag: "panadera_explico",
               dialogue: [
                 { portrait: "/images/juego/panadera-neutral.png", text: "¿Qué quiere, extranjero?" },
-                { portrait: "/images/juego/heinrich-neutral.png", text: "Hallo… estoy buscando algo que haga fermentar." },
+                { portrait: "/images/juego/heinrich-neutral.webp", text: "Hallo… estoy buscando algo que haga fermentar." },
                 { portrait: "/images/juego/panadera-small-mouth.png", text: "¿Para hacer pan?" },
                 { portrait: "/images/juego/heinrich-happy.png", text: "Para hacer cerveza." },
                 { portrait: "/images/juego/panadera-annoyed.png", text: "¿Cerveza? ¿Y ya la tiene?" },
-                { portrait: "/images/juego/heinrich-speaking-small.png", text: "Nein… estoy en eso.." },
+                { portrait: "/images/juego/heinrich-speaking-small.webp", text: "Nein… estoy en eso.." },
                 { portrait: "/images/juego/panadera-annoyed.png", text: "Primero consiga algo que fermentar. Después hablamos." },
               ],
             };
@@ -98,7 +98,7 @@ export const plazaScene: Scene = {
 
           // Si ya te explicó pero seguís sin mosto
           return {
-            text: "/images/juego/heinrich-neutral.png|Mejor preparo el mosto antes de volver a insistirle.",
+            text: "/images/juego/heinrich-neutral.webp|Mejor preparo el mosto antes de volver a insistirle.",
           };
         }
 
@@ -109,7 +109,7 @@ export const plazaScene: Scene = {
               { portrait: "/images/juego/panadera-neutral.png", text: "¿Otra vez usted?" },
               { portrait: "/images/juego/heinrich-happy.png", text: "Ahora sí. Tengo el mosto dulce listo para fermentar." },
               { portrait: "/images/juego/panadera-small-mouth.png", text: "¿Eso es su famosa cerveza?" },
-              { portrait: "/images/juego/heinrich-neutral.png", text: "Todavía no… pero lo será." },
+              { portrait: "/images/juego/heinrich-neutral.webp", text: "Todavía no… pero lo será." },
               { portrait: "/images/juego/panadera-annoyed.png", text: "No regalo masa madre para experimentos raros." },
               { portrait: "/images/juego/heinrich-happy.png", text: "Le prometo que será la mejor cerveza que haya probado." },
               { portrait: "/images/juego/panadera-excited.png", text: "¿Ah, sí? Bueno… si me guarda un vaso… trato hecho." },
@@ -126,7 +126,7 @@ export const plazaScene: Scene = {
             { portrait: "/images/juego/panadera-neutral.png", text: "¿Qué se le ofrece, extranjero? Tengo el mejor pan de la Recova." },
             { portrait: "/images/juego/heinrich-happy.png", text: "No busco pan, señora. Busco el secreto que lo hace crecer. Masa madre." },
             { portrait: "/images/juego/panadera-small-mouth.png", text: "¿Y para qué la quiere si no es para hornear?" },
-            { portrait: "/images/juego/heinrich-neutral.png", text: "Soy maestro cervecero. Tengo una olla llena de mosto esperando a ser fermentado." },
+            { portrait: "/images/juego/heinrich-neutral.webp", text: "Soy maestro cervecero. Tengo una olla llena de mosto esperando a ser fermentado." },
             { portrait: "/images/juego/panadera-annoyed.png", text: "No regalo masa madre para experimentos raros, gringo." },
             { portrait: "/images/juego/heinrich-happy.png", text: "Le prometo que si me ayuda, probará la mejor cerveza de su vida." },
             { portrait: "/images/juego/panadera-excited.png", text: "¿Ah, sí? Bueno… si me guarda un vaso… trato hecho." },
@@ -149,7 +149,7 @@ export const plazaScene: Scene = {
         text: "/images/juego/heinrich-surprised.png|Dos hombres con ropas de campo. Están compartiendo una bebida caliente en una especie de calabaza.",
       }),
       onInteract: () => ({
-        text: "/images/juego/heinrich-concerned.png|Tienen cuchillos muy grandes en la cintura. Mejor no los molesto físicamente.",
+        text: "/images/juego/heinrich-concerned.webp|Tienen cuchillos muy grandes en la cintura. Mejor no los molesto físicamente.",
       }),
       onTalk: (inventory, flags) => {
         if (!flags.includes("conocio_mate")) {
@@ -157,7 +157,7 @@ export const plazaScene: Scene = {
             setFlag: "conocio_mate",
             dialogue: [
               {
-                portrait: "/images/juego/heinrich-neutral.png",
+                portrait: "/images/juego/heinrich-neutral.webp",
                 text: "Buenas tardes, señores. ¿Qué es esa infusión que beben con tanta devoción?",
               },
               {
@@ -176,7 +176,7 @@ export const plazaScene: Scene = {
           };
         }
         return {
-          text: "/images/juego/heinrich-neutral.png|Mejor los dejo disfrutar de su 'mate'. Creo que prefiero la cerveza.",
+          text: "/images/juego/heinrich-neutral.webp|Mejor los dejo disfrutar de su 'mate'. Creo que prefiero la cerveza.",
         };
       },
     },
@@ -190,13 +190,13 @@ export const plazaScene: Scene = {
       walkToX: 25, // Lo ajusté para que camine cerca de ellas y no al centro
       walkToY: 60,
       onLook: () => ({
-        text: "/images/juego/heinrich-neutral.png|Un grupo de palomas picoteando migas de pan en la tierra.",
+        text: "/images/juego/heinrich-neutral.webp|Un grupo de palomas picoteando migas de pan en la tierra.",
       }),
       onInteract: () => ({
-        text: "/images/juego/heinrich-concerned.png|Si trato de agarrar una, se irán volando.",
+        text: "/images/juego/heinrich-concerned.webp|Si trato de agarrar una, se irán volando.",
       }),
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|Crrru cu cu... No, definitivamente no hablo idioma paloma.",
+        text: "/images/juego/heinrich-neutral.webp|Crrru cu cu... No, definitivamente no hablo idioma paloma.",
       }),
     },
     {
@@ -213,7 +213,7 @@ export const plazaScene: Scene = {
         // Si ya se fue, Heinrich dice otra cosa
         if (flags.includes("paloma_escapo")) return { text: "Ya se fue." };
         return {
-          text: "/images/juego/heinrich-neutral.png|Una paloma picoteando migas de pan en la tierra.",
+          text: "/images/juego/heinrich-neutral.webp|Una paloma picoteando migas de pan en la tierra.",
         };
       },
       onInteract: (inventory, flags) => {
@@ -221,14 +221,14 @@ export const plazaScene: Scene = {
         if (flags.includes("paloma_escapo"))
           return { text: "Ya asusté a esa pobre ave." };
         return {
-          text: "/images/juego/heinrich-concerned.png|¡Se fue volando! En Baviera las palomas son más lentas.",
+          text: "/images/juego/heinrich-concerned.webp|¡Se fue volando! En Baviera las palomas son más lentas.",
           setFlag: "paloma_escapo", // Esta bandera unificada dispara la animación CSS
         };
       },
       onTalk: (inventory, flags) => {
         if (flags.includes("paloma_escapo")) return { text: "Ya se fue." };
         return {
-          text: "/images/juego/heinrich-neutral.png|Crrru cu cu... No, definitivamente no hablo idioma paloma.",
+          text: "/images/juego/heinrich-neutral.webp|Crrru cu cu... No, definitivamente no hablo idioma paloma.",
         };
       },
     },
@@ -243,15 +243,15 @@ export const plazaScene: Scene = {
       walkToY: 65,
 
       onLook: () => ({
-        text: "/images/juego/heinrich-neutral.png|La bandera del Imperio Español. Parece que esta ciudad aún tiene dueño.",
+        text: "/images/juego/heinrich-neutral.webp|La bandera del Imperio Español. Parece que esta ciudad aún tiene dueño.",
       }),
 
       onInteract: () => ({
-        text: "/images/juego/heinrich-concerned.png|No creo que tocar eso sea buena idea.",
+        text: "/images/juego/heinrich-concerned.webp|No creo que tocar eso sea buena idea.",
       }),
 
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|Prefiero no meterme en política... vine a hacer cerveza.",
+        text: "/images/juego/heinrich-neutral.webp|Prefiero no meterme en política... vine a hacer cerveza.",
       }),
     },
     {
@@ -265,15 +265,15 @@ export const plazaScene: Scene = {
       walkToY: 60,
 
       onLook: () => ({
-        text: "/images/juego/heinrich-neutral.png|Un árbol grande que da buena sombra. Perfecto para escapar del calor.",
+        text: "/images/juego/heinrich-neutral.webp|Un árbol grande que da buena sombra. Perfecto para escapar del calor.",
       }),
 
       onInteract: () => ({
-        text: "/images/juego/heinrich-neutral.png|No necesito madera... todavía.",
+        text: "/images/juego/heinrich-neutral.webp|No necesito madera... todavía.",
       }),
 
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|En Baviera hay árboles así... pero con mejor cerveza cerca.",
+        text: "/images/juego/heinrich-neutral.webp|En Baviera hay árboles así... pero con mejor cerveza cerca.",
       }),
     },
     {
@@ -287,7 +287,7 @@ export const plazaScene: Scene = {
       walkToY: 80,
 
       onLook: () => ({
-        text: "/images/juego/heinrich-neutral.png|Una fuente con agua clara. Mucho mejor que ese río marrón.",
+        text: "/images/juego/heinrich-neutral.webp|Una fuente con agua clara. Mucho mejor que ese río marrón.",
       }),
 
       onInteract: (inventory) => {
@@ -296,13 +296,13 @@ export const plazaScene: Scene = {
 
         if (tieneAgua) {
           return {
-            text: "/images/juego/heinrich-neutral.png|El balde ya está lleno.",
+            text: "/images/juego/heinrich-neutral.webp|El balde ya está lleno.",
           };
         }
 
         if (!tieneBalde) {
           return {
-            text: "/images/juego/heinrich-concerned.png|Necesito algo para transportar agua.",
+            text: "/images/juego/heinrich-concerned.webp|Necesito algo para transportar agua.",
           };
         }
 
@@ -314,7 +314,7 @@ export const plazaScene: Scene = {
       },
 
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|No creo que el agua me responda.",
+        text: "/images/juego/heinrich-neutral.webp|No creo que el agua me responda.",
       }),
     },
     {
@@ -335,7 +335,7 @@ export const plazaScene: Scene = {
         transition: "pulperia",
       }),
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|Tengo la garganta seca, mejor entro a hablar adentro.",
+        text: "/images/juego/heinrich-neutral.webp|Tengo la garganta seca, mejor entro a hablar adentro.",
       }),
     },
   ],

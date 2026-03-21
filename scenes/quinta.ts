@@ -47,14 +47,14 @@ export const quintaScene: Scene = {
       walkToX: 10,
       walkToY: 85,
       onLook: () => ({
-        text: "/images/juego/heinrich-neutral.png|La puerta trasera de la pulpería. Desde acá se escucha el murmullo de los parroquianos.",
+        text: "/images/juego/heinrich-neutral.webp|La puerta trasera de la pulpería. Desde acá se escucha el murmullo de los parroquianos.",
       }),
       onInteract: () => ({
         text: "Entrando a la pulpería...",
         transition: "pulperia",
       }),
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|No hay necesidad de golpear, ya me dieron permiso.",
+        text: "/images/juego/heinrich-neutral.webp|No hay necesidad de golpear, ya me dieron permiso.",
       }),
     },
 
@@ -76,7 +76,7 @@ export const quintaScene: Scene = {
       onInteract: (inventory) => {
         if (inventory.some((i) => i.id === "lupulo")) {
           return {
-            text: "/images/juego/heinrich-neutral.png|Ya arranqué suficientes flores. No quiero deforestar la pared entera.",
+            text: "/images/juego/heinrich-neutral.webp|Ya arranqué suficientes flores. No quiero deforestar la pared entera.",
           };
         }
         return {
@@ -90,7 +90,7 @@ export const quintaScene: Scene = {
         };
       },
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|Crecé fuerte, amiguito. Vas a terminar en un buen barril.",
+        text: "/images/juego/heinrich-neutral.webp|Crecé fuerte, amiguito. Vas a terminar en un buen barril.",
       }),
     },
 
@@ -109,7 +109,7 @@ export const quintaScene: Scene = {
       walkToY: 95,
 
       // 👇 AGREGAMOS LA VISUALIZACIÓN 👇
-      imageUrl: "/images/juego/balde_suelo.png", // La imagen del balde
+      imageUrl: "/images/juego/balde_suelo.webp", // La imagen del balde
       visible: (inventory: Item[], flags: string[]) =>
         !flags.includes("balde_recogido"), // Solo es visible si NO se recogió
       imageScale: 1.1, // 80% de tamaño (achicarlo un poco)
@@ -117,11 +117,11 @@ export const quintaScene: Scene = {
       onLook: (inventory, flags) => {
         if (!flags.includes("balde_recogido")) {
           return {
-            text: "/images/juego/heinrich-neutral.png|Un viejo pozo de ladrillos. Hay un balde de hojalata.",
+            text: "/images/juego/heinrich-neutral.webp|Un viejo pozo de ladrillos. Hay un balde de hojalata.",
           };
         }
         return {
-          text: "/images/juego/heinrich-neutral.png|Un viejo pozo. Seco. Perfecto. Justo lo que necesitaba… nada.",
+          text: "/images/juego/heinrich-neutral.webp|Un viejo pozo. Seco. Perfecto. Justo lo que necesitaba… nada.",
         };
       },
       onInteract: (inventory, flags) => {
@@ -139,11 +139,11 @@ export const quintaScene: Scene = {
           };
         }
         return {
-          text: "/images/juego/heinrich-neutral.png|Asomarse no tiene sentido. Si tiro una moneda, probablemente me devuelva arena.",
+          text: "/images/juego/heinrich-neutral.webp|Asomarse no tiene sentido. Si tiro una moneda, probablemente me devuelva arena.",
         };
       },
       onTalk: () => ({
-        text: "/images/juego/heinrich-speaking-small.png|¡HAAALLO!... (hallo... hallo...). Tiene eco, pero no agua.",
+        text: "/images/juego/heinrich-speaking-small.webp|¡HAAALLO!... (hallo... hallo...). Tiene eco, pero no agua.",
       }),
     },
     // =======================
@@ -159,13 +159,13 @@ export const quintaScene: Scene = {
       walkToX: 85,
       walkToY: 75,
       onLook: () => ({
-        text: "/images/juego/heinrich-neutral.png|Una soga marinera bastante resistente y algo sucia.",
+        text: "/images/juego/heinrich-neutral.webp|Una soga marinera bastante resistente y algo sucia.",
       }),
       onInteract: () => ({
-        text: "/images/juego/heinrich-speaking-small.png|Mmm... 'Podría serme útil en el futuro'. Todavá no la necesito… todavía.",
+        text: "/images/juego/heinrich-speaking-small.webp|Mmm... 'Podría serme útil en el futuro'. Todavá no la necesito… todavía.",
       }),
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|Mejor No preguntaré para qué la usan.",
+        text: "/images/juego/heinrich-neutral.webp|Mejor No preguntaré para qué la usan.",
       }),
     },
 
@@ -185,10 +185,10 @@ export const quintaScene: Scene = {
         text: "/images/juego/heinrich-surprised.png|Un barril de caña, el aroma es… contundente. Esto no es bebida, es una advertencia.",
       }),
       onInteract: () => ({
-        text: "/images/juego/heinrich-concerned.png|Mejor no. Prefiero cerveza. Esto parece combustible.",
+        text: "/images/juego/heinrich-concerned.webp|Mejor no. Prefiero cerveza. Esto parece combustible.",
       }),
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|Hola, veneno.",
+        text: "/images/juego/heinrich-neutral.webp|Hola, veneno.",
       }),
     },
 
@@ -205,10 +205,10 @@ export const quintaScene: Scene = {
       walkToX: 55,
       walkToY: 65,
       onLook: () => ({
-        text: "/images/juego/heinrich-neutral.png|Un árbol bastante generoso. Sombra, temperatura estable… casi perfecto para una fermentación decente.",
+        text: "/images/juego/heinrich-neutral.webp|Un árbol bastante generoso. Sombra, temperatura estable… casi perfecto para una fermentación decente.",
       }),
       onInteract: () => ({
-        text: "/images/juego/heinrich-neutral.png|No soy leñador, soy cervecero. Mi relación con la madera se limita estrictamente a los barriles.",
+        text: "/images/juego/heinrich-neutral.webp|No soy leñador, soy cervecero. Mi relación con la madera se limita estrictamente a los barriles.",
       }),
       onTalk: () => ({
         text: "/images/juego/heinrich-happy.png|No sos un roble bávaro, pero tenés tu encanto sureño.",
@@ -243,7 +243,7 @@ export const quintaScene: Scene = {
             text: "/images/juego/heinrich-thinking.png|El mosto está en el barril. Le falta la chispa de la vida: algo que la haga cobrar vida.",
           };
         return {
-          text: "/images/juego/heinrich-neutral.png|Una mesa vieja bajo la sombra. El lugar perfecto para dejar reposar un buen barril.",
+          text: "/images/juego/heinrich-neutral.webp|Una mesa vieja bajo la sombra. El lugar perfecto para dejar reposar un buen barril.",
         };
       },
 
@@ -291,7 +291,7 @@ export const quintaScene: Scene = {
         };
       },
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|Mesa, llevemosnos bien.",
+        text: "/images/juego/heinrich-neutral.webp|Mesa, llevemosnos bien.",
       }),
     },
   ],

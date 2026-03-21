@@ -45,7 +45,7 @@ export const pulperiaScene: Scene = {
           return {
             setFlag: "conocio_pulpero",
             dialogue: [
-              { portrait: "/images/juego/heinrich-neutral.png", text: "Hallo… buenas tardes." },
+              { portrait: "/images/juego/heinrich-neutral.webp", text: "Hallo… buenas tardes." },
               { portrait: "/images/juego/pulpero-serious.png", text: "No lo conozco. ¿Qué busca?" },
               { portrait: "/images/juego/heinrich-happy.png", text: "Soy Heinrich, un maestro cervecero. Solo estoy conociendo el lugar." },
               { portrait: "/images/juego/pulpero-smirk.png", text: "Acá tomamos cosas fuertes, gringo. Si va a consumir, siéntese. Si no, no estorbe el paso." }
@@ -58,7 +58,7 @@ export const pulperiaScene: Scene = {
           return {
             setFlag: "permiso_pulpero",
             dialogue: [
-              { portrait: "/images/juego/heinrich-neutral.png", text: "Señor, ¿me permite usar esa olla de hierro? Quiero hacer cerveza." },
+              { portrait: "/images/juego/heinrich-neutral.webp", text: "Señor, ¿me permite usar esa olla de hierro? Quiero hacer cerveza." },
               { portrait: "/images/juego/pulpero-smirk.png", text: "¿Cerveza? Ya le dije que la gente acá no toma eso." },
               { portrait: "/images/juego/heinrich-happy.png", text: "La cerveza es una bebida noble. Déjeme demostrarlo." },
               { portrait: "/images/juego/pulpero-speaking-medium.png", text: "Mientras no me rompa nada… use lo que necesite." },
@@ -72,7 +72,7 @@ export const pulperiaScene: Scene = {
           return {
             setFlag: "permiso_patio",
             dialogue: [
-              { portrait: "/images/juego/heinrich-neutral.png", text: "¿Puedo pasar al patio trasero?" },
+              { portrait: "/images/juego/heinrich-neutral.webp", text: "¿Puedo pasar al patio trasero?" },
               { portrait: "/images/juego/pulpero-serious.png", text: "¿Al patio? ¿A qué?" },
               { portrait: "/images/juego/heinrich-happy.png", text: "Necesito un lugar fresco o quizás algo de vegetación para mi receta." },
               { portrait: "/images/juego/pulpero-neutral.png", text: "Pase. Pero cierre la puerta al salir para que no se escape el perro." }
@@ -142,10 +142,10 @@ export const pulperiaScene: Scene = {
         }
         return { 
           setFlag: "galleta_anim", 
-          text: "/images/juego/heinrich-neutral.png|El perro disfruta de los mimos." 
+          text: "/images/juego/heinrich-neutral.webp|El perro disfruta de los mimos." 
         };
       },
-      onTalk: () => ({ text: "/images/juego/heinrich-speaking-small.png|Hallo, pequeño amigo." }),
+      onTalk: () => ({ text: "/images/juego/heinrich-speaking-small.webp|Hallo, pequeño amigo." }),
     },
 
     // =======================
@@ -161,7 +161,7 @@ export const pulperiaScene: Scene = {
       walkToX: 65,
       walkToY: 100,
       onLook: () => ({ text: "/images/juego/heinrich-surprised.png|Un gaucho con un facón enorme. Parece tranquilo… pero no lo probaría." }),
-      onInteract: () => ({ text: "/images/juego/heinrich-concerned.png|Prefiero hablarle antes que tocarlo." }),
+      onInteract: () => ({ text: "/images/juego/heinrich-concerned.webp|Prefiero hablarle antes que tocarlo." }),
       onTalk: (inventory, flags) => {
         const tieneYesca = inventory.some((i) => i.id === "yesca");
 
@@ -170,7 +170,7 @@ export const pulperiaScene: Scene = {
             setFlag: "hablo_pancho",
             dialogue: [
               { portrait: "/images/juego/pancho-neutral.png", text: "Buenas, gringo. No sos de por acá, ¿no?" },
-              { portrait: "/images/juego/heinrich-neutral.png", text: "Soy cervecero. Quiero hacer cerveza." },
+              { portrait: "/images/juego/heinrich-neutral.webp", text: "Soy cervecero. Quiero hacer cerveza." },
               { portrait: "/images/juego/pancho-amused.png", text: "¿Cerveza? Acá tomamos mate… o cosas que te tumban." },
               { portrait: "/images/juego/pancho-smiling.png", text: "Pero me gusta tu idea. Suena a problema… y a diversión." },
             ],
@@ -186,7 +186,7 @@ export const pulperiaScene: Scene = {
             return {
               setFlag: "pancho_reto_permiso",
               dialogue: [
-                { portrait: "/images/juego/heinrich-neutral.png", text: "Necesito encender esa olla…" },
+                { portrait: "/images/juego/heinrich-neutral.webp", text: "Necesito encender esa olla…" },
                 { portrait: "/images/juego/pancho-serious.png", text: "Pará, gringo. ¿Ya hablaste con el pulpero?" },
                 { portrait: "/images/juego/heinrich-surprised.png", text: "Eh… no exactamente." },
                 { portrait: "/images/juego/pancho-serious.png", text: "Acá no se prende fuego sin permiso. A menos que quieras terminar afuera… o peor." },
@@ -200,7 +200,7 @@ export const pulperiaScene: Scene = {
         if (flags.includes("permiso_pulpero") && !flags.includes("olla_encendida") && !tieneYesca) {
           return {
             dialogue: [
-              { portrait: "/images/juego/heinrich-neutral.png", text: "El pulpero me dejó usar la olla. Pero no tengo cómo encender el fuego." },
+              { portrait: "/images/juego/heinrich-neutral.webp", text: "El pulpero me dejó usar la olla. Pero no tengo cómo encender el fuego." },
               { portrait: "/images/juego/pancho-serious.png", text: "Sin chispa no hay fuego, gringo. Y sin fuego… lo tuyo es sopa triste." },
               { portrait: "/images/juego/pancho-smiling.png", text: "Tomá, llevate esto. Pero no me incendies el rancho." },
             ],
@@ -220,7 +220,7 @@ export const pulperiaScene: Scene = {
           return {
             dialogue: [
               { portrait: "/images/juego/pancho-smiling.png", text: "Ahora sí… eso ya empieza a oler como algo serio. Pero le falta algo." },
-              { portrait: "/images/juego/heinrich-neutral.png", text: "¿El qué?" },
+              { portrait: "/images/juego/heinrich-neutral.webp", text: "¿El qué?" },
               { portrait: "/images/juego/pancho-smiling.png", text: "Algo que le dé carácter. Atrás, en el patio… hay unas flores enredadas." },
               { portrait: "/images/juego/pancho-neutral.png", text: "Los caballos no las comen… así que deben servir para algo." },
               { portrait: "/images/juego/heinrich-happy.png", text: "Interesante… podría funcionar." },
@@ -233,7 +233,7 @@ export const pulperiaScene: Scene = {
             setFlag: "pancho_hint_fermento",
             dialogue: [
               { portrait: "/images/juego/pancho-serious.png", text: "Ahora viene lo importante." },
-              { portrait: "/images/juego/heinrich-neutral.png", text: "¿Qué sigue?" },
+              { portrait: "/images/juego/heinrich-neutral.webp", text: "¿Qué sigue?" },
               { portrait: "/images/juego/pancho-neutral.png", text: "Dejalo descansar… como al mate." },
               { portrait: "/images/juego/pancho-smiling.png", text: "Buscate un barril… y armate de paciencia." },
             ],
@@ -246,7 +246,7 @@ export const pulperiaScene: Scene = {
               setFlag: "advirtio_whitmore",
               dialogue: [
                 { portrait: "/images/juego/pancho-serious.png", text: "Te vi mirando hacia el puerto antes. ¿Conocés al inglés?" },
-                { portrait: "/images/juego/heinrich-angry.png", text: "Demasiado. Me arruinó la vida en alta mar." },
+                { portrait: "/images/juego/heinrich-angry.webp", text: "Demasiado. Me arruinó la vida en alta mar." },
                 { portrait: "/images/juego/pancho-annoyed.png", text: "Whitmore no me gusta nada. Nadie trae tantos barriles porque sí." },
                 { portrait: "/images/juego/pancho-serious.png", text: "Andá con cuidado por ahí." },
               ],
@@ -256,7 +256,7 @@ export const pulperiaScene: Scene = {
               setFlag: "advirtio_whitmore",
               dialogue: [
                 { portrait: "/images/juego/pancho-serious.png", text: "Y ojo si vas para el puerto... cuidado con ese inglés." },
-                { portrait: "/images/juego/heinrich-neutral.png", text: "¿Qué inglés?" },
+                { portrait: "/images/juego/heinrich-neutral.webp", text: "¿Qué inglés?" },
                 { portrait: "/images/juego/pancho-annoyed.png", text: "Un tal Whitmore. No me gusta nada. Nadie trae tantos barriles porque sí." },
               ],
             };
@@ -281,20 +281,20 @@ export const pulperiaScene: Scene = {
       walkToY: 75,
       
       onLook: (inventory, flags) => {
-        if (!flags.includes("olla_encendida")) return { text: "/images/juego/heinrich-neutral.png|Una olla de hierro. Está apagada." };
-        if (!flags.includes("agua_agregada")) return { text: "/images/juego/heinrich-neutral.png|El fuego está encendido, pero la olla está vacía." };
-        if (!flags.includes("macerando")) return { text: "/images/juego/heinrich-neutral.png|El agua está caliente. Lista para agregar la cebada." };
-        if (!flags.includes("macerado_listo")) return { text: "/images/juego/heinrich-neutral.png|La cebada se está macerando en el agua caliente. Hay que darle un rato." };
-        if (!flags.includes("hirviendo")) return { text: "/images/juego/heinrich-neutral.png|El macerado terminó. Falta agregarle algo para darle carácter…" };
-        if (!flags.includes("hervido_listo")) return { text: "/images/juego/heinrich-neutral.png|El mosto está hirviendo con el lúpulo. Esto lleva un rato." };
-        if (!flags.includes("mosto_enfriando")) return { text: "/images/juego/heinrich-neutral.png|El hervido terminó. Huele fantástico, pero hierve con fuerza." };
-        if (!flags.includes("mosto_listo")) return { text: "/images/juego/heinrich-neutral.png|Está enfriándose. Todavía no puedo usarlo." };
-        if (!flags.includes("mosto_en_barril")) return { text: "/images/juego/heinrich-neutral.png|El mosto está listo y frío. Tengo que pasarlo a un barril." };
+        if (!flags.includes("olla_encendida")) return { text: "/images/juego/heinrich-neutral.webp|Una olla de hierro. Está apagada." };
+        if (!flags.includes("agua_agregada")) return { text: "/images/juego/heinrich-neutral.webp|El fuego está encendido, pero la olla está vacía." };
+        if (!flags.includes("macerando")) return { text: "/images/juego/heinrich-neutral.webp|El agua está caliente. Lista para agregar la cebada." };
+        if (!flags.includes("macerado_listo")) return { text: "/images/juego/heinrich-neutral.webp|La cebada se está macerando en el agua caliente. Hay que darle un rato." };
+        if (!flags.includes("hirviendo")) return { text: "/images/juego/heinrich-neutral.webp|El macerado terminó. Falta agregarle algo para darle carácter…" };
+        if (!flags.includes("hervido_listo")) return { text: "/images/juego/heinrich-neutral.webp|El mosto está hirviendo con el lúpulo. Esto lleva un rato." };
+        if (!flags.includes("mosto_enfriando")) return { text: "/images/juego/heinrich-neutral.webp|El hervido terminó. Huele fantástico, pero hierve con fuerza." };
+        if (!flags.includes("mosto_listo")) return { text: "/images/juego/heinrich-neutral.webp|Está enfriándose. Todavía no puedo usarlo." };
+        if (!flags.includes("mosto_en_barril")) return { text: "/images/juego/heinrich-neutral.webp|El mosto está listo y frío. Tengo que pasarlo a un barril." };
         
-        return { text: "/images/juego/heinrich-neutral.png|La olla ya cumplió su función." };
+        return { text: "/images/juego/heinrich-neutral.webp|La olla ya cumplió su función." };
       },
       
-      onTalk: () => ({ text: "/images/juego/heinrich-neutral.png|Nada más que decir. Es una olla." }),
+      onTalk: () => ({ text: "/images/juego/heinrich-neutral.webp|Nada más que decir. Es una olla." }),
       
       onInteract: (inventory, flags) => {
         const tieneYesca = inventory.some((i) => i.id === "yesca");
@@ -306,14 +306,14 @@ export const pulperiaScene: Scene = {
         // 🔒 SIN PERMISO
         if (!flags.includes("permiso_pulpero")) {
           return {
-            text: "/images/juego/heinrich-concerned.png|Mejor le pido permiso al dueño antes de empezar a encender fuegos.",
+            text: "/images/juego/heinrich-concerned.webp|Mejor le pido permiso al dueño antes de empezar a encender fuegos.",
             setFlag: "quiere_usar_olla"
           };
         }
 
         // 🔥 ENCENDER
         if (!flags.includes("olla_encendida")) {
-          if (!tieneYesca) return { text: "/images/juego/heinrich-concerned.png|Necesito algo para encender el fuego." };
+          if (!tieneYesca) return { text: "/images/juego/heinrich-concerned.webp|Necesito algo para encender el fuego." };
           return { text: "/images/juego/heinrich-happy.png|Prendo el fuego debajo de la olla.", 
             setFlag: "olla_encendida",
           removeItem: "yesca" };
@@ -321,13 +321,13 @@ export const pulperiaScene: Scene = {
 
         // 💧 AGUA
         if (!flags.includes("agua_agregada")) {
-          if (!tieneAgua) return { text: "/images/juego/heinrich-neutral.png|Necesito agua primero." };
-          return { text: "/images/juego/heinrich-neutral.png|Agrego agua a la olla.", setFlag: "agua_agregada", removeItem: "balde_agua" };
+          if (!tieneAgua) return { text: "/images/juego/heinrich-neutral.webp|Necesito agua primero." };
+          return { text: "/images/juego/heinrich-neutral.webp|Agrego agua a la olla.", setFlag: "agua_agregada", removeItem: "balde_agua" };
         }
 
         // 🌾 CEBADA (INICIA MACERADO)
         if (!flags.includes("macerando")) {
-          if (!tieneCebada) return { text: "/images/juego/heinrich-neutral.png|Necesito conseguir cebada para hacer el mosto." };
+          if (!tieneCebada) return { text: "/images/juego/heinrich-neutral.webp|Necesito conseguir cebada para hacer el mosto." };
           return { text: "/images/juego/heinrich-happy.png|Agrego la cebada. El aroma empieza a cambiar…", setFlag: "macerando", removeItem: "cebada" };
         }
 
@@ -338,7 +338,7 @@ export const pulperiaScene: Scene = {
 
         // 🌿 LÚPULO (INICIA HERVIDO)
         if (!flags.includes("hirviendo")) {
-          if (!tieneLupulo) return { text: "/images/juego/heinrich-neutral.png|Necesito algo para darle amargor…" };
+          if (!tieneLupulo) return { text: "/images/juego/heinrich-neutral.webp|Necesito algo para darle amargor…" };
           return { 
             text: "/images/juego/heinrich-happy.png|Listo el macerado, agrego estas flores silvestres. Espero le de amargor.", 
             setFlag: "hirviendo,lupulo_agregado",
@@ -353,7 +353,7 @@ export const pulperiaScene: Scene = {
 
         // 🧊 ENFRIAR
         if (!flags.includes("mosto_enfriando")) {
-          return { text: "/images/juego/heinrich-neutral.png|El hervido terminó y la receta está completa. Pero el mosto está demasiado caliente. Mejor dejarlo enfriar.", setFlag: "mosto_enfriando" };
+          return { text: "/images/juego/heinrich-neutral.webp|El hervido terminó y la receta está completa. Pero el mosto está demasiado caliente. Mejor dejarlo enfriar.", setFlag: "mosto_enfriando" };
         }
 
         // ⏳ ESPERAR ENFRIADO (Viaje al puerto)
@@ -374,7 +374,7 @@ export const pulperiaScene: Scene = {
           };
         }
 
-        return { text: "/images/juego/heinrich-neutral.png|La olla ya cumplió su función. Ahora todo depende del barril." };
+        return { text: "/images/juego/heinrich-neutral.webp|La olla ya cumplió su función. Ahora todo depende del barril." };
       },
     },
 
@@ -392,18 +392,18 @@ export const pulperiaScene: Scene = {
       walkToY: 1,
       
       onLook: () => ({ 
-        text: "/images/juego/heinrich-neutral.png|Un saco lleno de cebada. Los locales se la dan a los caballos, pero es oro puro para un cervecero." 
+        text: "/images/juego/heinrich-neutral.webp|Un saco lleno de cebada. Los locales se la dan a los caballos, pero es oro puro para un cervecero." 
       }),
 
       onInteract: (inventory, flags) => {
         if (!flags.includes("permiso_pulpero")) {
-          return { text: "/images/juego/heinrich-neutral.png|No debería tocar esto sin permiso." };
+          return { text: "/images/juego/heinrich-neutral.webp|No debería tocar esto sin permiso." };
         }
         if (inventory.some((i) => i.id === "cebada")) {
-          return { text: "/images/juego/heinrich-neutral.png|Ya tengo suficiente cebada." };
+          return { text: "/images/juego/heinrich-neutral.webp|Ya tengo suficiente cebada." };
         }
         if (!flags.includes("agua_agregada")) {
-           return { text: "/images/juego/heinrich-neutral.png|La cebada podría ser para el macerado. Pero primero necesito tener agua caliente en la olla." };
+           return { text: "/images/juego/heinrich-neutral.webp|La cebada podría ser para el macerado. Pero primero necesito tener agua caliente en la olla." };
         }
         
         return {
@@ -428,14 +428,14 @@ export const pulperiaScene: Scene = {
       walkToY: 60,
       onLook: (inventory, flags) => {
         if (!flags.includes("permiso_patio")) {
-          return { text: "/images/juego/heinrich-neutral.png|Una puerta trasera que da a un patio. El pulpero no me saca los ojos de encima." };
+          return { text: "/images/juego/heinrich-neutral.webp|Una puerta trasera que da a un patio. El pulpero no me saca los ojos de encima." };
         }
-        return { text: "/images/juego/heinrich-neutral.png|La puerta al patio. El pulpero me dio permiso para usarlo." };
+        return { text: "/images/juego/heinrich-neutral.webp|La puerta al patio. El pulpero me dio permiso para usarlo." };
       },
       onInteract: (inventory, flags): ActionResult => {
         if (!flags.includes("permiso_patio")) {
           return {
-            text: "/images/juego/heinrich-concerned.png|Mejor le pregunto al pulpero si puedo salir al patio.",
+            text: "/images/juego/heinrich-concerned.webp|Mejor le pregunto al pulpero si puedo salir al patio.",
             setFlag: "quiere_ir_patio" 
           };
         }
@@ -450,7 +450,7 @@ export const pulperiaScene: Scene = {
         
         return result;
       },
-      onTalk: () => ({ text: "/images/juego/heinrich-neutral.png|No suelo conversar con puertas." }),
+      onTalk: () => ({ text: "/images/juego/heinrich-neutral.webp|No suelo conversar con puertas." }),
     },
 
     // =======================

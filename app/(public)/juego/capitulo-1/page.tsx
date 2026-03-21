@@ -126,6 +126,13 @@ export default function GameEngine() {
         "/images/juego/paloma-escape.png",
         "/images/juego/barril-vacio.png",
         "/images/juego/edward-idle.png",
+
+        // Caras y personajes
+        "/images/juego/heinrich-neutral.webp",
+        "/images/juego/olla-fuego.png",
+        "/images/juego/paloma-escape.png",
+        "/images/juego/barril-vacio.png",
+        "/images/juego/edward-idle.png",
       ];
 
       imagesToPreload.forEach((src) => {
@@ -696,9 +703,9 @@ export default function GameEngine() {
       ) : (
         /* SI ESTAMOS JUGANDO NORMALMENTE */
         <div
-          className={`w-full max-w-5xl bg-[#c0c0c0] rounded-lg border-[#555] shadow-2xl relative z-30 flex flex-col ${
+          className={`w-full max-w-5xl mx-auto my-auto bg-[#c0c0c0] rounded-lg border-[#555] shadow-2xl relative z-30 flex flex-col ${
             isFullscreen
-              ? "border-0 p-1 md:p-3 min-h-full"
+              ? "border-0 p-1 md:p-3" 
               : "border-t-4 border-l-4 border-white border-b-4 border-r-4 p-2 md:p-3"
           }`}
         >

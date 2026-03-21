@@ -62,16 +62,16 @@ export const puertoScene: Scene = {
       onInteract: (inventory, flags) => {
         if (!flags.includes("sospecha_polvora")) {
           return {
-            text: "/images/juego/heinrich-concerned.png|Esto no es cerveza negra. La textura... el olor... Es pólvora.",
+            text: "/images/juego/heinrich-concerned.webp|Esto no es cerveza negra. La textura... el olor... Es pólvora.",
             setFlag: "sospecha_polvora",
           };
         }
         return {
-          text: "/images/juego/heinrich-neutral.png|Están repletos de pólvora. Alguien planea un asedio.",
+          text: "/images/juego/heinrich-neutral.webp|Están repletos de pólvora. Alguien planea un asedio.",
         };
       },
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|Shhh. Los barriles no hablan, pero a veces explotan.",
+        text: "/images/juego/heinrich-neutral.webp|Shhh. Los barriles no hablan, pero a veces explotan.",
       }),
     },
     {
@@ -88,20 +88,20 @@ export const puertoScene: Scene = {
         if (flags.includes("conocio_whitmore")) {
           if (flags.includes("sospecha_polvora")) {
             return {
-              text: "/images/juego/heinrich-concerned.png|Ese inglés es peligroso. Y esos barriles… no son cerveza.",
+              text: "/images/juego/heinrich-concerned.webp|Ese inglés es peligroso. Y esos barriles… no son cerveza.",
             };
           }
           return {
-            text: "/images/juego/heinrich-neutral.png|Edward Whitmore. Comerciante… o algo peor.",
+            text: "/images/juego/heinrich-neutral.webp|Edward Whitmore. Comerciante… o algo peor.",
           };
         }
         return {
-          text: "/images/juego/heinrich-neutral.png|Un hombre elegante. Demasiado elegante para este puerto.",
+          text: "/images/juego/heinrich-neutral.webp|Un hombre elegante. Demasiado elegante para este puerto.",
         };
       },
 
       onInteract: () => ({
-        text: "/images/juego/heinrich-concerned.png|No creo que tocar a un inglés bien vestido termine bien.",
+        text: "/images/juego/heinrich-concerned.webp|No creo que tocar a un inglés bien vestido termine bien.",
       }),
 
       onTalk: (inventory, flags) => {
@@ -123,7 +123,7 @@ export const puertoScene: Scene = {
                 text: "Digamos que nuestros intereses comerciales… colisionaron en alta mar.",
               },
               {
-                portrait: "/images/juego/heinrich-angry.png",
+                portrait: "/images/juego/heinrich-angry.webp",
                 text: "¡Tú ordenaste tirar mi cargamento por la borda!",
               },
               {
@@ -131,7 +131,7 @@ export const puertoScene: Scene = {
                 text: "Era necesario aligerar la carga. Supervivencia básica.",
               },
               {
-                portrait: "/images/juego/heinrich-angry.png",
+                portrait: "/images/juego/heinrich-angry.webp",
                 text: "Para usted tal vez. Para mí era mi trabajo.",
               },
               {
@@ -139,7 +139,7 @@ export const puertoScene: Scene = {
                 text: "El mundo recompensa a quienes saben adaptarse, Adler.",
               },
               {
-                portrait: "/images/juego/heinrich-neutral.png",
+                portrait: "/images/juego/heinrich-neutral.webp",
                 text: "Yo prefiero perfeccionar las cosas. Como la cerveza.",
               },
               {
@@ -169,7 +169,7 @@ export const puertoScene: Scene = {
         // 🔴 SI DESCUBRE LA PÓLVORA → NO HABLAR MÁS
         if (flags.includes("sospecha_polvora")) {
           return {
-            text: "/images/juego/heinrich-concerned.png|No debería llamar su atención otra vez. Ese hombre es peligroso.",
+            text: "/images/juego/heinrich-concerned.webp|No debería llamar su atención otra vez. Ese hombre es peligroso.",
           };
         }
 
@@ -179,7 +179,7 @@ export const puertoScene: Scene = {
             setFlag: "hablo_whitmore_extra",
             dialogue: [
               {
-                portrait: "/images/juego/heinrich-neutral.png",
+                portrait: "/images/juego/heinrich-neutral.webp",
                 text: "¿Siempre arruina el negocio de otros?",
               },
               {
@@ -214,12 +214,12 @@ export const puertoScene: Scene = {
       walkToX: 30,
       walkToY: 85,
       onLook: () => ({
-        text: "/images/juego/heinrich-concerned.png|Mis cosas. Las tiraron del barco como si fueran basura.",
+        text: "/images/juego/heinrich-concerned.webp|Mis cosas. Las tiraron del barco como si fueran basura.",
       }),
       onInteract: (inventory, flags) => {
         if (inventory.some((i) => i.id === "recetas"))
           return {
-            text: "/images/juego/heinrich-neutral.png|Ya no queda nada útil aquí.",
+            text: "/images/juego/heinrich-neutral.webp|Ya no queda nada útil aquí.",
           };
 
         if (flags.includes("cerveza_arruinada")) {
@@ -229,11 +229,11 @@ export const puertoScene: Scene = {
           };
         }
         return {
-          text: "/images/juego/heinrich-neutral.png|Solo hay ropa vieja. Primero debo buscar los ingredientes.",
+          text: "/images/juego/heinrich-neutral.webp|Solo hay ropa vieja. Primero debo buscar los ingredientes.",
         };
       },
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|No hablo con maletas.",
+        text: "/images/juego/heinrich-neutral.webp|No hablo con maletas.",
       }),
     },
     {
@@ -249,21 +249,21 @@ export const puertoScene: Scene = {
       onLook: (inventory, flags) => {
         if (flags.includes("sospecha_polvora")) {
           return {
-            text: "/images/juego/heinrich-concerned.png|Ese galeón inglés está demasiado armado para ser un simple barco mercante.",
+            text: "/images/juego/heinrich-concerned.webp|Ese galeón inglés está demasiado armado para ser un simple barco mercante.",
           };
         }
 
         return {
-          text: "/images/juego/heinrich-neutral.png|Un galeón mercante inglés anclado en el puerto. Parece recién llegado de Europa.",
+          text: "/images/juego/heinrich-neutral.webp|Un galeón mercante inglés anclado en el puerto. Parece recién llegado de Europa.",
         };
       },
 
       onInteract: () => ({
-        text: "/images/juego/heinrich-neutral.png|Intento acercarme, pero el muelle no llega hasta el barco.",
+        text: "/images/juego/heinrich-neutral.webp|Intento acercarme, pero el muelle no llega hasta el barco.",
       }),
 
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|— ¿Hola?\n\nEl barco no responde. Supongo que eso es buena señal.",
+        text: "/images/juego/heinrich-neutral.webp|— ¿Hola?\n\nEl barco no responde. Supongo que eso es buena señal.",
       }),
     },
     {
@@ -277,15 +277,15 @@ export const puertoScene: Scene = {
       walkToY: 65,
 
       onLook: () => ({
-        text: "/images/juego/heinrich-neutral.png|Un día soleado en Buenos Aires. En Baviera el cielo suele ser mucho más gris.",
+        text: "/images/juego/heinrich-neutral.webp|Un día soleado en Buenos Aires. En Baviera el cielo suele ser mucho más gris.",
       }),
 
       onInteract: () => ({
-        text: "/images/juego/heinrich-neutral.png|No creo que pueda alcanzar el cielo.",
+        text: "/images/juego/heinrich-neutral.webp|No creo que pueda alcanzar el cielo.",
       }),
 
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|Hola cielo.\n\nSigue sin responder.",
+        text: "/images/juego/heinrich-neutral.webp|Hola cielo.\n\nSigue sin responder.",
       }),
     },
     {
@@ -298,13 +298,13 @@ export const puertoScene: Scene = {
       walkToX: 50,
       walkToY: 65,
       onLook: () => ({
-        text: "/images/juego/heinrich-neutral.png|El famoso Río de la Plata. Parece más un mar marrón que un río.",
+        text: "/images/juego/heinrich-neutral.webp|El famoso Río de la Plata. Parece más un mar marrón que un río.",
       }),
       onInteract: () => ({
-        text: "/images/juego/heinrich-concerned.png|No creo que esta agua sirva para hacer cerveza.",
+        text: "/images/juego/heinrich-concerned.webp|No creo que esta agua sirva para hacer cerveza.",
       }),
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|He visto sopas más claras que este río.",
+        text: "/images/juego/heinrich-neutral.webp|He visto sopas más claras que este río.",
       }),
     },
     {
@@ -320,13 +320,13 @@ export const puertoScene: Scene = {
       condition: (inventory) => !inventory.some((i) => i.id === "barril_vacio"),
 
       onLook: () => ({
-        text: "/images/juego/heinrich-neutral.png|Unos pequeños barriles de madera vacío. Perfecto para fermentar mi primera tanda.",
+        text: "/images/juego/heinrich-neutral.webp|Unos pequeños barriles de madera vacío. Perfecto para fermentar mi primera tanda.",
       }),
       onInteract: (inventory, flags) => {
         // 1. Si NO está enfriando y TAMPOCO está listo
         if (!flags.includes("mosto_enfriando") && !flags.includes("necesita_fermentar")) {
           return {
-            text: "/images/juego/heinrich-concerned.png|Mejor no andar cargando un barril inútilmente. Solo lo llevaré cuando tenga mosto cocinándose o listo.",
+            text: "/images/juego/heinrich-concerned.webp|Mejor no andar cargando un barril inútilmente. Solo lo llevaré cuando tenga mosto cocinándose o listo.",
           };
         }
 
@@ -347,7 +347,7 @@ export const puertoScene: Scene = {
         };
       },
       onTalk: () => ({
-        text: "/images/juego/heinrich-neutral.png|Si le hablo adentro, solo escucharé el eco de mi propia voz.",
+        text: "/images/juego/heinrich-neutral.webp|Si le hablo adentro, solo escucharé el eco de mi propia voz.",
       }),
     },
     {
@@ -361,7 +361,7 @@ export const puertoScene: Scene = {
       walkToX: 30,
       walkToY: 60,
       onLook: () => ({
-        text: "/images/juego/heinrich-neutral.png|El camino se curva hacia el centro de la ciudad. Se ve el Cabildo a lo lejos.",
+        text: "/images/juego/heinrich-neutral.webp|El camino se curva hacia el centro de la ciudad. Se ve el Cabildo a lo lejos.",
       }),
       onInteract: () => ({ text: "Caminando...", transition: "plaza" }),
       onTalk: () => ({ text: "..." }),
