@@ -58,8 +58,12 @@ export default function NotasPage() {
         {/* GRILLA DE NOTAS */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {notas.map((nota) => (
-            <Link href={`/notas/${nota.id}`} key={nota.id} className="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col overflow-hidden cursor-pointer h-full">
-              
+            {/* 👇 ACÁ ESTÁ EL CAMBIO: Usamos nota.slug (y si no tiene, usamos nota.id para no romper notas viejas) 👇 */}
+            <Link 
+              href={`/notas/${nota.slug || nota.id}`} 
+              key={nota.id} 
+              className="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col overflow-hidden cursor-pointer h-full"
+            >
               {/* Imagen de Portada */}
               <div className="w-full h-56 bg-stone-100 overflow-hidden relative border-b border-gray-100">
                 {nota.image_url ? (
