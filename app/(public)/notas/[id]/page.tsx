@@ -112,26 +112,26 @@ export default function NotaDetailPage() {
         )}
 
         {/* CONTENIDO DEL ARTÍCULO */}
-        {/* 👇 Le sacamos el "overflow-hidden" y el "w-full" que estaban asfixiando al texto 👇 */}
         <div
           className="text-lg md:text-xl text-stone-700 leading-relaxed prose-cervecero max-w-none"
-          dangerouslySetInnerHTML={{ __html: nota.content || "" }}
+          dangerouslySetInnerHTML={{ 
+            /* 👇 ACÁ ESTÁ LA MAGIA: Reemplazamos todos los &nbsp; por espacios normales 👇 */
+            __html: nota.content ? nota.content.replace(/&nbsp;/g, ' ') : "" 
+          }}
         />
 
         {/* CSS PERSONALIZADO PARA EL HTML INYECTADO */}
         <style
           dangerouslySetInnerHTML={{
             __html: `
-          /* 👇 LA REGLA DE ORO DEFINITIVA 👇 */
-          .prose-cervecero, .prose-cervecero * { 
-            word-break: normal !important; 
-            overflow-wrap: break-word !important; 
-            hyphens: none !important;
+          .prose-cervecero { 
+            word-break: normal; 
+            overflow-wrap: break-word; 
           }
           
-          /* Arreglo para las imágenes que pongas adentro de la nota */
+          .prose-cervecero * { max-width: 100% !important; }
+          
           .prose-cervecero img { 
-            max-width: 100% !important;
             height: auto !important; 
             border-radius: 1rem; 
             margin: 2.5rem auto; 
@@ -148,11 +148,7 @@ export default function NotaDetailPage() {
           .prose-cervecero li { margin-bottom: 0.5rem; color: #44403c; }
           .prose-cervecero blockquote { border-left: 4px solid #f59e0b; padding-left: 1rem; font-style: italic; background: #fafaf9; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
           
-          .prose-cervecero a { 
-            color: #b45309; 
-            text-decoration: underline; 
-            font-weight: bold; 
-          }
+          .prose-cervecero a { color: #b45309; text-decoration: underline; font-weight: bold; word-break: break-all; }
           .prose-cervecero a:hover { color: #d97706; }
         `,
           }}
