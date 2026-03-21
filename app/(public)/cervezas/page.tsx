@@ -7,11 +7,14 @@ import Link from "next/link";
 export default function RankingCervezasPage() {
   const [cervezas, setCervezas] = useState<any[]>([]);
   const [cargando, setCargando] = useState(true);
-  const [orden, setOrden] = useState("mejor_puntuadas"); // mejor_puntuadas, mas_alcohol, mas_amargas, az
+  
+  // 👇 NUEVOS ESTADOS PARA BUSCADOR Y FILTRO 👇
+  const [orden, setOrden] = useState("mejor_puntuadas");
+  const [busqueda, setBusqueda] = useState("");
+  const [estiloFiltro, setEstiloFiltro] = useState("todos");
 
   useEffect(() => {
     const fetchRanking = async () => {
-      // Traemos las cervezas con su cervecería, estilo y TODAS sus reseñas para promediar
       const { data, error } = await supabase
         .from("cervezas")
         .select(`
@@ -28,7 +31,6 @@ export default function RankingCervezasPage() {
       }
 
       if (data) {
-        // Calculamos el promedio de cada cerveza y se lo agregamos al objeto
         const cervezasConPromedio = data.map((cerv) => {
           const totalResenas = cerv.resenas?.length || 0;
           const sumaPuntajes = cerv.resenas?.reduce((acc: number, curr: any) => acc + Number(curr.puntaje_general), 0) || 0;
@@ -49,14 +51,33 @@ export default function RankingCervezasPage() {
     fetchRanking();
   }, []);
 
-  // Función para ordenar el array de cervezas según el selector
-  const cervezasOrdenadas = [...cervezas].sort((a, b) => {
-    if (orden === "mejor_puntuadas") return b.promedioGeneral - a.promedioGeneral;
-    if (orden === "mas_alcohol") return b.abv - a.abv;
-    if (orden === "mas_amargas") return b.ibu - a.ibu;
-    if (orden === "az") return a.nombre.localeCompare(b.nombre);
-    return 0;
-  });
+  // 👇 1. EXTRAER ESTILOS ÚNICOS PARA EL SELECTOR 👇
+  const estilosUnicos = Array.from(
+    new Set(cervezas.map((c) => c.estilos?.nombre).filter(Boolean))
+  ).sort();
+
+  // 👇 2. EL MOTOR DE BÚSQUEDA, FILTRO Y ORDENAMIENTO ENCADENADO 👇
+  const cervezasProcesadas = cervezas
+    .filter((cerveza) => {
+      // Filtro por texto (busca en nombre de cerveza o en nombre de fábrica)
+      const textoBusqueda = busqueda.toLowerCase();
+      const coincideBusqueda = 
+        cerveza.nombre.toLowerCase().includes(textoBusqueda) ||
+        cerveza.cervecerias?.nombre.toLowerCase().includes(textoBusqueda);
+      
+      // Filtro por estilo
+      const coincideEstilo = estiloFiltro === "todos" || cerveza.estilos?.nombre === estiloFiltro;
+
+      return coincideBusqueda && coincideEstilo;
+    })
+    .sort((a, b) => {
+      // Ordenamiento final
+      if (orden === "mejor_puntuadas") return b.promedioGeneral - a.promedioGeneral;
+      if (orden === "mas_alcohol") return b.abv - a.abv;
+      if (orden === "mas_amargas") return b.ibu - a.ibu;
+      if (orden === "az") return a.nombre.localeCompare(b.nombre);
+      return 0;
+    });
 
   if (cargando) {
     return (
@@ -76,35 +97,77 @@ export default function RankingCervezasPage() {
             Ranking <span className="text-amber-600">Cervecero</span> 🏆
           </h1>
           <p className="text-lg text-stone-600 max-w-2xl mx-auto">
-            Descubrí cuáles son las cervezas favoritas de la comunidad. Ordená por puntaje, nivel de alcohol o el amargor que tu paladar resista.
+            Descubrí cuáles son las cervezas favoritas de la comunidad. Buscá, filtrá y ordená para encontrar tu próxima pinta ideal.
           </p>
         </div>
 
-        {/* BARRA DE HERRAMIENTAS (Filtros y Orden) */}
-        <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
-          <div className="text-stone-600 font-bold flex items-center gap-2">
-            📊 Mostrando {cervezas.length} cervezas
-          </div>
+        {/* 👇 NUEVO PANEL DE HERRAMIENTAS (Buscador, Filtros y Orden) 👇 */}
+        <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 mb-8 space-y-4">
           
-          <div className="flex items-center gap-3 w-full md:w-auto">
-            <label className="text-sm font-bold text-gray-500 uppercase">Ordenar por:</label>
-            <select 
-              value={orden} 
-              onChange={(e) => setOrden(e.target.value)}
-              className="p-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none bg-stone-50 text-stone-800 font-medium flex-1 md:flex-none cursor-pointer"
-            >
-              <option value="mejor_puntuadas">⭐ Mejor Puntuadas</option>
-              <option value="mas_alcohol">🔥 Mayor Alcohol (ABV)</option>
-              <option value="mas_amargas">🌿 Más Amargas (IBU)</option>
-              <option value="az">🔤 Alfabético (A-Z)</option>
-            </select>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Buscador de Texto */}
+            <div className="flex flex-col gap-1 md:col-span-1">
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider pl-1">Buscar</label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">🔍</span>
+                <input 
+                  type="text" 
+                  placeholder="Nombre o fábrica..." 
+                  value={busqueda}
+                  onChange={(e) => setBusqueda(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none bg-stone-50 text-stone-800 font-medium"
+                />
+              </div>
+            </div>
+
+            {/* Filtro por Estilo */}
+            <div className="flex flex-col gap-1">
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider pl-1">Estilo</label>
+              <select 
+                value={estiloFiltro} 
+                onChange={(e) => setEstiloFiltro(e.target.value)}
+                className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none bg-stone-50 text-stone-800 font-medium cursor-pointer"
+              >
+                <option value="todos">🍺 Todos los estilos</option>
+                {estilosUnicos.map((estilo) => (
+                  <option key={estilo as string} value={estilo as string}>{estilo as string}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Ordenamiento */}
+            <div className="flex flex-col gap-1">
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider pl-1">Ordenar por</label>
+              <select 
+                value={orden} 
+                onChange={(e) => setOrden(e.target.value)}
+                className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none bg-stone-50 text-stone-800 font-medium cursor-pointer"
+              >
+                <option value="mejor_puntuadas">⭐ Mejor Puntuadas</option>
+                <option value="mas_alcohol">🔥 Mayor Alcohol (ABV)</option>
+                <option value="mas_amargas">🌿 Más Amargas (IBU)</option>
+                <option value="az">🔤 Alfabético (A-Z)</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="text-sm text-stone-500 font-medium pt-2 border-t border-gray-100 flex items-center justify-between">
+            <span>Mostrando <strong>{cervezasProcesadas.length}</strong> resultados</span>
+            {(busqueda !== "" || estiloFiltro !== "todos") && (
+              <button 
+                onClick={() => { setBusqueda(""); setEstiloFiltro("todos"); }}
+                className="text-amber-600 hover:text-amber-700 font-bold transition"
+              >
+                Limpiar filtros ✕
+              </button>
+            )}
           </div>
         </div>
 
-        {/* LISTA DEL RANKING (Estilo Leaderboard) */}
+        {/* LISTA DEL RANKING */}
         <div className="space-y-4">
-          {cervezasOrdenadas.map((cerveza, index) => {
-            // Estilos especiales para el Top 3
+          {cervezasProcesadas.map((cerveza, index) => {
+            // Estilos especiales para el Top 3 (Solo se aplican si estamos viendo el ranking general sin filtros raros)
             const isTop1 = orden === "mejor_puntuadas" && index === 0 && cerveza.promedioGeneral > 0;
             const isTop2 = orden === "mejor_puntuadas" && index === 1 && cerveza.promedioGeneral > 0;
             const isTop3 = orden === "mejor_puntuadas" && index === 2 && cerveza.promedioGeneral > 0;
@@ -145,7 +208,7 @@ export default function RankingCervezasPage() {
                     <div className="flex items-center justify-center sm:justify-start gap-4 mt-3 text-sm text-stone-600">
                       <span title="Alcohol By Volume"><strong>ABV:</strong> {cerveza.abv}%</span>
                       <span className="text-gray-300">|</span>
-                      <span title="International Bitterness Units"><strong>IBU:</strong> {cerveza.ibu}</span>
+                      <span title="International Bitterness Units"><strong>IBU:</strong> {cerveza.ibu || "N/A"}</span>
                     </div>
                   </div>
 
@@ -167,11 +230,18 @@ export default function RankingCervezasPage() {
             );
           })}
 
-          {cervezas.length === 0 && (
+          {/* ESTADO VACÍO CUANDO NO HAY RESULTADOS DE BÚSQUEDA */}
+          {cervezasProcesadas.length === 0 && (
             <div className="text-center py-16 bg-white rounded-3xl border border-dashed border-gray-200">
-              <span className="text-4xl">🏜️</span>
-              <h3 className="text-xl font-bold text-stone-800 mt-4">Todavía no hay cervezas en el ranking</h3>
-              <p className="text-gray-500">Sé el primero en agregar una desde el panel de administración.</p>
+              <span className="text-4xl">🕵️‍♂️</span>
+              <h3 className="text-xl font-bold text-stone-800 mt-4">No encontramos lo que buscás</h3>
+              <p className="text-gray-500 mt-1">Probá cambiando los filtros o borrando el texto de búsqueda.</p>
+              <button 
+                onClick={() => { setBusqueda(""); setEstiloFiltro("todos"); }}
+                className="mt-6 bg-amber-100 text-amber-800 font-bold px-6 py-2 rounded-xl border border-amber-200 hover:bg-amber-200 transition"
+              >
+                Ver todo el ranking
+              </button>
             </div>
           )}
         </div>
