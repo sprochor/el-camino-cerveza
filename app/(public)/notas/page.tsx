@@ -64,6 +64,7 @@ export default function NotasPage() {
               key={nota.id} 
               className="group bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col overflow-hidden cursor-pointer h-full"
             >
+              
               {/* Imagen de Portada */}
               <div className="w-full h-56 bg-stone-100 overflow-hidden relative border-b border-gray-100">
                 {nota.image_url ? (
