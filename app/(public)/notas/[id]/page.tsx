@@ -122,19 +122,20 @@ export default function NotaDetailPage() {
         <style
           dangerouslySetInnerHTML={{
             __html: `
-          /* 👇 MAGIA: Forzamos el salto de línea normal y evitamos cortes de palabras 👇 */
-          .prose-cervecero { 
+          /* 👇 LA BOMBA NUCLEAR CONTRA LOS CORTES 👇 */
+          .prose-cervecero, 
+          .prose-cervecero * { 
             word-break: normal !important; 
-            overflow-wrap: break-word !important; 
-            hyphens: none !important;
+            overflow-wrap: normal !important; 
+            white-space: normal !important;
+            -webkit-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important; 
+            max-width: 100% !important;
           }
-
-          /* Obligamos a TODO (textos, tablas, divs ocultos) a no superar el 100% del ancho */
-          .prose-cervecero * { max-width: 100% !important; }
           
           /* Arreglo para las imágenes que pongas adentro de la nota */
           .prose-cervecero img { 
-            max-width: 100% !important; 
             height: auto !important; 
             border-radius: 1rem; 
             margin: 2.5rem auto; 
@@ -151,8 +152,14 @@ export default function NotaDetailPage() {
           .prose-cervecero li { margin-bottom: 0.5rem; color: #44403c; }
           .prose-cervecero blockquote { border-left: 4px solid #f59e0b; padding-left: 1rem; font-style: italic; background: #fafaf9; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
           
-          /* 👇 A los links sí les permitimos cortarse, por si pegás una URL larguísima 👇 */
-          .prose-cervecero a { color: #b45309; text-decoration: underline; font-weight: bold; word-break: break-all; }
+          /* 👇 Excepción ÚNICA: Solo los links gigantes pueden romperse 👇 */
+          .prose-cervecero a { 
+            color: #b45309; 
+            text-decoration: underline; 
+            font-weight: bold; 
+            word-break: break-all !important; 
+            overflow-wrap: break-word !important;
+          }
           .prose-cervecero a:hover { color: #d97706; }
         `,
           }}
