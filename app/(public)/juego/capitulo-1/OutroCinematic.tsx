@@ -11,12 +11,12 @@ const OUTRO_SCRIPT = [
   {
     bg: "bg-[url('/images/juego/outro-pancho.webp')] bg-cover bg-center",
     text: "Gringo... te aprecio, pero esto tiene gusto a agua de zanja. Y de las malas.",
-    portrait: "/images/juego/pancho-annoyed.png",
+    portrait: "/images/juego/pancho-annoyed.webp",
   },
   {
     bg: "bg-[url('/images/juego/outro-pulpero.webp')] bg-cover bg-center",
     text: "Se lo advertí. Y ahora va a tener que limpiar mi pulperia!",
-    portrait: "/images/juego/pulpero-serious.png",
+    portrait: "/images/juego/pulpero-serious.webp",
   },
   {
     // 💡 ACÁ PODÉS PONER OTRA (ej: 'outro-panadera.png')

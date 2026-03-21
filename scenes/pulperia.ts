@@ -46,9 +46,9 @@ export const pulperiaScene: Scene = {
             setFlag: "conocio_pulpero",
             dialogue: [
               { portrait: "/images/juego/heinrich-neutral.webp", text: "Hallo… buenas tardes." },
-              { portrait: "/images/juego/pulpero-serious.png", text: "No lo conozco. ¿Qué busca?" },
+              { portrait: "/images/juego/pulpero-serious.webp", text: "No lo conozco. ¿Qué busca?" },
               { portrait: "/images/juego/heinrich-happy.webp", text: "Soy Heinrich, un maestro cervecero. Solo estoy conociendo el lugar." },
-              { portrait: "/images/juego/pulpero-smirk.png", text: "Acá tomamos cosas fuertes, gringo. Si va a consumir, siéntese. Si no, no estorbe el paso." }
+              { portrait: "/images/juego/pulpero-smirk.webp", text: "Acá tomamos cosas fuertes, gringo. Si va a consumir, siéntese. Si no, no estorbe el paso." }
             ],
           };
         }
@@ -59,10 +59,10 @@ export const pulperiaScene: Scene = {
             setFlag: "permiso_pulpero",
             dialogue: [
               { portrait: "/images/juego/heinrich-neutral.webp", text: "Señor, ¿me permite usar esa olla de hierro? Quiero hacer cerveza." },
-              { portrait: "/images/juego/pulpero-smirk.png", text: "¿Cerveza? Ya le dije que la gente acá no toma eso." },
+              { portrait: "/images/juego/pulpero-smirk.webp", text: "¿Cerveza? Ya le dije que la gente acá no toma eso." },
               { portrait: "/images/juego/heinrich-happy.webp", text: "La cerveza es una bebida noble. Déjeme demostrarlo." },
-              { portrait: "/images/juego/pulpero-speaking-medium.png", text: "Mientras no me rompa nada… use lo que necesite." },
-              { portrait: "/images/juego/pulpero-neutral.png", text: "Pero si explota algo… usted limpia." }
+              { portrait: "/images/juego/pulpero-speaking-medium.webp", text: "Mientras no me rompa nada… use lo que necesite." },
+              { portrait: "/images/juego/pulpero-neutral.webp", text: "Pero si explota algo… usted limpia." }
             ]
           };
         }
@@ -73,9 +73,9 @@ export const pulperiaScene: Scene = {
             setFlag: "permiso_patio",
             dialogue: [
               { portrait: "/images/juego/heinrich-neutral.webp", text: "¿Puedo pasar al patio trasero?" },
-              { portrait: "/images/juego/pulpero-serious.png", text: "¿Al patio? ¿A qué?" },
+              { portrait: "/images/juego/pulpero-serious.webp", text: "¿Al patio? ¿A qué?" },
               { portrait: "/images/juego/heinrich-happy.webp", text: "Necesito un lugar fresco o quizás algo de vegetación para mi receta." },
-              { portrait: "/images/juego/pulpero-neutral.png", text: "Pase. Pero cierre la puerta al salir para que no se escape el perro." }
+              { portrait: "/images/juego/pulpero-neutral.webp", text: "Pase. Pero cierre la puerta al salir para que no se escape el perro." }
             ]
           };
         }
@@ -85,32 +85,32 @@ export const pulperiaScene: Scene = {
           return {
             setFlag: "pulpero_comento_cebada",
             dialogue: [
-              { portrait: "/images/juego/pulpero-serious.png", text: "¿Agarró cebada?" },
-              { portrait: "/images/juego/pulpero-speaking-medium.png", text: "Eso es comida para caballos." },
+              { portrait: "/images/juego/pulpero-serious.webp", text: "¿Agarró cebada?" },
+              { portrait: "/images/juego/pulpero-speaking-medium.webp", text: "Eso es comida para caballos." },
               { portrait: "/images/juego/heinrich-happy.webp", text: "¡También sirve para cerveza!" },
-              { portrait: "/images/juego/pulpero-surprised.png", text: "Si logra que alguien se la tome… le pago una ronda." },
+              { portrait: "/images/juego/pulpero-surprised.webp", text: "Si logra que alguien se la tome… le pago una ronda." },
             ],
           };
         }
 
         // 5. RESPUESTAS DINÁMICAS GENERALES
         if (!flags.includes("olla_encendida")) {
-          return { text: "/images/juego/pulpero-smirk.png|Si va a consumir, siéntese. Si no, no estorbe el paso." };
+          return { text: "/images/juego/pulpero-smirk.webp|Si va a consumir, siéntese. Si no, no estorbe el paso." };
         }
         if (flags.includes("olla_encendida") && !flags.includes("agua_agregada")) {
-          return { text: "/images/juego/pulpero-speaking-medium.png|Trate de no explotar nada con ese fuego." };
+          return { text: "/images/juego/pulpero-speaking-medium.webp|Trate de no explotar nada con ese fuego." };
         }
         if (flags.includes("agua_agregada") && !flags.includes("macerando")) {
-          return { text: "/images/juego/pulpero-smirk.png|Eso es agua caliente. No impresiona a nadie." };
+          return { text: "/images/juego/pulpero-smirk.webp|Eso es agua caliente. No impresiona a nadie." };
         }
         if (flags.includes("macerando") && !flags.includes("mosto_listo")) {
-          return { text: "/images/juego/pulpero-surprised.png|Le puso comida para caballos… Si logra que alguien se la tome… le pago una ronda." };
+          return { text: "/images/juego/pulpero-surprised.webp|Le puso comida para caballos… Si logra que alguien se la tome… le pago una ronda." };
         }
         if (flags.includes("mosto_listo")) {
-          return { text: "/images/juego/pulpero-smirk.png|Si eso no lo mata… capaz hasta le compro un vaso." };
+          return { text: "/images/juego/pulpero-smirk.webp|Si eso no lo mata… capaz hasta le compro un vaso." };
         }
 
-        return { text: "/images/juego/pulpero-neutral.png|Mientras no incendie la pulpería… estamos bien." };
+        return { text: "/images/juego/pulpero-neutral.webp|Mientras no incendie la pulpería… estamos bien." };
       },
     },
 
@@ -169,16 +169,16 @@ export const pulperiaScene: Scene = {
           return {
             setFlag: "hablo_pancho",
             dialogue: [
-              { portrait: "/images/juego/pancho-neutral.png", text: "Buenas, gringo. No sos de por acá, ¿no?" },
+              { portrait: "/images/juego/pancho-neutral.webp", text: "Buenas, gringo. No sos de por acá, ¿no?" },
               { portrait: "/images/juego/heinrich-neutral.webp", text: "Soy cervecero. Quiero hacer cerveza." },
-              { portrait: "/images/juego/pancho-amused.png", text: "¿Cerveza? Acá tomamos mate… o cosas que te tumban." },
-              { portrait: "/images/juego/pancho-smiling.png", text: "Pero me gusta tu idea. Suena a problema… y a diversión." },
+              { portrait: "/images/juego/pancho-amused.webp", text: "¿Cerveza? Acá tomamos mate… o cosas que te tumban." },
+              { portrait: "/images/juego/pancho-smiling.webp", text: "Pero me gusta tu idea. Suena a problema… y a diversión." },
             ],
           };
         }
 
         if (!flags.includes("permiso_pulpero") && !flags.includes("quiere_usar_olla")) {
-           return { text: "/images/juego/pancho-smiling.png|Linda pulpería, ¿no? El dueño tiene pocas pulgas, así que portate bien." };
+           return { text: "/images/juego/pancho-smiling.webp|Linda pulpería, ¿no? El dueño tiene pocas pulgas, así que portate bien." };
         }
 
         if (flags.includes("quiere_usar_olla") && !flags.includes("permiso_pulpero")) {
@@ -187,13 +187,13 @@ export const pulperiaScene: Scene = {
               setFlag: "pancho_reto_permiso",
               dialogue: [
                 { portrait: "/images/juego/heinrich-neutral.webp", text: "Necesito encender esa olla…" },
-                { portrait: "/images/juego/pancho-serious.png", text: "Pará, gringo. ¿Ya hablaste con el pulpero?" },
+                { portrait: "/images/juego/pancho-serious.webp", text: "Pará, gringo. ¿Ya hablaste con el pulpero?" },
                 { portrait: "/images/juego/heinrich-surprised.webp", text: "Eh… no exactamente." },
-                { portrait: "/images/juego/pancho-serious.png", text: "Acá no se prende fuego sin permiso. A menos que quieras terminar afuera… o peor." },
+                { portrait: "/images/juego/pancho-serious.webp", text: "Acá no se prende fuego sin permiso. A menos que quieras terminar afuera… o peor." },
               ],
             };
           } else {
-            return { text: "/images/juego/pancho-serious.png|Hablá con el pulpero primero, gringo. Las cosas se hacen por derecha." };
+            return { text: "/images/juego/pancho-serious.webp|Hablá con el pulpero primero, gringo. Las cosas se hacen por derecha." };
           }
         }
 
@@ -201,28 +201,28 @@ export const pulperiaScene: Scene = {
           return {
             dialogue: [
               { portrait: "/images/juego/heinrich-neutral.webp", text: "El pulpero me dejó usar la olla. Pero no tengo cómo encender el fuego." },
-              { portrait: "/images/juego/pancho-serious.png", text: "Sin chispa no hay fuego, gringo. Y sin fuego… lo tuyo es sopa triste." },
-              { portrait: "/images/juego/pancho-smiling.png", text: "Tomá, llevate esto. Pero no me incendies el rancho." },
+              { portrait: "/images/juego/pancho-serious.webp", text: "Sin chispa no hay fuego, gringo. Y sin fuego… lo tuyo es sopa triste." },
+              { portrait: "/images/juego/pancho-smiling.webp", text: "Tomá, llevate esto. Pero no me incendies el rancho." },
             ],
             addItem: { id: "yesca", name: "Yesca", icon: "🔥", imageUrl: "/images/juego/items/yesca.png" },
           };
         }
 
         if (!flags.includes("olla_encendida")) {
-          return { text: "/images/juego/pancho-amused.png|¿Y? ¿La olla se prende sola en tu país? Usá la yesca." };
+          return { text: "/images/juego/pancho-amused.webp|¿Y? ¿La olla se prende sola en tu país? Usá la yesca." };
         }
 
         if (flags.includes("agua_agregada") && !flags.includes("macerando")) {
-          return { text: "/images/juego/pancho-amused.png|Eso es agua caliente, gringo. Hasta mi caballo hace algo más interesante." };
+          return { text: "/images/juego/pancho-amused.webp|Eso es agua caliente, gringo. Hasta mi caballo hace algo más interesante." };
         }
 
         if (flags.includes("macerando") && !flags.includes("hirviendo")) {
           return {
             dialogue: [
-              { portrait: "/images/juego/pancho-smiling.png", text: "Ahora sí… eso ya empieza a oler como algo serio. Pero le falta algo." },
+              { portrait: "/images/juego/pancho-smiling.webp", text: "Ahora sí… eso ya empieza a oler como algo serio. Pero le falta algo." },
               { portrait: "/images/juego/heinrich-neutral.webp", text: "¿El qué?" },
-              { portrait: "/images/juego/pancho-smiling.png", text: "Algo que le dé carácter. Atrás, en el patio… hay unas flores enredadas." },
-              { portrait: "/images/juego/pancho-neutral.png", text: "Los caballos no las comen… así que deben servir para algo." },
+              { portrait: "/images/juego/pancho-smiling.webp", text: "Algo que le dé carácter. Atrás, en el patio… hay unas flores enredadas." },
+              { portrait: "/images/juego/pancho-neutral.webp", text: "Los caballos no las comen… así que deben servir para algo." },
               { portrait: "/images/juego/heinrich-happy.webp", text: "Interesante… podría funcionar." },
             ],
           };
@@ -232,10 +232,10 @@ export const pulperiaScene: Scene = {
           return {
             setFlag: "pancho_hint_fermento",
             dialogue: [
-              { portrait: "/images/juego/pancho-serious.png", text: "Ahora viene lo importante." },
+              { portrait: "/images/juego/pancho-serious.webp", text: "Ahora viene lo importante." },
               { portrait: "/images/juego/heinrich-neutral.webp", text: "¿Qué sigue?" },
-              { portrait: "/images/juego/pancho-neutral.png", text: "Dejalo descansar… como al mate." },
-              { portrait: "/images/juego/pancho-smiling.png", text: "Buscate un barril… y armate de paciencia." },
+              { portrait: "/images/juego/pancho-neutral.webp", text: "Dejalo descansar… como al mate." },
+              { portrait: "/images/juego/pancho-smiling.webp", text: "Buscate un barril… y armate de paciencia." },
             ],
           };
         }
@@ -245,25 +245,25 @@ export const pulperiaScene: Scene = {
             return {
               setFlag: "advirtio_whitmore",
               dialogue: [
-                { portrait: "/images/juego/pancho-serious.png", text: "Te vi mirando hacia el puerto antes. ¿Conocés al inglés?" },
+                { portrait: "/images/juego/pancho-serious.webp", text: "Te vi mirando hacia el puerto antes. ¿Conocés al inglés?" },
                 { portrait: "/images/juego/heinrich-angry.webp", text: "Demasiado. Me arruinó la vida en alta mar." },
-                { portrait: "/images/juego/pancho-annoyed.png", text: "Whitmore no me gusta nada. Nadie trae tantos barriles porque sí." },
-                { portrait: "/images/juego/pancho-serious.png", text: "Andá con cuidado por ahí." },
+                { portrait: "/images/juego/pancho-annoyed.webp", text: "Whitmore no me gusta nada. Nadie trae tantos barriles porque sí." },
+                { portrait: "/images/juego/pancho-serious.webp", text: "Andá con cuidado por ahí." },
               ],
             };
           } else {
             return {
               setFlag: "advirtio_whitmore",
               dialogue: [
-                { portrait: "/images/juego/pancho-serious.png", text: "Y ojo si vas para el puerto... cuidado con ese inglés." },
+                { portrait: "/images/juego/pancho-serious.webp", text: "Y ojo si vas para el puerto... cuidado con ese inglés." },
                 { portrait: "/images/juego/heinrich-neutral.webp", text: "¿Qué inglés?" },
-                { portrait: "/images/juego/pancho-annoyed.png", text: "Un tal Whitmore. No me gusta nada. Nadie trae tantos barriles porque sí." },
+                { portrait: "/images/juego/pancho-annoyed.webp", text: "Un tal Whitmore. No me gusta nada. Nadie trae tantos barriles porque sí." },
               ],
             };
           }
         }
 
-        return { text: "/images/juego/pancho-smiling.png|Todo llega, gringo… hasta la buena cerveza." };
+        return { text: "/images/juego/pancho-smiling.webp|Todo llega, gringo… hasta la buena cerveza." };
       },
     },
 
