@@ -101,7 +101,7 @@ export default function JuegoLandingPage() {
               {/* REEMPLAZO DE EMOJI POR IMAGEN REAL */}
               <div className="w-24 h-24 bg-stone-900 border-4 border-stone-600 overflow-hidden flex-shrink-0 shadow-inner relative">
                 <img
-                  src="/images/juego/heinrich-neutral.png"
+                  src="/images/juego/heinrich-neutral.webp"
                   alt="Heinrich Adler"
                   className="absolute top-0 left-0 w-full h-full object-cover pixelated scale-125 origin-top"
                 />
@@ -148,7 +148,7 @@ export default function JuegoLandingPage() {
               {/* REEMPLAZO DE EMOJI POR IMAGEN REAL */}
               <div className="w-24 h-24 bg-stone-900 border-4 border-red-900 overflow-hidden flex-shrink-0 shadow-inner relative">
                 <img
-                  src="/images/juego/edward-smirk.png"
+                  src="/images/juego/edward-smirk.webp"
                   alt="Edward Whitmore"
                   className="absolute top-0 left-0 w-full h-full object-cover pixelated scale-125 origin-top grayscale hover:grayscale-0 transition-all"
                 />
