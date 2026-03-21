@@ -122,11 +122,16 @@ export default function NotaDetailPage() {
         <style
           dangerouslySetInnerHTML={{
             __html: `
-          /* 👇 El estándar universal para que el texto fluya como debe 👇 */
-          .prose-cervecero { 
-            overflow-wrap: break-word !important; /* Solo rompe si una palabra es más larga que toda la pantalla (ej: un link) */
-            word-wrap: break-word !important;
-            word-break: normal !important; /* Mantiene las palabras normales unidas */
+          /* 👇 LA ORDEN DEFINITIVA PARA QUE NADA CORTE PALABRAS 👇 */
+          .prose-cervecero,
+          .prose-cervecero * { 
+            word-break: normal !important; 
+            overflow-wrap: normal !important; 
+            word-wrap: normal !important;
+            white-space: normal !important;
+            -webkit-hyphens: none !important;
+            -ms-hyphens: none !important;
+            hyphens: none !important;
           }
           
           /* Evita que imágenes o tablas gigantes empujen el texto afuera */
@@ -152,7 +157,14 @@ export default function NotaDetailPage() {
           .prose-cervecero li { margin-bottom: 0.5rem; color: #44403c; }
           .prose-cervecero blockquote { border-left: 4px solid #f59e0b; padding-left: 1rem; font-style: italic; background: #fafaf9; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
           
-          .prose-cervecero a { color: #b45309; text-decoration: underline; font-weight: bold; }
+          /* Solo permitimos cortes forzados en los enlaces para que no rompan el diseño */
+          .prose-cervecero a { 
+            color: #b45309; 
+            text-decoration: underline; 
+            font-weight: bold; 
+            word-break: break-all !important;
+            overflow-wrap: break-word !important;
+          }
           .prose-cervecero a:hover { color: #d97706; }
         `,
           }}
