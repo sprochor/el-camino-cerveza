@@ -51,7 +51,7 @@ export default function DashboardAdmin() {
 
       supabase.from("cervecerias").select("id, nombre, ciudad, created_at").order("created_at", { ascending: false }).limit(100),
       supabase.from("cervezas").select("id, nombre, estilos(nombre), cervecerias(nombre)").order("created_at", { ascending: false }).limit(100),
-      supabase.from("estilos").select("id, nombre, familia, codigo_bjcp").order("informacion_extra", { ascending: true }).limit(100), // 👈 Traemos Estilos
+      supabase.from("estilos").select("id, nombre, familia, codigo_bjcp").order("codigo_bjcp", { ascending: true }).limit(100), // 👈 Traemos Estilos
       supabase.from("noticias").select("id, title, created_at").order("created_at", { ascending: false }).limit(100),
     ]);
 
