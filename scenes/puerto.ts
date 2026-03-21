@@ -187,7 +187,7 @@ export const puertoScene: Scene = {
                 text: "Solo cuando es conveniente.",
               },
               {
-                portrait: "/images/juego/heinrich-annoyed.webp",
+                portrait: "/images/juego/heinrich-speaking-medium.webp",
                 text: "Algún día probará una cerveza de verdad.",
               },
               {
