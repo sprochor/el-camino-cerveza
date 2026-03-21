@@ -112,9 +112,9 @@ export default function NotaDetailPage() {
         )}
 
         {/* CONTENIDO DEL ARTÍCULO */}
-        {/* 👇 Le sacamos la clase "break-words" de Tailwind 👇 */}
+        {/* 👇 Le sacamos el "overflow-hidden" y el "w-full" que estaban asfixiando al texto 👇 */}
         <div
-          className="text-lg md:text-xl text-stone-700 leading-relaxed prose-cervecero w-full overflow-hidden"
+          className="text-lg md:text-xl text-stone-700 leading-relaxed prose-cervecero max-w-none"
           dangerouslySetInnerHTML={{ __html: nota.content || "" }}
         />
 
@@ -122,16 +122,16 @@ export default function NotaDetailPage() {
         <style
           dangerouslySetInnerHTML={{
             __html: `
-          /* 👇 LA BOMBA NUCLEAR CONTRA LOS CORTES 👇 */
-          .prose-cervecero, 
+          /* 👇 El estándar universal para que el texto fluya como debe 👇 */
+          .prose-cervecero { 
+            overflow-wrap: break-word !important; /* Solo rompe si una palabra es más larga que toda la pantalla (ej: un link) */
+            word-wrap: break-word !important;
+            word-break: normal !important; /* Mantiene las palabras normales unidas */
+          }
+          
+          /* Evita que imágenes o tablas gigantes empujen el texto afuera */
           .prose-cervecero * { 
-            word-break: normal !important; 
-            overflow-wrap: normal !important; 
-            white-space: normal !important;
-            -webkit-hyphens: none !important;
-            -ms-hyphens: none !important;
-            hyphens: none !important; 
-            max-width: 100% !important;
+            max-width: 100% !important; 
           }
           
           /* Arreglo para las imágenes que pongas adentro de la nota */
@@ -152,14 +152,7 @@ export default function NotaDetailPage() {
           .prose-cervecero li { margin-bottom: 0.5rem; color: #44403c; }
           .prose-cervecero blockquote { border-left: 4px solid #f59e0b; padding-left: 1rem; font-style: italic; background: #fafaf9; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; }
           
-          /* 👇 Excepción ÚNICA: Solo los links gigantes pueden romperse 👇 */
-          .prose-cervecero a { 
-            color: #b45309; 
-            text-decoration: underline; 
-            font-weight: bold; 
-            word-break: break-all !important; 
-            overflow-wrap: break-word !important;
-          }
+          .prose-cervecero a { color: #b45309; text-decoration: underline; font-weight: bold; }
           .prose-cervecero a:hover { color: #d97706; }
         `,
           }}
