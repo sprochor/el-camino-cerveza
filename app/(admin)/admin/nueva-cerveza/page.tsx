@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 
-const OPCIONES_PRESENTACIONES = ["Lata", "Botella", "Barril", "Growler"];
+const OPCIONES_PRESENTACIONES = ["Lata", "Botella", "Tirada"];
 const OPCIONES_TAMANOS = [
   "354ml",
   "473ml",

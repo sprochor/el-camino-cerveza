@@ -5,7 +5,7 @@ import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
-const OPCIONES_PRESENTACIONES = ["Lata", "Botella", "Barril", "Growler"];
+const OPCIONES_PRESENTACIONES = ["Lata", "Botella", "Tirada"];
 const OPCIONES_TAMANOS = ["354ml", "473ml", "500ml", "710ml", "Pinta", "Media Pinta", "Litro"];
 
 export default function EditarCervezaAdmin() {
