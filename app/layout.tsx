@@ -4,6 +4,18 @@ import type { Metadata } from "next";
 import Navbar from "@/components/navbar";
 import "./globals.css";
 import AgeModal from "@/components/AgeModal";
+import { Analytics } from "@vercel/analytics/react";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="es">
+      <body>
+        {children}
+        <Analytics /> {/* 👈 2. Lo ponés justo antes de cerrar el body */}
+      </body>
+    </html>
+  )
+}
 
 // 👇 Meta-datos para SEO y al compartir en redes/WhatsApp
 export const metadata: Metadata = {
