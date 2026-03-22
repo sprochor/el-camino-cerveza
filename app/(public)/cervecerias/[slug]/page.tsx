@@ -162,7 +162,6 @@ export default function CerveceriaDetailPage() {
           {cerveceria.cervezas && cerveceria.cervezas.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {cerveceria.cervezas.map((cerveza: any) => (
-                {/* 👇 ENLACE DE CADA CERVEZA 👇 */}
                 <Link href={`/cervezas/${cerveza.slug || cerveza.id}`} key={cerveza.id}>
                   <div className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 group flex items-center gap-5 cursor-pointer h-full">
                     
