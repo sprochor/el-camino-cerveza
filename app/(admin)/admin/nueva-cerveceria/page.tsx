@@ -14,6 +14,16 @@ export default function NuevaCerveceriaAdmin() {
   const [guardando, setGuardando] = useState(false);
   const [mensaje, setMensaje] = useState({ tipo: "", texto: "" });
 
+  // 👇 1. Agregamos la función creadora de Slugs 👇
+  const crearSlug = (texto: string) => {
+    return texto
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMensaje({ tipo: "", texto: "" });
@@ -41,8 +51,13 @@ export default function NuevaCerveceriaAdmin() {
         urlFinalImagen = data.publicUrl;
       }
 
+      // 👇 2. Generamos el slug a partir del nombre 👇
+      const slugGenerado = crearSlug(nombre);
+
+      // 👇 3. Lo incluimos en el insert a Supabase 👇
       const { error: insertError } = await supabase.from("cervecerias").insert({
         nombre,
+        slug: slugGenerado, // 👈 Se guarda el slug en la BD
         ciudad,
         pais,
         historia,

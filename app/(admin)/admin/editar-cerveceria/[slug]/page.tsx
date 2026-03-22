@@ -6,9 +6,10 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
 export default function EditarCerveceriaAdmin() {
-  const { id } = useParams();
+  const { slug } = useParams(); // 👈 1. Ahora atrapamos el slug
   const router = useRouter();
 
+  const [cerveceriaId, setCerveceriaId] = useState(""); // 👈 2. Guardamos el ID real en secreto para actualizar después
   const [nombre, setNombre] = useState("");
   const [ciudad, setCiudad] = useState("");
   const [pais, setPais] = useState("Argentina");
@@ -23,9 +24,22 @@ export default function EditarCerveceriaAdmin() {
 
   useEffect(() => {
     const fetchCerveceria = async () => {
-      const { data, error } = await supabase.from("cervecerias").select("*").eq("id", id).single();
+      if (!slug) return;
+
+      // Intentamos buscar por SLUG
+      let { data, error } = await supabase.from("cervecerias").select("*").eq("slug", slug).single();
       
+      // Sistema de rescate: verificamos si la URL era un ID viejo
+      if (error) {
+        const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug as string);
+        if (isUUID) {
+          const fallback = await supabase.from("cervecerias").select("*").eq("id", slug).single();
+          if (fallback.data) data = fallback.data;
+        }
+      }
+
       if (data) {
+        setCerveceriaId(data.id); // Guardamos el ID real oculto
         setNombre(data.nombre || "");
         setCiudad(data.ciudad || "");
         setPais(data.pais || "Argentina");
@@ -37,7 +51,17 @@ export default function EditarCerveceriaAdmin() {
       setCargando(false);
     };
     fetchCerveceria();
-  }, [id]);
+  }, [slug]);
+
+  // 👇 3. Función para generar el slug actualizado 👇
+  const crearSlug = (texto: string) => {
+    return texto
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,6 +76,7 @@ export default function EditarCerveceriaAdmin() {
     try {
       let urlFinalImagen = imagenActualUrl;
 
+      // Subir nueva imagen si la hay
       if (imagenArchivo) {
         const fileExt = imagenArchivo.name.split(".").pop();
         const fileName = `${Date.now()}.${fileExt}`;
@@ -66,13 +91,18 @@ export default function EditarCerveceriaAdmin() {
         urlFinalImagen = data.publicUrl;
       }
 
+      // Generamos el slug por si el nombre cambió
+      const slugActualizado = crearSlug(nombre);
+
+      // Actualizamos en la base de datos usando el ID REAL que teníamos oculto
       const { error } = await supabase.from("cervecerias").update({
         nombre,
+        slug: slugActualizado, // 👈 Guardamos el slug
         ciudad,
         pais,
         historia,
         image_url: urlFinalImagen,
-      }).eq("id", id);
+      }).eq("id", cerveceriaId); // 👈 Buscamos por el ID verdadero, no por el slug
 
       if (error) throw error;
 

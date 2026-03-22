@@ -9,8 +9,10 @@ const OPCIONES_PRESENTACIONES = ["Lata", "Botella", "Tirada"];
 const OPCIONES_TAMANOS = ["354ml", "473ml", "500ml", "710ml", "Pinta", "Media Pinta", "Litro"];
 
 export default function EditarCervezaAdmin() {
-  const { id } = useParams();
+  const { slug } = useParams(); // 👈 1. Atrapamos el slug
   const router = useRouter();
+
+  const [cervezaIdOriginal, setCervezaIdOriginal] = useState(""); // 👈 2. Guardamos el ID real en secreto
 
   // Estados para los desplegables dinámicos
   const [cervecerias, setCervecerias] = useState<any[]>([]);
@@ -32,8 +34,8 @@ export default function EditarCervezaAdmin() {
   const [notasCata, setNotasCata] = useState("");
   const [historia, setHistoria] = useState("");
   const [premios, setPremios] = useState("");
-  const [presentaciones, setPresentaciones] = useState<string[]>([]); // 👈
-  const [tamanos, setTamanos] = useState<string[]>([]); // 👈
+  const [presentaciones, setPresentaciones] = useState<string[]>([]);
+  const [tamanos, setTamanos] = useState<string[]>([]);
   
   // Imagen existente vs Imagen Nueva
   const [imagenActualUrl, setImagenActualUrl] = useState("");
@@ -46,7 +48,7 @@ export default function EditarCervezaAdmin() {
   // Cargar datos al abrir la página
   useEffect(() => {
     const fetchDatos = async () => {
-      if (!id) return;
+      if (!slug) return;
 
       // 1. Traer catálogos para los selectores
       const { data: cervs } = await supabase.from("cervecerias").select("id, nombre").order("nombre");
@@ -57,16 +59,24 @@ export default function EditarCervezaAdmin() {
       if (ests) setEstilos(ests);
       if (vs) setVasos(vs);
 
-      // 2. Traer los datos actuales de la cerveza a editar
-      const { data: cervezaActual, error } = await supabase
+      // 2. Intentamos buscar por SLUG primero
+      let { data: cervezaActual, error } = await supabase
         .from("cervezas")
         .select("*")
-        .eq("id", id)
+        .eq("slug", slug)
         .single();
 
+      // Sistema de rescate: verificamos si la URL era un ID viejo
       if (error) {
-        setMensaje({ tipo: "error", texto: "No se encontró la cerveza." });
-      } else if (cervezaActual) {
+        const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug as string);
+        if (isUUID) {
+          const fallback = await supabase.from("cervezas").select("*").eq("id", slug).single();
+          if (fallback.data) cervezaActual = fallback.data;
+        }
+      }
+
+      if (cervezaActual) {
+        setCervezaIdOriginal(cervezaActual.id); // 👈 Guardamos el ID real oculto
         setNombre(cervezaActual.nombre || "");
         setCerveceriaId(cervezaActual.cerveceria_id || "");
         setEstiloId(cervezaActual.estilo_id || "");
@@ -80,16 +90,28 @@ export default function EditarCervezaAdmin() {
         setNotasCata(cervezaActual.notas_cata || "");
         setHistoria(cervezaActual.historia_cerveza || "");
         setPremios(cervezaActual.premios || "");
-        setPresentaciones(cervezaActual.presentaciones || []); // 👈
-        setTamanos(cervezaActual.tamanos || []);               // 👈
+        setPresentaciones(cervezaActual.presentaciones || []); 
+        setTamanos(cervezaActual.tamanos || []);               
         setImagenActualUrl(cervezaActual.imagen_url || "");
+      } else {
+        setMensaje({ tipo: "error", texto: "No se encontró la cerveza." });
       }
       
       setCargandoDatos(false);
     };
 
     fetchDatos();
-  }, [id]);
+  }, [slug]);
+
+  // 👇 3. Función para generar el slug actualizado 👇
+  const crearSlug = (texto: string) => {
+    return texto
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,9 +125,8 @@ export default function EditarCervezaAdmin() {
     setGuardando(true);
 
     try {
-      let urlFinalImagen = imagenActualUrl; // Por defecto mantenemos la vieja
+      let urlFinalImagen = imagenActualUrl; 
 
-      // Si el usuario seleccionó una foto nueva, la subimos
       if (imagenArchivo) {
         const fileExt = imagenArchivo.name.split(".").pop();
         const fileName = `${Date.now()}.${fileExt}`;
@@ -121,11 +142,15 @@ export default function EditarCervezaAdmin() {
         urlFinalImagen = data.publicUrl;
       }
 
-      // 3. Actualizar la cerveza en la base de datos (Usamos UPDATE en vez de INSERT)
+      // Generamos el slug actualizado
+      const slugActualizado = crearSlug(nombre);
+
+      // 4. Actualizar usando el ID oculto
       const { error: updateError } = await supabase
         .from("cervezas")
         .update({
           nombre,
+          slug: slugActualizado, // 👈 Guardamos el slug
           cerveceria_id: cerveceriaId,
           estilo_id: estiloId,
           vaso_id: vasoId || null,
@@ -138,17 +163,16 @@ export default function EditarCervezaAdmin() {
           notas_cata: notasCata,
           historia_cerveza: historia,
           premios,
-          presentaciones, // 👈
-          tamanos,        // 👈
+          presentaciones, 
+          tamanos,        
           imagen_url: urlFinalImagen,
         })
-        .eq("id", id); // ¡CRUCIAL PARA NO PISAR TODA LA BASE DE DATOS!
+        .eq("id", cervezaIdOriginal); // 👈 ¡Usamos el ID REAL!
 
       if (updateError) throw updateError;
 
       setMensaje({ tipo: "exito", texto: "¡Cerveza actualizada con éxito! 🍻 Volviendo al panel..." });
       
-      // Redirigimos al panel de admin después de 2 segundos
       setTimeout(() => {
         router.push("/admin");
       }, 2000);
@@ -253,7 +277,7 @@ export default function EditarCervezaAdmin() {
                   <option value="Edición Limitada">Edición Limitada</option>
                 </select>
               </div>
-              {/* 👇 NUEVOS BOTONES DE PRESENTACIÓN Y TAMAÑO 👇 */}
+
               <div className="col-span-2 md:col-span-3">
                 <label className="block text-sm font-bold text-gray-600 mb-2">Formatos (Click para seleccionar varios)</label>
                 <div className="flex flex-wrap gap-2">
@@ -285,7 +309,6 @@ export default function EditarCervezaAdmin() {
                   ))}
                 </div>
               </div>
-              {/* 👆 FIN NUEVOS BOTONES 👆 */}
             </div>
           </div>
 

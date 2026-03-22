@@ -67,6 +67,16 @@ export default function NuevaCervezaAdmin() {
     fetchSelects();
   }, []);
 
+  // 👇 1. Agregamos la función creadora de Slugs 👇
+  const crearSlug = (texto: string) => {
+    return texto
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMensaje({ tipo: "", texto: "" });
@@ -101,8 +111,13 @@ export default function NuevaCervezaAdmin() {
         urlFinalImagen = data.publicUrl;
       }
 
+      // 👇 2. Generamos el slug a partir del nombre 👇
+      const slugGenerado = crearSlug(nombre);
+
+      // 👇 3. Incluimos el slug en el insert a Supabase 👇
       const { error: insertError } = await supabase.from("cervezas").insert({
         nombre,
+        slug: slugGenerado, // 👈 Se guarda el slug en la BD
         cerveceria_id: cerveceriaId,
         estilo_id: estiloId,
         vaso_id: vasoId || null,
@@ -115,8 +130,8 @@ export default function NuevaCervezaAdmin() {
         notas_cata: notasCata,
         historia_cerveza: historia,
         premios,
-        presentaciones, // 👈 NUEVO
-        tamanos, // 👈 NUEVO
+        presentaciones, 
+        tamanos, 
         imagen_url: urlFinalImagen,
       });
 
@@ -141,8 +156,8 @@ export default function NuevaCervezaAdmin() {
       setHistoria("");
       setPremios("");
       setImagenArchivo(null);
-      setPresentaciones([]); // 👈 NUEVO
-      setTamanos([]); // 👈 NUEVO
+      setPresentaciones([]); 
+      setTamanos([]); 
     } catch (error: any) {
       console.error("Error al guardar:", error);
       setMensaje({ tipo: "error", texto: "Hubo un error: " + error.message });
@@ -336,7 +351,7 @@ export default function NuevaCervezaAdmin() {
                   <option value="Edición Limitada">Edición Limitada</option>
                 </select>
               </div>
-              {/* 👇 NUEVOS BOTONES DE PRESENTACIÓN Y TAMAÑO 👇 */}
+              
               <div className="col-span-2 md:col-span-3">
                 <label className="block text-sm font-bold text-gray-600 mb-2">
                   Formatos (Click para seleccionar varios)
@@ -384,11 +399,9 @@ export default function NuevaCervezaAdmin() {
                   ))}
                 </div>
               </div>
-            </div>{" "}
-            {/* 👈 ¡FALTABA ESTE CIERRE! (Cierra el grid) */}
-          </div>{" "}
-          {/*
-
+            </div> 
+          </div> 
+          
           {/* TEXTOS, PREMIOS Y LORE */}
           <div>
             <h3 className="text-lg font-bold text-stone-800 border-b border-gray-100 pb-2 mb-4 flex items-center gap-2">
