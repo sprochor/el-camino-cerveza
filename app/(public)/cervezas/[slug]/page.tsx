@@ -7,7 +7,9 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 
 export default function CervezaDetailPage() {
-  const { slug } = useParams(); // 👈 1. Atrapamos el slug
+  const params = useParams(); 
+  // 👇 Atrapamos el dato sin importar si la carpeta se llama [id] o [slug]
+  const urlParam = params.slug || params.id; 
 
   const [cerveza, setCerveza] = useState<any>(null);
   const [resenas, setResenas] = useState<any[]>([]);
@@ -19,7 +21,7 @@ export default function CervezaDetailPage() {
 
   useEffect(() => {
     const fetchCerveza = async () => {
-      if (!slug) return;
+      if (!urlParam) return;
 
       const {
         data: { session },
@@ -28,29 +30,30 @@ export default function CervezaDetailPage() {
 
       let cervData: any = null;
 
-      // Consulta base (agregamos el slug en cervecerias)
       const querySelect = `
         *,
-        cervecerias (id, nombre, ciudad, pais, slug), /* 👈 Pedimos el slug de la fábrica */
+        cervecerias (id, nombre, ciudad, pais, slug),
         estilos (id, nombre, familia, categoria, descripcion, codigo_bjcp),
         vasos (id, nombre, imagen_url)
       `;
 
-      // 2. Intentamos buscar por SLUG
+      // Intentamos buscar por SLUG
       const { data: resSlug, error: errSlug } = await supabase
         .from("cervezas")
         .select(querySelect)
-        .eq("slug", slug)
+        .eq("slug", urlParam) 
         .single();
 
       if (errSlug) {
-        // 3. Sistema de rescate: verificamos si es un link viejo usando ID
-        const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug as string);
+        console.error("🚨 Error de Supabase al buscar la cerveza:", errSlug.message);
+        
+        // Sistema de rescate: verificamos si es un link viejo usando ID
+        const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(urlParam as string);
         if (isUUID) {
           const fallback = await supabase
             .from("cervezas")
             .select(querySelect)
-            .eq("id", slug)
+            .eq("id", urlParam)
             .single();
           if (fallback.data) cervData = fallback.data;
         }
@@ -61,13 +64,13 @@ export default function CervezaDetailPage() {
       if (cervData) {
         setCerveza(cervData);
 
-        // 4. EL TRUCO: Ahora que tenemos la cerveza, usamos su ID REAL para buscar las reseñas
+        // Ahora que tenemos la cerveza, usamos su ID REAL para buscar las reseñas
         const cervezaIdReal = cervData.id;
 
         const { data: revs, error: errorRevs } = await supabase
           .from("resenas")
           .select("*, profiles(full_name, avatar_url)")
-          .eq("cerveza_id", cervezaIdReal) // 👈 Usamos el ID real
+          .eq("cerveza_id", cervezaIdReal) 
           .order("created_at", { ascending: false });
 
         if (errorRevs) {
@@ -93,7 +96,7 @@ export default function CervezaDetailPage() {
     };
 
     fetchCerveza();
-  }, [slug]); // 👈 Actualizamos la dependencia
+  }, [urlParam]); // 👈 ¡ESTE ERA EL CULPABLE! Ahora usa urlParam en vez de slug.
 
   const renderStars = (promedio: number) => {
     const stars = [];
@@ -521,7 +524,7 @@ export default function CervezaDetailPage() {
       <ReviewModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        cervezaId={cerveza?.id} /* 👈 MANDAMOS EL ID REAL AL MODAL DE RESEÑAS */
+        cervezaId={cerveza?.id} 
       />
     </div>
   );
