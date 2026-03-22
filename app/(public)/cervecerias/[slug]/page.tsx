@@ -6,13 +6,18 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 
 export default function CerveceriaDetailPage() {
-  const { slug } = useParams(); // 👈 1. Atrapamos el slug en vez del ID
+  const params = useParams(); 
+  // 👇 1. Atrapamos el dato a prueba de balas (no importa si la carpeta es id o slug)
+  const urlParam = params.slug || params.id; 
+
   const [cerveceria, setCerveceria] = useState<any>(null);
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
     const fetchCerveceria = async () => {
-      if (!slug) return;
+      if (!urlParam) return;
+
+      let cervData = null;
 
       // 2. Traemos la cervecería y TODAS sus cervezas (incluyendo el SLUG de cada una)
       let { data, error } = await supabase
@@ -21,7 +26,7 @@ export default function CerveceriaDetailPage() {
           *,
           cervezas (
             id,
-            slug, /* 👈 Pedimos explícitamente el slug de la cerveza */
+            slug,
             nombre,
             abv,
             ibu,
@@ -29,12 +34,13 @@ export default function CerveceriaDetailPage() {
             estilos (nombre)
           )
         `)
-        .eq("slug", slug) // 👈 Buscamos por el slug de la cervecería
+        .eq("slug", urlParam) // 👈 Buscamos por la variable a prueba de balas
         .single();
 
-      // 3. Sistema de rescate: Si falla, comprobamos si la URL era un ID viejo
+      // 3. Sistema de rescate
       if (error) {
-        const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug as string);
+        console.error("🚨 Error buscando fábrica por slug:", error.message);
+        const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(urlParam as string);
         
         if (isUUID) {
            const fallback = await supabase
@@ -51,24 +57,26 @@ export default function CerveceriaDetailPage() {
                 estilos (nombre)
               )
             `)
-            .eq("id", slug) // 👈 Buscamos por ID
+            .eq("id", urlParam) 
             .single();
            
            if (fallback.data) {
-             data = fallback.data;
+             cervData = fallback.data;
            }
         }
+      } else {
+        cervData = data;
       }
 
-      if (data) {
-        setCerveceria(data);
+      if (cervData) {
+        setCerveceria(cervData);
       }
       
       setCargando(false);
     };
 
     fetchCerveceria();
-  }, [slug]);
+  }, [urlParam]); // 👈 El useEffect ahora depende de urlParam
 
   if (cargando) {
     return (
@@ -154,6 +162,7 @@ export default function CerveceriaDetailPage() {
           {cerveceria.cervezas && cerveceria.cervezas.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {cerveceria.cervezas.map((cerveza: any) => (
+                {/* 👇 ENLACE DE CADA CERVEZA 👇 */}
                 <Link href={`/cervezas/${cerveza.slug || cerveza.id}`} key={cerveza.id}>
                   <div className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 group flex items-center gap-5 cursor-pointer h-full">
                     
@@ -175,9 +184,9 @@ export default function CerveceriaDetailPage() {
                         {cerveza.nombre}
                       </h3>
                       <div className="flex gap-3 text-xs font-bold text-gray-500 bg-stone-50 w-fit px-2 py-1 rounded-md border border-gray-100">
-                        <span title="Alcohol">ABV: {cerveza.abv}%</span>
+                        <span title="Alcohol">ABV: {cerveza.abv ? `${cerveza.abv}%` : "-"}</span>
                         <span className="text-gray-300">|</span>
-                        <span title="Amargor">IBU: {cerveza.ibu}</span>
+                        <span title="Amargor">IBU: {cerveza.ibu || "-"}</span>
                       </div>
                     </div>
 
