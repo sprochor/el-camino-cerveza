@@ -11,12 +11,13 @@ export default function CerveceriasPage() {
 
   useEffect(() => {
     const fetchCervecerias = async () => {
-      // Traemos las cervecerías y, de paso, le pedimos a Supabase que nos traiga los IDs de sus cervezas para contarlas
+      // 1. 👇 Agregamos el 'slug' a la lista de datos que le pedimos a Supabase
       const { data, error } = await supabase
         .from("cervecerias")
         .select(
           `
           *,
+          slug, 
           cervezas (id)
         `,
         )
@@ -80,7 +81,8 @@ export default function CerveceriasPage() {
         {/* GRILLA DE CERVECERÍAS */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {cerveceriasFiltradas.map((cerveceria) => (
-            <Link href={`/cervecerias/${cerveceria.id}`} key={cerveceria.id}>
+            /* 2. 👇 Usamos cerveceria.slug, y si no existe (raro), caemos en el ID viejo */
+            <Link href={`/cervecerias/${cerveceria.slug || cerveceria.id}`} key={cerveceria.id}>
               <div className="bg-white rounded-3xl p-6 shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 group h-full flex flex-col cursor-pointer relative overflow-hidden">
                 {/* Etiqueta de cantidad de cervezas */}
                 <div className="absolute top-4 right-4 bg-amber-100 text-amber-800 text-xs font-black px-3 py-1 rounded-full border border-amber-200 shadow-sm z-10">
