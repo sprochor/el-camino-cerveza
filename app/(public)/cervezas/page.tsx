@@ -173,7 +173,7 @@ export default function RankingCervezasPage() {
             const isTop3 = orden === "mejor_puntuadas" && index === 2 && cerveza.promedioGeneral > 0;
 
             return (
-              <Link href={`/cervezas/${cerveza.id}`} key={cerveza.id}>
+              <Link href={`/cervezas/${cerveza.slug || cerveza.id}`} key={cerveza.id}>
                 <div className={`group relative bg-white rounded-2xl p-4 sm:p-6 shadow-sm hover:shadow-md transition duration-300 border flex flex-col sm:flex-row items-center gap-6 cursor-pointer overflow-hidden ${isTop1 ? 'border-amber-400 border-2' : 'border-gray-100'}`}>
                   
                   {/* Posición (Ranking Number) */}
